@@ -1,0 +1,35 @@
+/* General container styles */
+.infograph-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* Style for node labels to add border */
+  .node-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 2px solid #000; */
+    /* padding: 2px; */
+    /* margin: 5px; */
+    border-radius: 8px; /* Optional for rounded corners */
+  }
+
+  .node-label>div{
+    border: 1px solid grey;
+    padding: 5px;
+    border-radius: 10px;
+  }
+  
+  .node-label>div>div{
+    font-size: 12px;
+  }
+
+  .node-label img{
+    width: 45%;
+  }
+  

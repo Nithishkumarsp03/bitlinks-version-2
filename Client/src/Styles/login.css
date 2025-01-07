@@ -1,0 +1,101 @@
+/* Wrapper to center the login box */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9; /* Light background */
+    padding: 20px; /* Space on smaller screens */
+    box-sizing: border-box; /* Include padding in width/height calculations */
+  }
+  
+  /* Login box styling */
+  .login-box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 10px 30px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+    box-sizing: border-box; /* Prevent overflow */
+  }
+  
+  /* Image styling */
+  .login-image {
+    width: 40%;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Heading and text */
+  h2 {
+    margin-bottom: 10px;
+    color: #333333;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+  
+  p {
+    color: #777777;
+    margin-bottom: 25px;
+    font-size: 1rem;
+  }
+  
+  /* Form styling */
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Spacing between form elements */
+  }
+  
+  /* Input styling (overrides for MUI Joy Input) */
+  .login-form .MuiInput-root {
+    width: 100%; /* Full width input */
+    font-size: 1rem;
+    padding: 7px; /* Padding for inputs */
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    transition: border-color 0.3s ease;
+  }
+  
+  .login-form .MuiInput-root:hover {
+    border-color: #007bff;
+  }
+  
+  .login-form .MuiInput-root:focus-within {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Button styling */
+  .login-button {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background: #0056b3;
+  }
+  
+  .login-button:active {
+    background: #004080;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .login-box {
+      width: 90%;
+      padding: 30px;
+    }
+  }
+  

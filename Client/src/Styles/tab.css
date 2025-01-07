@@ -1,0 +1,136 @@
+/* Container for scrolling tabs */
+.scrolling-tabs {
+    display: flex;
+    gap: 22px; /* Space between tabs */
+    /* margin: 20px; */
+    justify-content: center;
+    width: 100%;
+    overflow-x: auto; /* Enable horizontal scrolling when needed */
+    /* padding-bottom: 10px; */
+    box-sizing: border-box;
+    overflow: hidden;
+    align-items: center;
+    padding: 0px 20px;
+  }
+  
+  /* Individual tab styling */
+  .tab {
+    display: flex;
+    justify-content: center;
+    width: 170px;
+    padding: 2px 0;
+    height: 33px;
+    gap: 5px;
+    border: 1px solid black;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 30px;
+    background-color: #fefeff;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  /* Tab icon and text color */
+  .tab p {
+    display: inline-block;
+    color: black;
+  }
+  
+  .tab svg {
+    transition: stroke 0.3s ease;
+    stroke: #000;
+  }
+  
+  /* Hover effect for the tab */
+  .tab:hover::before {
+    transform: scale(40);
+  }
+  
+  .tab:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Tab active state */
+  .tab.active {
+    background-color: #2867b2;
+    color: white;
+    border: none;
+  }
+  
+  .tab.active svg {
+    stroke: white;
+  }
+  
+  .tab.active p {
+    color: white;
+  }
+  
+  /* Hover effect - Before pseudo-element for background animation */
+  .tab:not(.active)::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    background-color: #2867b2;
+    opacity: 0.2;
+    width: 2%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    inset: 0;
+    margin: auto;
+    transition: transform 600ms;
+  }
+  
+  /* Media queries for responsiveness */
+  @media (max-width: 1200px) {
+    .tab {
+      width: 150px; /* Decrease tab width for medium screens */
+      height: 30px; /* Adjust height for smaller screens */
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .scrolling-tabs {
+      gap: 10px; /* Reduce gap between tabs */
+    }
+  
+    .tab {
+      width: 130px; /* Further reduce tab width */
+      height: 30px; /* Adjust tab height */
+    }
+    .tab p{
+        font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .tab p {
+      display: none; /* Hide text inside tabs on small screens */
+    }
+  
+    .tab {
+      width: 60px; /* Decrease width for better icon display */
+      height: 35px; /* Increase height to fit the icons properly */
+      align-items: center;
+    }
+  
+    .tab svg {
+      width: 24px; /* Adjust icon size */
+      height: 24px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .tab {
+      width: 45px; /* Decrease width even further */
+      height: 40px; /* Adjust height to fit small screens */
+      align-items: center;
+    }
+  
+    .tab svg {
+      width: 20px; /* Adjust icon size for very small screens */
+      height: 20px;
+    }
+  }
+  

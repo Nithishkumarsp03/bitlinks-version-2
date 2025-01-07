@@ -1,0 +1,320 @@
+.profile-data{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;   
+    overflow-y: auto; 
+    box-sizing: border-box;
+}
+
+.profile-content{
+    width: 95%;
+    height: 100%;
+    /* border: 1px solid black; */
+    display: flex;
+    gap: 1%;
+}
+
+.persondata-leftside{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+}
+
+.persondata-rightside{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+    padding-bottom: 10px;
+}
+
+.persondata-info{
+    width: 100%;
+    height: 20%;
+    background-color: white;
+    padding: 2%;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 5px;
+}
+.person-description{
+    width: 100%;
+    height: 25%;
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 7%;
+    border-radius: 5px;
+}
+.person-graph{
+    width: 100%;
+    height: 45%;
+    background-color: white;
+    border-radius: 5px;
+}
+.person-basicinfo{
+    width: 100%;
+    height: 20%;
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 5px;
+}
+.person-proffesionalinfo{
+    width: 100%;
+    height: 25%;
+    background-color: white;
+    border-radius: 5px;
+}
+.person-companyinfo{
+    width: 100%;
+    height: 30%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+.person-contactinfo{
+    width: 100%;
+    height: 30%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.persondata-info-img{
+    width: 12%;
+    height: 95%;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.persondata-info-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.persondata-info-details{
+    width: 50%;
+    height: 100%;
+}
+
+.persondata-info-connections{
+    height: 100%;
+    width: 30%;
+}
+
+.persondata-info-details .name{
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.persondata-info-details .role{
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.persondata-info-details .location{
+    font-size: 16px;
+    color: rgb(78, 78, 78);
+}
+
+.persondata-info-connections{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.persondata-info-connections .connection-header{
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.persondata-info-connections .connection-count{
+    font-size: 20px;
+    color: #0A66c2;
+    font-weight: bold;
+}
+
+.person-description .description-header{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.person-description .description-body{
+    font-size: 16px;
+}
+
+.basicinfo-header-content{
+    display: flex;
+    width: 100%;
+    gap: 2%;
+}
+
+.person-basicinfo .basicinfo-header{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.person-basicinfo .basicinfo-body{
+    width: 40%;
+    height: auto; /* Adjust based on content size */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center child elements horizontally */
+    margin-left: 2%;
+}
+
+.basicinfo-header-content{
+    text-align: center;
+    width: 100%;
+}
+
+.basicinfo-header-content div:nth-child(1){
+    font-weight: 500;
+}
+
+.proffesionalinfo-body-content{
+    display: flex;
+    width: 100%;
+    gap: 1%;
+    margin-left: 2%;
+}
+
+.proffesionalinfo-body-content div:nth-child(1){
+    font-weight: 500;
+}
+
+.skill-lists{
+    display: flex;
+    gap: 2%;
+    width: 100%;
+    margin-left: 2%;
+}
+
+.skill{
+    background-color: #e3e9f1;
+    width: fit-content;
+    padding: 3px 10px;
+    border-radius: 3px;
+    color: #989ca1;
+    margin-top: 1%;
+}
+
+.proffesionalinfo-header{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.person-proffesionalinfo{
+    padding: 10px;
+}
+
+.company-info-table {
+    width: 100%;
+    padding-left: 2%;
+  }
+  
+  .company-info-table .label-cell {
+    font-weight: 600;
+    white-space: nowrap; /* Prevents wrapping of text */
+    width: 25%;
+  }
+  
+  .company-info-table .value-cell {
+    width: 75%;
+  }
+  
+
+  @media (max-width: 1200px) {
+    .persondata-info-img{
+        width: 17%;
+    }
+    .persondata-info-details{
+        width: 50%;
+        margin-left: 10px;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .profile-content{
+        flex-direction: column;
+        height: 200%;
+    }
+    .persondata-leftside, .persondata-rightside{
+        width: 99.5%;
+    }
+    .persondata-leftside{
+        height: 200%;
+    }
+    .persondata-info{
+        height: 17%;
+        padding: 10px;
+    }
+    .persondata-info-img{
+        width: 8%;
+        height: 100%;
+    }
+    .persondata-info-details{
+        /* background-color: #0A66c2; */
+    }
+    .person-description{
+        height: 30%;
+    }
+    .person-graph{
+        height: 48%;
+        background-color: #0A66c2;
+    }
+  }
+
+  @media (max-width: 940px){
+    .persondata-info-img{
+        width: 10%;
+        height: 100%;
+    }
+  }
+
+  @media (max-width: 768px){
+    .persondata-info-img{
+        width: 12%;
+        height: 100%;
+    }
+  }
+
+  @media (max-width: 600px){
+    .persondata-info-img{
+        width: 13%;
+        height: 100%;
+    }
+    .persondata-info-details .name{
+        font-size: 15px;
+    }
+    .persondata-info-details .role, .persondata-info-details .location {
+        font-size: 14px;
+        /* color: red; */
+    }
+  }
+
+  @media (max-width: 450px) {
+    .profile-content{
+        gap: 0%;
+    }
+    .persondata-info{
+        height: 10%;
+    }
+    .persondata-info-img{
+        width: 17%;
+        height: 100%;
+    }
+    .persondata-info-connections .connection-header{
+        font-size: 10px;
+    }
+  }

@@ -1,0 +1,296 @@
+.admin-body{
+    height: 90%;
+    width: 100%;
+    background-color: #edf3f7;
+}
+
+.tabs{
+    /* background-color: green; */
+    height: 10%;
+    display: flex;
+    align-content: center;
+}
+
+.tab-content{
+    height: 90%;
+    width: 100%;
+}
+
+.iecc-body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.left-side {
+    height: 100%;
+    width: 20%;
+    padding: 10px;
+}
+
+.middle-side {
+    height: 100%;
+    width: 56%;
+    padding: 9px 0px;
+}
+
+.right-side {
+    height: 100%;
+    width: 24%;
+}
+
+.full-width-outlet {
+    width: 80%;
+    height: 100%;
+    padding: 12px 0px 0px 0px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 800px) {
+    .left-side {
+        display: none;
+    }
+
+    .iecc-body {
+        justify-content: space-between; /* Adjust layout spacing */
+    }
+
+    .floating-navbar {
+        display: flex;
+        position: fixed;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        justify-content: center;
+        z-index: 1000;
+    }
+    .right-side {
+        display: none;
+    }
+
+    .middle-side {
+        width: 100%; /* Expand middle side to full width */
+    }
+
+    .full-width-outlet{
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    
+}
+
+  
+
+.navigation-buttons{
+    /* background-color: blue; */
+    width: 100%;
+    height: 40.6%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.navigation-buttons div{
+    background-color: white;
+    border: 1px solid rgb(210, 210, 210);
+    padding: 10px;
+}
+
+.search-container-middle{
+    height: 15%;
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10%;
+}
+
+.search-container-middle input{
+    height: 30px;
+    padding: 10px 0px;
+    border: none;
+    outline: none;
+}
+
+.person-contacts {
+    height: 85%;
+    padding: 10px 0px;
+    display: flex;
+    flex-wrap: wrap; /* Ensure wrapping to new rows */
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: scroll;
+  }
+  
+  /* Customizing scrollbar */
+  .person-contacts::-webkit-scrollbar {
+    width: 3px; /* Adjust the scrollbar width */
+    padding: 10px 0px;
+  }
+  
+  .person-contacts::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 3px; /* Rounded corners for the scrollbar thumb */
+  }
+  
+  .person-contacts::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker color on hover */
+  }
+  
+  .person-contacts::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background color of the scrollbar track */
+  }
+  
+
+.person-card {
+    flex: 0 0 calc(33.33% - 7.5px); /* Three cards per row */
+    height: 48%;
+    background-color: white;
+    box-sizing: border-box; /* Include padding and borders in width/height */
+    overflow: hidden;
+}
+
+.image-details{
+    width: 100%;
+    height: 40%;
+    /* background-color: red; */
+    display: flex;
+    gap: 5%;
+    align-items: center;
+}
+
+.profile-container{
+    width: 25%;
+    height: 80%;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.profile-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.details-container{
+    width: 65%;
+    height: 100%;
+    /* background-color: green; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.details-container div{
+    font-size: 14px;
+}
+
+.details-container .name{
+    font-weight: 600;
+    /* background-color: red; */
+    width: 100%;
+    height: 42%;
+    line-height: 1.2;
+}
+
+.details-container .role{
+    color: rgb(113, 113, 113);
+    font-weight: 500;
+}
+
+.person-card i{
+    color: #2867B2;
+    font-size: 12px;
+}
+
+.person-info{
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: end;
+    color: black;
+    font-weight: 500;
+    /* background-color: red; */
+}
+
+.person-info .card-links{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    gap: 4%;
+    height: 95%;
+    /* background-color: blue; */
+}
+
+.card-links div{
+    display: flex;
+    /* background-color: red; */
+    align-items: center;
+    gap: 5%;
+    text-overflow: ellipsis;
+}
+
+.card-links div>div{
+    font-size: 10px;
+    /* background-color: red; */
+    width: 100%;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 1200px) {
+    .person-card{
+        flex: 0 0 calc(50% - 7.5px); /* Three cards per row */
+    }
+}
+@media (max-width: 800px) {
+    .profile-container{
+        width: 18%;
+        /* background-color: green; */
+    }
+}
+@media (max-width: 600px) {
+    .person-contacts{
+        flex-direction: column;
+    }
+    .profile-container{
+        width: 14%;
+        height: 90%;
+        /* background-color: green; */
+    }
+}
+
+@media (max-width: 450px){
+    .profile-container{
+        width: 22%;
+    }
+
+    .person-card .name{
+        font-size: 20px;
+    }
+
+    .person-info{
+        height: 100%;
+    }
+
+    .card-links div div{
+        font-size: 13px;
+    }
+
+    .person-contacts{
+        padding-bottom: 6%;
+    }
+
+    .person-card{
+        padding-top: 2px;
+    }
+}

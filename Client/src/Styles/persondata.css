@@ -1,0 +1,23 @@
+.left-data{
+    /* background-color: #430f0f; */
+    height: 100%;
+    width: 20%;
+}
+.right-data{
+    background-color: white;
+    height: 100%;
+    width: 25%;
+    margin-right: 0.5%;
+}
+.middle-data{
+    background-color: white;
+    height: 100%;
+    width: 54%;
+    margin-right: 0.5%;
+}
+
+.outcome-data{
+    height: 52%;
+    width: 100%;
+    padding: 10px;
+}
