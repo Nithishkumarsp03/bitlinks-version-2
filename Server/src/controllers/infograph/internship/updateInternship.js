@@ -2,7 +2,7 @@ const db = require("../../../db/config");
 
 const updateInternship = (req, res) => {
   const { updateInternship } = req.body;
-  // console.log(req.body);
+  console.log(req.body);
 
   const getPersonIdQuery = `SELECT person_id FROM personalinfo WHERE uuid = ?`;
   const checkCompanyQuery = `SELECT * FROM internship WHERE person_id = ?`;
@@ -44,7 +44,7 @@ const updateInternship = (req, res) => {
       if (result.length > 0) {
         // If experience record exists, update it
         db.query(updateExperienceQuery, [
-          updateInternship.consultancy,
+          updateInternship.internship,
           updateInternship.role ? updateInternship.role.value : null,
           updateInternship.domain,
           updateInternship.skillset,
@@ -64,7 +64,7 @@ const updateInternship = (req, res) => {
         // If no experience record exists, insert a new record
         db.query(insertCompanyQuery, [
           personId,
-          updateInternship.consultancy,
+          updateInternship.internship,
           updateInternship.role ? updateInternship.role.value : null,
           updateInternship.domain,
           updateInternship.skillset,

@@ -19,6 +19,9 @@ export default function Leftside({ role }) {
     } else if (location.pathname === "/admin/data-hub") {
       setActive("merge");
     }
+    else{
+      setActive("myconnections")
+    }
   }, [location.pathname]);
 
   const handleActive = (navbar) => {

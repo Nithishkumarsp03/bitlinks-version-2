@@ -66,7 +66,7 @@ export default function Login() {
           navigate('/admin/myconnections')
         }
         else if(data.userData.role === 'user'){
-          navigate('/')
+          navigate('/myconnections')
         }
         else if(data.userData.role === 'guest'){
           navigate('/secure-data-hub');

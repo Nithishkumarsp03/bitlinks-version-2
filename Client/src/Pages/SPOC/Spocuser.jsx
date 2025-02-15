@@ -5,7 +5,7 @@ import Spocremainder from "../../Components/Notification/Spocremainder";
 
 export default function Spocuser() {
   const location = useLocation();
-  const isAddConnectionsRoute = location.pathname === "/add-connection";
+  const isAddConnectionsRoute = location.pathname.startsWith("/add-connection/");
   const isPojectRoute = location.pathname === "/projects";
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 800);
 

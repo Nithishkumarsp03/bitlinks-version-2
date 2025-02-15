@@ -5,13 +5,15 @@ import Select from "react-select";
 import Userprofile from "../../Assets/user.jpg";
 import Switch from "@mui/material/Switch";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../../Styles/addconnection.css";
 
 export default function Addconnection() {
   const api = process.env.REACT_APP_API;
+  const role = localStorage.getItem('role');
+  const navigate = useNavigate();
   const [name, setName] = useState("");
-  const useremail = useParams();
+  const {spocemail} = useParams();
   const [isNameAvailable, setIsNameAvailable] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [visitingCardPhoto, setVisitingCardPhoto] = useState(null);
@@ -161,7 +163,7 @@ export default function Addconnection() {
       // Step 2: Send JSON data with photo paths (if available)
       const finalData = {
         ...personData,
-        useremail,
+        useremail: spocemail,
         profilePhoto: filePaths[0] || null, // Use the first file path if available
         visitingCardPhoto: filePaths[1] || null, // Use the second file path if available
       };
@@ -183,6 +185,9 @@ export default function Addconnection() {
 
       setLoading(false);
       showSnackbar("Data submitted Successfully!", "success");
+      if(role === "admin") navigate("/admin/myconnections");
+      else if(role === "user") navigate("/myconnections");
+      else{}
       const result = await jsonResponse.json();
       setPersonData({
         fullname: "",

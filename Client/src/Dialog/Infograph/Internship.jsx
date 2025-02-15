@@ -80,7 +80,7 @@ const InternshipDialog = ({open, setInternshipopen, setinternshipCompletion, sho
         const fetchedData = data.internship[0]; // Extract first object
   
         setInternshipInfo({
-          internship: fetchedData.ifinternship === "yes" ? true: false, // Convert "yes" -> true
+          internship: fetchedData.ifinternship === "yes", // Convert "yes" -> true
           role: fetchedData.role
           ? { value: fetchedData.role, label: fetchedData.role }
           : null,

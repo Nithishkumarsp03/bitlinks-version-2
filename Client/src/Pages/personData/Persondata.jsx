@@ -125,7 +125,7 @@ export default function Persondata() {
           <div className="tab-content" style={{ display: "flex" }}>
             <div className="left-data" style={{ padding: "0px 10px" }}>
               {persondata.map((person, index) => (
-                <div className="person-card" key={index} style={{ border: "2px solid blue" }}>
+                <div className="person-card" key={index} style={{ border: "2px solid #2867b2" }}>
                   <div className="image-details">
                     <br />
                     <div className="profile-container">

@@ -4,6 +4,7 @@ const db = require("../../db/config"); // Assuming this is your database connect
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  // console.log(req.body)
   try {
     const [rows] = await db.promise().query("SELECT * FROM login WHERE EMAIL = ?", [email]);
     const user = rows[0];

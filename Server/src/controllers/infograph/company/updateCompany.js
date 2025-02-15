@@ -52,8 +52,8 @@ const updateCompany = (req, res) => {
           companyInfo.role ? companyInfo.role.value : null,
           companyInfo.companyaddress ? companyInfo.companyaddress.value : null,
           companyInfo.websiteurl,
-          companyInfo.scale,
-          companyInfo.payscale,
+          companyInfo.scale ? companyInfo.scale.value : null,
+          companyInfo.payscale ? companyInfo.payscale.value : null,
           completion,
           personId
         ], (err, updateResult) => {
@@ -74,8 +74,8 @@ const updateCompany = (req, res) => {
           companyInfo.role ? companyInfo.role.value : null,
           companyInfo.companyaddress ? companyInfo.companyaddress.value : null,
           companyInfo.websiteurl,
-          companyInfo.scale,
-          companyInfo.payscale,
+          companyInfo.scale ? companyInfo.scale.value : null,
+          companyInfo.payscale ? companyInfo.payscale.value : null,
           completion,
         ], (err, insertResult) => {
           if (err) {

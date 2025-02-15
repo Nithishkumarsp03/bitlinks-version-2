@@ -144,6 +144,7 @@ const Alumni = ({ open, setAlumniopen, setalumniCompletion, showSnackbar }) => {
           <div className="input-group" style={{ marginBottom: "15px" }}>
             <Input
               placeholder="Graduated Year"
+              type='number'
               name="graduatedyear"
               value={alumniInfo.graduatedyear}
               onChange={handleDetailsChange}

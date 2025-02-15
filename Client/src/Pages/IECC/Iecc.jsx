@@ -5,7 +5,7 @@ import Adminremainder from "../../Components/Notification/Adminremainder";
 
 export default function Iecc() {
   const location = useLocation();
-  const isAddConnectionsRoute = location.pathname === "/admin/add-connection";
+  const isAddConnectionsRoute = location.pathname.startsWith("/admin/add-connection/");
   const isPojectRoute = location.pathname === "/admin/projects";
   const isDatahub = location.pathname === "/admin/data-hub";
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 800);

@@ -167,7 +167,7 @@ const PlacementDialog = ({ open, setPlacementopen, setplacementCompletion, showS
   return (
     <Dialog
       open={open}
-      onClose={() => setPlacementInfo(false)}
+      onClose={() => setPlacementopen(false)}
       maxWidth="sm"
       fullWidth
     >
