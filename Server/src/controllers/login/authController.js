@@ -4,8 +4,6 @@ const db = require("../../db/config"); // Assuming this is your database connect
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body)
-
   try {
     const [rows] = await db.promise().query("SELECT * FROM login WHERE EMAIL = ?", [email]);
     const user = rows[0];
@@ -16,14 +14,15 @@ const login = async (req, res) => {
 
     const isPasswordValid = await bcrypt.compare(password, user.PASSWORD);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Not authorized! Contact your administrator" });
     }
 
+    // Adjust the property names based on your DB columns
     const token = jwt.sign(
       {
-        id: user.id,
-        email: user.email,
-        updatedAt: user.updated_at, // Include updated_at in token
+        ID: user.ID, // instead of user.id
+        EMAIL: user.EMAIL, // instead of user.email
+        updatedAt: user.updatedAt, // or user.updated_at, depending on your DB column name
       },
       process.env.JWT_SECRET,
       { expiresIn: "12h" }
@@ -42,34 +41,28 @@ const login = async (req, res) => {
   }
 };
 
-
 const register = async (req, res) => {
   const { name, email, password, role } = req.body;
-  console.log(req.body)
+  // console.log(req.body)
 
-  // Check if all required fields are provided
   if (!name || !email || !password) {
     return res.status(400).json({ message: "Name, email, and password are required" });
   }
 
   try {
-    // Check if user already exists
     const [existingUser] = await db.promise().query("SELECT * FROM login WHERE EMAIL = ?", [email]);
     if (existingUser.length > 0) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Hash the password before saving it
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insert new user into the database
     const result = await db.promise().query(
       "INSERT INTO login (NAME, EMAIL, PASSWORD, ROLE) VALUES (?, ?, ?, ?)", 
       [name, email, hashedPassword, role || 'user'] // Default role is 'user' if not provided
     );
 
 
-    // Respond with the generated token and user data
     res.status(201).json({ message: "Registered Successfully" });
   } catch (error) {
     console.error("Register error:", error);

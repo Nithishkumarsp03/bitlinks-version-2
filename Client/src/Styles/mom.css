@@ -1,0 +1,46 @@
+.projects-header-mom{
+    display: flex;
+    justify-content: space-between;
+    height: 40%;
+    align-items: center;
+}
+
+.projects-header-mom button{
+    /* padding: 6px 20px;
+    background-color: #2867B2;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15%;
+    cursor: pointer; */
+
+    width: 8%;
+    padding: 7px;
+    background: #2867B2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15%;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    /* height: 10%; */
+}
+
+.projects-header-mom button:hover{
+    background: #0056b3;
+}
+
+.project-header {
+    width: 100%;             /* Full-width container */
+    overflow: hidden;        /* Hide overflowing content */
+    white-space: nowrap;     /* Prevent text wrapping */
+    text-overflow: ellipsis; /* Display ellipsis when text overflows */
+}

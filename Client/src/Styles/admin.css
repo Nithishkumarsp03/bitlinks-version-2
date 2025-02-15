@@ -1,296 +1,481 @@
-.admin-body{
-    height: 90%;
-    width: 100%;
-    background-color: #edf3f7;
+.admin-body {
+  height: 90%;
+  width: 100%;
+  background-color: #edf3f7;
 }
 
-.tabs{
-    /* background-color: green; */
-    height: 10%;
-    display: flex;
-    align-content: center;
+.tabs {
+  /* background-color: green; */
+  height: 10%;
+  display: flex;
+  align-content: center;
 }
 
-.tab-content{
-    height: 90%;
-    width: 100%;
+.tab-content {
+  height: 90%;
+  width: 100%;
 }
 
 .iecc-body {
-    width: 100%;
-    height: 100%;
-    display: flex;
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 
 .left-side {
-    height: 100%;
-    width: 20%;
-    padding: 10px;
+  height: 100%;
+  width: 20%;
+  padding: 5px;
 }
 
 .middle-side {
-    height: 100%;
-    width: 56%;
-    padding: 9px 0px;
+  height: 100%;
+  width: 56%;
+  padding: 9px 0px;
 }
 
 .right-side {
-    height: 100%;
-    width: 24%;
+  height: 100%;
+  width: 24%;
+  padding: 10px 0px;
+  padding-right: 0;
 }
 
 .full-width-outlet {
-    width: 80%;
-    height: 100%;
-    padding: 12px 0px 0px 0px;
+  width: 80%;
+  height: 100%;
+  padding: 12px 0px 0px 0px;
 }
 
 /* Responsive design for smaller screens */
 @media (max-width: 800px) {
-    .left-side {
-        display: none;
-    }
+  .left-side {
+    display: none;
+  }
 
-    .iecc-body {
-        justify-content: space-between; /* Adjust layout spacing */
-    }
+  .iecc-body {
+    justify-content: space-between; /* Adjust layout spacing */
+  }
 
-    .floating-navbar {
-        display: flex;
-        position: fixed;
-        bottom: 0px;
-        left: 0;
-        right: 0;
-        background: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 10px;
-        justify-content: center;
-        z-index: 1000;
-    }
-    .right-side {
-        display: none;
-    }
+  .floating-navbar {
+    display: flex;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .right-side {
+    display: none;
+  }
 
-    .middle-side {
-        width: 100%; /* Expand middle side to full width */
-    }
+  .middle-side {
+    width: 100%; /* Expand middle side to full width */
+  }
 
-    .full-width-outlet{
-        width: 100%;
-    }
+  .full-width-outlet {
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
-    
 }
 
-  
-
-.navigation-buttons{
-    /* background-color: blue; */
-    width: 100%;
-    height: 40.6%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.navigation-buttons {
+  /* background-color: blue; */
+  width: 100%;
+  /* height: 40.6%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.navigation-buttons div{
-    background-color: white;
-    border: 1px solid rgb(210, 210, 210);
-    padding: 10px;
+.navigation-buttons div {
+  background-color: white;
+  border: 1px solid rgb(243, 243, 243);
+  padding: 10px;
+  position: relative;
+  background-color: white;
+  display: flex;
+  gap: 20px;
+  cursor: pointer;
+  background: linear-gradient(
+      to left,
+      rgb(255, 253, 253) 50%,
+      rgb(224, 240, 245) 50%
+    )
+    right;
+  background-size: 200%;
+  transition: 0.5s steps(25);
 }
 
-.search-container-middle{
-    height: 15%;
-    background-color: white;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10%;
+.buttons-myconnection.open::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3%;
+  height: 100%;
+  background: linear-gradient(to left, #2867b2 40%, #2867b2 50%) right;
+  transition: all 1s ease;
 }
 
-.search-container-middle input{
-    height: 30px;
-    padding: 10px 0px;
-    border: none;
-    outline: none;
+.navigation-buttons div:hover {
+  background-position: left;
+  animation: changeToRed 0.5s steps(25), showRed 0.5s steps(1) 0.5s forwards,
+    revertColor 0.5s steps(1) 1s forwards;
+
+  transition: all 1 s ease-in-out;
+}
+
+.search-container-middle div:nth-child(1) {
+  font-weight: 600;
+}
+
+.search-container-middle {
+  height: 15%;
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
+}
+
+.search-container-middle input {
+  height: 30px;
+  padding: 10px 0px;
+  width: 100%;
+  border: none;
+  outline: none;
 }
 
 .person-contacts {
-    height: 85%;
-    padding: 10px 0px;
-    display: flex;
-    flex-wrap: wrap; /* Ensure wrapping to new rows */
-    gap: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    overflow-y: scroll;
-  }
-  
-  /* Customizing scrollbar */
-  .person-contacts::-webkit-scrollbar {
-    width: 3px; /* Adjust the scrollbar width */
-    padding: 10px 0px;
-  }
-  
-  .person-contacts::-webkit-scrollbar-thumb {
-    background: #888; /* Color of the scrollbar thumb */
-    border-radius: 3px; /* Rounded corners for the scrollbar thumb */
-  }
-  
-  .person-contacts::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Darker color on hover */
-  }
-  
-  .person-contacts::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Background color of the scrollbar track */
-  }
-  
+  height: 85%;
+  padding: 10px 0px;
+  display: flex;
+  flex-wrap: wrap; /* Ensure wrapping to new rows */
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+.project-card-container {
+  height: 85%;
+  padding: 10px 0px;
+  display: flex;
+  flex-wrap: wrap; /* Ensure wrapping to new rows */
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+/* Customizing scrollbar */
+.person-contacts::-webkit-scrollbar {
+  width: 3px; /* Adjust the scrollbar width */
+  padding: 10px 0px;
+}
+
+.person-contacts::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 3px; /* Rounded corners for the scrollbar thumb */
+}
+
+.person-contacts::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}
+
+.person-contacts::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background color of the scrollbar track */
+}
+
+/* Project Scrollbar */
+.project-card-container::-webkit-scrollbar {
+  width: 3px; /* Adjust the scrollbar width */
+  padding: 10px 0px;
+}
+
+.project-card-container::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 3px; /* Rounded corners for the scrollbar thumb */
+}
+
+.project-card-container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}
+
+.project-card-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background color of the scrollbar track */
+}
+
+.merge-contacts-card-container::-webkit-scrollbar {
+  width: 3px; /* Adjust the scrollbar width */
+  padding: 10px 0px;
+}
+
+.merge-contacts-card-container::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 3px; /* Rounded corners for the scrollbar thumb */
+}
+
+.merge-contacts-card-container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}
+
+.merge-contacts-card-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background color of the scrollbar track */
+}
 
 .person-card {
-    flex: 0 0 calc(33.33% - 7.5px); /* Three cards per row */
-    height: 48%;
-    background-color: white;
-    box-sizing: border-box; /* Include padding and borders in width/height */
-    overflow: hidden;
+  position: relative;
+  flex: 0 0 calc(33.33% - 7.5px); /* Three cards per row */
+  height: 50%;
+  background-color: white;
+  box-sizing: border-box; /* Include padding and borders in width/height */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  padding: 10px 7px;
 }
 
-.image-details{
-    width: 100%;
-    height: 40%;
-    /* background-color: red; */
-    display: flex;
-    gap: 5%;
-    align-items: center;
+.project-card {
+  flex: 0 0 calc(25% - 7.5px); /* Three cards per row */
+  height: 50%;
+  background-color: white;
+  box-sizing: border-box; /* Include padding and borders in width/height */
+  overflow: hidden;
 }
 
-.profile-container{
-    width: 25%;
-    height: 80%;
-    border-radius: 50%;
-    overflow: hidden;
-    position: relative;
+.image-details {
+  width: 100%;
+  height: 40%;
+  /* background-color: red; */
+  display: flex;
+  gap: 5%;
+  align-items: center;
 }
 
-.profile-container img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.profile-container {
+  /* width: 25%;
+  height: 80%; */
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
 }
 
-
-.details-container{
-    width: 65%;
-    height: 100%;
-    /* background-color: green; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.profile-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.details-container div{
-    font-size: 14px;
+.details-container {
+  width: 65%;
+  height: 100%;
+  /* background-color: green; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.details-container .name{
-    font-weight: 600;
-    /* background-color: red; */
-    width: 100%;
-    height: 42%;
-    line-height: 1.2;
+.details-container div {
+  font-size: 14px;
 }
 
-.details-container .role{
-    color: rgb(113, 113, 113);
-    font-weight: 500;
+.details-container .name {
+  font-weight: 600;
+  /* background-color: red; */
+  width: 100%;
+  height: 42%;
+  line-height: 1.2;
 }
 
-.person-card i{
-    color: #2867B2;
-    font-size: 12px;
+.details-container .role {
+  color: rgb(113, 113, 113);
+  font-weight: 500;
 }
 
-.person-info{
-    width: 100%;
-    height: 60%;
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    justify-content: end;
-    color: black;
-    font-weight: 500;
-    /* background-color: red; */
+.person-card i {
+  color: #2867b2;
+  font-size: 12px;
 }
 
-.person-info .card-links{
-    width: 95%;
-    display: flex;
-    flex-direction: column;
-    gap: 4%;
-    height: 95%;
-    /* background-color: blue; */
+.person-info {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: end;
+  color: black;
+  font-weight: 500;
+  /* background-color: red; */
 }
 
-.card-links div{
-    display: flex;
-    /* background-color: red; */
-    align-items: center;
-    gap: 5%;
-    text-overflow: ellipsis;
+.person-info .card-links {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  gap: 4%;
+  height: 95%;
+  /* background-color: blue; */
 }
 
-.card-links div>div{
-    font-size: 10px;
-    /* background-color: red; */
-    width: 100%;
-    text-overflow: ellipsis;
+.card-links div {
+  display: flex;
+  /* background-color: red; */
+  align-items: center;
+  gap: 5%;
+  text-overflow: ellipsis;
+}
+
+.card-links div > div {
+  font-size: 11px;
+  /* background-color: red; */
+  width: 100%;
+  text-overflow: ellipsis;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.details-box {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.details-box > div {
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: normal;
+}
+
+.details-box div div {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.details-box div > div:nth-child(2) {
+  color: #2867b2;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 @media (max-width: 1200px) {
-    .person-card{
-        flex: 0 0 calc(50% - 7.5px); /* Three cards per row */
-    }
+  .person-card {
+    flex: 0 0 calc(50% - 7.5px);
+  }
 }
 @media (max-width: 800px) {
-    .profile-container{
-        width: 18%;
-        /* background-color: green; */
-    }
+  /* .profile-container {
+    width: 18%;
+  } */
 }
 @media (max-width: 600px) {
-    .person-contacts{
-        flex-direction: column;
-    }
-    .profile-container{
-        width: 14%;
-        height: 90%;
-        /* background-color: green; */
-    }
+  .person-contacts {
+    /* flex-direction: column; */
+    overflow-y: scroll;
+  }
+  .person-card {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+  /* .profile-container {
+    width: 14%;
+    height: 90%;
+  } */
 }
 
-@media (max-width: 450px){
-    .profile-container{
-        width: 22%;
-    }
+@media (max-width: 450px) {
+  /* .profile-container {
+    width: 22%;
+  } */
 
-    .person-card .name{
-        font-size: 20px;
-    }
+  .person-card {
+    width: 100%;
+  }
 
-    .person-info{
-        height: 100%;
-    }
+  .person-card .name {
+    font-size: 20px;
+  }
 
-    .card-links div div{
-        font-size: 13px;
-    }
+  .person-info {
+    height: 100%;
+  }
 
-    .person-contacts{
-        padding-bottom: 6%;
-    }
+  .card-links div div {
+    font-size: 13px;
+  }
 
-    .person-card{
-        padding-top: 2px;
-    }
+  .person-contacts {
+    padding-bottom: 6%;
+  }
+
+  .person-card {
+    padding-top: 2px;
+  }
+}
+
+.plus-icon {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: #2867b2; /* Blue background */
+  color: white;
+  border-radius: 10%;
+  padding: 5px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.plus-icon:hover {
+  background: #0056b3; /* Darker blue on hover */
+}
+
+.loader-component{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-action-buttons{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.profile-action-buttons button{
+  width: 50%;
+  padding: 8px 6px;
+  border-radius: 7px;
+  border: none;
+  background-color: #2867b2;
+  color: white;
+  cursor: pointer;
 }

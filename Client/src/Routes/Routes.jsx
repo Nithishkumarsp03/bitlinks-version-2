@@ -17,6 +17,12 @@ import Interlinks from "../Pages/personData/Interlinks";
 import Mom from "../Pages/personData/Mom";
 import Infograph from "../Pages/personData/Infograph";
 import Graph from "../Pages/personData/Graph";
+import Spoc from "../Components/Spoc/Spoc";
+import Project from "../Components/Project/Project";
+import Minutes from "../Pages/personData/Minutes";
+import Securedata from "../Pages/Guest/Securedata";
+import Datahub from "../Pages/Admin/Datahub";
+import Welcome from "../Utils/welcome/Welcome"
 
 function RoutesController() {
 
@@ -27,9 +33,15 @@ function RoutesController() {
             <Route path="/login" element={<Login />}/>
             <Route path="*" element={<Error />}/>
             <Route path="/404" element={<Error />}/>
+            <Route path="/welcome" element={<Welcome />}/>
             <Route path="/register" element={<Register />}/>
+            <Route path="/secure-data-hub" element={
+              // <ProtectedRoute allowedRoles={['admin', 'user', 'guest']}>
+              <Securedata />
+            // </ProtectedRoute>
+            }/>
             <Route path="/admin/:uuid/person-details" element={
-              <ProtectedRoute allowedRoles={['user', 'admin']}>
+              <ProtectedRoute allowedRoles={['admin']}>
                 <Persondata />
               </ProtectedRoute>
               }>
@@ -38,12 +50,29 @@ function RoutesController() {
               <Route path="minutes-of-meeting" element={<Mom />} />
               <Route path="graph" element={<Graph />} />
               <Route path="info-graph" element={<Infograph />} />
+              <Route path="minutes/:shaid" element={<Minutes />} />
+            </Route>
+            <Route path="/:uuid/person-details" element={
+              <ProtectedRoute allowedRoles={['user']}>
+                <Persondata />
+              </ProtectedRoute>
+              }>
+              <Route path="" element={<Profile />} />
+              <Route path="interlinks" element={<Interlinks />} />
+              <Route path="minutes-of-meeting" element={<Mom />} />
+              <Route path="graph" element={<Graph />} />
+              <Route path="info-graph" element={<Infograph />} />
+              <Route path="minutes/:shaid" element={<Minutes />} />
             </Route>
             <Route path="/" element={
               <ProtectedRoute allowedRoles={["user"]}>
                 <User />
               </ProtectedRoute>
-            }/>
+            }>
+              <Route path="myconnections" element={<Connections />} />
+              <Route path="projects" element={<Project />} />
+              <Route path="add-connection/:spocemail" element={<Addconnection />} />
+            </Route>
             <Route path="/admin" element={
               <ProtectedRoute allowedRoles={["admin"]}>
                 <Admin />
@@ -51,7 +80,10 @@ function RoutesController() {
             }>
               <Route path="myconnections" element={<Connections />} />
               <Route path="network" element={<Network />} />
-              <Route path="add-connection" element={<Addconnection />} />
+              <Route path="spoc" element={<Spoc />} />
+              <Route path="projects" element={<Project />} />
+              <Route path="data-hub" element={<Datahub />} />
+              <Route path="add-connection/:spocemail" element={<Addconnection />} />
             </Route>
         </Routes>
     </div>

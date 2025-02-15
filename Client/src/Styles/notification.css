@@ -1,0 +1,153 @@
+.notification-container{
+    width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+    /* background-color: red; */
+}
+.notification-header{
+    width: 100%;
+    height: 7%;
+    display: flex;
+    align-items: center;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.card-notification{
+    width: 98%;
+    height: 19%;
+    border: 1px solid rgb(221, 220, 220);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+}
+
+.image-name-role{
+    display: flex; 
+    width: 100%;
+    height: 100%; 
+    align-items: center;
+    gap: 4%;
+}
+
+.notification-img{
+    width: 20%;
+    height: 78%;
+    /* background-color: rgb(213, 213, 213); */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    overflow: hidden;
+}
+
+.snoozed-message{
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: 600;
+  color: rgb(199, 129, 0);
+}
+
+.notification-img img{
+    width: 60%;
+}
+
+.notification-img i{
+    font-size: 30px;
+}
+
+.contact-name{
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.contact-role{
+    font-size: 13px;
+    color: black;
+}
+
+
+
+
+.notification-container::-webkit-scrollbar {
+    width: 3px; /* Adjust the scrollbar width */
+    padding: 10px 0px;
+  }
+  
+  .notification-container::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 3px; /* Rounded corners for the scrollbar thumb */
+  }
+  
+  .notification-container::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker color on hover */
+  }
+  
+  .notification-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background color of the scrollbar track */
+  }
+
+  .snooze-catalog {
+    position: absolute; /* Position it relative to the parent container */
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 1000;
+  }
+  
+  .snooze-catalog button {
+    background-color: #f8f8f8;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px 0;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .snooze-catalog button:hover {
+    background-color: #e0e0e0;
+  }
+
+  .notification-action-buttons{
+    background-color: #2867B2;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 12px;
+    margin-top: 7px;
+  }
+
+  .notification-action-buttons-sent{
+    background-color: white;
+    color: green;
+    border: 1px solid #2867B2;
+    border-radius: 20px;
+    padding: 6px 12px;
+    margin-top: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .minutes-confirmation{
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: 500;
+  }
+
+  .minutes-confirmation.approved{
+    color: green;
+  }
+  
+  .minutes-confirmation.rejected{
+    color: red;
+  }

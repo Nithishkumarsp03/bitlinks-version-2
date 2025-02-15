@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../Styles/profile.css";
 import ProfileImg from "../../Assets/user.jpg";
 import { useParams } from "react-router-dom";
+import Graph from "../../Components/Graph/Graph";
 
 export default function Profile() {
   const api = process.env.REACT_APP_API;
@@ -17,6 +18,7 @@ export default function Profile() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "authorization": `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify({ uuid: uuid }),
         }
@@ -64,7 +66,9 @@ export default function Profile() {
               {persondata.shortdescription || "---"}
             </div>
           </div>
-          <div className="person-graph"></div>
+          <div className="person-graph">
+            <Graph />
+          </div>
         </div>
         <div className="persondata-rightside">
           <div className="person-basicinfo">

@@ -1,0 +1,112 @@
+/* securedata.css */
+.secure-data-hub {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .admin-body {
+    flex: 1;
+    background-color: #edf3f7;
+    padding: 20px;
+    overflow: auto;
+  }
+  
+  .secure-data-container {
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+  .left-side-sections{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .profile-section{
+    height: 20%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .profile-left-container {
+    position: relative; /* To position delete icon */
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px dotted grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .profile-left-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-left-container button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+  }  
+
+  .input-fields{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .right-side-sections{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .action-button-bottom{
+    margin-top: 10px;
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .secure-data-container {
+        height: auto;
+        min-height: 500px;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .left-side-sections, .right-side-sections{
+        width: 100%;
+    }
+    .admin-body {
+      padding: 10px;
+    }
+
+    .profile-section{
+        height: 105px;
+        width: 100%;
+      }
+  }

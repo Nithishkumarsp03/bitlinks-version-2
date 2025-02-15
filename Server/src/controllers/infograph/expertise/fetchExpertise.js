@@ -1,0 +1,27 @@
+const db = require("../../../db/config");
+
+const fetchExpertise = (req, res) => {
+  const { uuid } = req.body;
+
+  const getpersonidQuery = `SELECT person_id FROM personalinfo WHERE uuid = ?`;
+  const getExpertiseQuery = `SELECT * FROM expertise WHERE person_id = ?`;
+
+  db.query(getpersonidQuery, [uuid], (err, person) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ message: "Error fetching expertise" });
+    } else {
+      const personId = person[0].person_id;
+      db.query(getExpertiseQuery, [personId], (err, result) => {
+        if (err) {
+          console.log(err);
+          res.status(500).json({ message: "Error fetching expertise" });
+        } else {
+          res.json({expertise: result})
+        }
+      });
+    }
+  });
+};
+
+module.exports = { fetchExpertise };

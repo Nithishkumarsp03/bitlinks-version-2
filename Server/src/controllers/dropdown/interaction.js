@@ -7,7 +7,7 @@ const fetchdata = (req, res) => {
       return res.status(500).json({ message: "Internal server error" });
     }
 
-    console.log("Received data:", results); // Log the fetched data to inspect its structure.
+    // console.log("Received data:", results);
 
     // Check if results is an array
     if (Array.isArray(results)) {

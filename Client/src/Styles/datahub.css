@@ -1,0 +1,65 @@
+.merge-contacts-card-container {
+    height: 85%;
+    padding: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start; /* Align rows to the top without extra space */
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: scroll;
+  }  
+  
+
+.merge-contacts-card{
+    flex: 0 0 calc(25% - 7.5px);
+    height: 30%;
+    background-color: white;
+    box-sizing: border-box; /* Include padding and borders in width/height */
+    overflow: hidden;
+}
+
+.profile-name-box{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+}
+
+.profile-name{
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.photo-user{
+    width: 60px;
+    height: 60px;
+    /* border: 1px solid red; */
+    border-radius: 50%;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
+.photo-user img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-name-box input{
+    width: 10%;
+}
+
+.bottom-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 5px;
+    font-weight: 600;
+}
+
+.bottom-box div{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

@@ -1,18 +1,66 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import Header from "../../Components/Header/Header";
+import Tab from "../../Components/Tabs/Tab";
+import "../../Styles/admin.css";
+import Spocuser from "../SPOC/Spocuser";
+import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 
 export default function User() {
+  const [activeTab, setActiveTab] = useState("IECC");
+  const name = localStorage.getItem("name");
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
+  const showSnackbar = (message, severity) => {
+    setSnackbar({ open: true, message, severity });
+  };
 
-  // const role = localStorage.getItem('role');
-  // const email = localStorage.getItem('email');
-  // const name = localStorage.getItem('name');
-  // const token = localStorage.getItem('token');
-  const navigate = useNavigate();
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") {
+      showSnackbar(`Welcome back ${name}!`, "success");
+      localStorage.removeItem("isLoggedIn");
+    }
+  }, []);
 
   return (
-    <div>
-      <h1>USER PAGE</h1>
+    <div style={{ width: "100%", height: "100%" }}>
+      <div className="header">
+        <Header />
+      </div>
+      <div className="admin-body">
+        <div className="tabs">
+          <Tab activeTab={activeTab} setActiveTab={setActiveTab} />
+        </div>
+        <div className="tab-content">
+          {activeTab === "IECC" ? (
+            <Spocuser />
+          ) : activeTab === "Colleges" ? (
+            "Colleges"
+          ) : activeTab === "Schools" ? (
+            "Schools"
+          ) : activeTab === "Students" ? (
+            "Students"
+          ) : activeTab === "Company" ? (
+            "Company"
+          ) : activeTab === "Startup" ? (
+            "Startup"
+          ) : activeTab === "Job" ? (
+            "Job"
+          ) : (
+            "none"
+          )}
+        </div>
+      </div>
+      <CustomSnackbar
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      />
     </div>
-  )
+  );
 }

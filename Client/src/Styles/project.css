@@ -1,0 +1,111 @@
+
+
+
+.project-card{
+    padding: 10px;
+}
+
+.status-bar{
+    width: 100%;
+    height: 12%;
+}
+
+.status-bar>div{
+    background-color: #ED8F03;
+    color: white;
+    width: fit-content;
+    text-align: center;
+    padding: 3px 10px;
+    border-radius: 40px;
+}
+
+.project-lead{
+    height: 18%;
+    /* background-color: #7B7B7B; */
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.project-lead div:nth-child(1){
+    color: #7B7B7B;
+    font-size: 13px;
+}
+
+.project-lead>div{
+    display: flex;
+    align-items: center;
+    gap: 2%;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.project-lead i{
+    color: #2867B2;
+}
+
+.project-details{
+    /* background-color: #ED8F03; */
+    height: 22%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.project-details div:nth-child(1){
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.project-details div:nth-child(2){
+    font-size: 13px;
+    font-weight: 400;
+    color: #7B7B7B;
+}
+
+.project-domain div:nth-child(1){
+    font-size: 13px;
+    font-weight: 600;
+    color: #7B7B7B;
+}
+.project-domain div:nth-child(2){
+    font-size: 14px;
+    font-weight: 600;
+    /* color: #7B7B7B; */
+}
+.project-domain{
+    /* background-color: #7B7B7B; */
+    height: 20%;
+}
+.project-progress{
+    width: 100%;
+    height: 28%;
+    /* background-color: #7B7B7B; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 13px;
+}
+.progress-bar-value{
+    width: 100%;
+    /* background-color: #7B7B7B; */
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 5px;
+    background-color: #e0e0e0; /* Light grey background for the bar */
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 7px 0;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background-color: #2867B2; /* Progress bar color */
+    transition: width 0.3s ease; /* Smooth transition for width changes */
+  }

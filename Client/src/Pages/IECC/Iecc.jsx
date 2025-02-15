@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Outlet } from "react-router-dom";
 import Leftside from "../Admin/Leftside";
+import Adminremainder from "../../Components/Notification/Adminremainder";
 
 export default function Iecc() {
   const location = useLocation();
   const isAddConnectionsRoute = location.pathname === "/admin/add-connection";
+  const isPojectRoute = location.pathname === "/admin/projects";
+  const isDatahub = location.pathname === "/admin/data-hub";
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 800);
 
   useEffect(() => {
@@ -19,9 +22,9 @@ export default function Iecc() {
   return (
     <div className="iecc-body">
       <div className="left-side">
-        {!isSmallScreen && <Leftside />}
+        {!isSmallScreen && <Leftside role={"admin"}/>}
       </div>
-      {isAddConnectionsRoute ? (
+      {isAddConnectionsRoute || isPojectRoute || isDatahub ? (
         <div className="full-width-outlet">
           <Outlet />
         </div>
@@ -30,7 +33,9 @@ export default function Iecc() {
           <div className="middle-side">
             <Outlet />
           </div>
-          <div className="right-side"></div>
+          <div className="right-side">
+            <Adminremainder/>
+          </div>
         </>
       )}
       {isSmallScreen && (

@@ -18,7 +18,7 @@ const fetchdata = (req, res) => {
        FROM personalinfo 
        WHERE sub_id = p1.person_id) AS connection_count -- Count of connections
     FROM personalinfo p1
-    INNER JOIN company ON p1.person_id = company.person_id
+    LEFT JOIN company ON p1.person_id = company.person_id
     LEFT JOIN expertise ON p1.person_id = expertise.person_id
     LEFT JOIN personalinfo p2 ON p2.person_id = p1.sub_id
     LEFT JOIN person_points_summary pps ON pps.person_id = p1.person_id

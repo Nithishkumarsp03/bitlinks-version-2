@@ -13,10 +13,12 @@ function App() {
   useEffect(() => {
     const currentPath = window.location.pathname;
     if (role && token) {
-      if (role === "user" && currentPath !== "/") {
+      if (role === "user" && !currentPath.startsWith("/")) {
         navigate("/myconnections");
       } else if (role === "admin" && !currentPath.startsWith("/admin")) {
         navigate("/admin/myconnections");
+      } else if (role === "guest" && !currentPath.startsWith("/secure-data-hub")) {
+        navigate("/secure-data-hub");
       }
     }
   }, [role, token, navigate]);  

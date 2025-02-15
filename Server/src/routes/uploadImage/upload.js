@@ -23,11 +23,23 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// File upload route
-router.post('/upload', upload.array('images', 2), (req, res) => {
+// File upload route supporting multiple fields
+router.post('/upload', upload.fields([
+  { name: 'profileImage', maxCount: 1 },
+  { name: 'visitingcard', maxCount: 1 }
+]), (req, res) => {
   try {
-    const filePaths = req.files.map(file => `/uploads/${file.filename}`); // Relative paths
-    res.status(200).json({ filePaths });
+    const filePaths = {};
+    
+    if (req.files.profileImage) {
+      filePaths.profileImage = `/uploads/${req.files.profileImage[0].filename}`;
+    }
+    
+    if (req.files.visitingcard) {
+      filePaths.visitingcard = `/uploads/${req.files.visitingcard[0].filename}`;
+    }
+
+    res.status(200).json(filePaths);
   } catch (error) {
     res.status(500).json({ error: 'File upload failed' });
   }

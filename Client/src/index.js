@@ -6,6 +6,24 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Add before ReactDOM.render()
+if (window.ResizeObserver) {
+  window.ResizeObserver = class extends ResizeObserver {
+    constructor(callback) {
+      super((entries, observer) => {
+        requestAnimationFrame(() => {
+          try {
+            callback(entries, observer);
+          } catch (e) {
+            console.error('ResizeObserver error:', e);
+          }
+        });
+      });
+    }
+  };
+}
+
 root.render(
   <React.StrictMode>
     <Router>

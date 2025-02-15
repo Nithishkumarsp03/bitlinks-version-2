@@ -2,6 +2,10 @@ const jwt = require("jsonwebtoken");
 const db = require("../db/config");
 
 const authenticateToken = async (req, res, next) => {
+  if (req.method === "OPTIONS") {
+    return next();
+  }
+  
   const token = req.headers["authorization"]?.split(" ")[1];
   if (!token) {
     return res.status(401).json({ message: "Access denied" });
@@ -9,12 +13,16 @@ const authenticateToken = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+    // console.log("Decoded token:", decoded); 
+    
     // Fetch the updated_at field from the database
-    const [rows] = await db.promise().query("SELECT updatedAt FROM login WHERE ID = ?", [decoded.id]);
+    const [rows] = await db.promise().query("SELECT updatedAt FROM login WHERE ID = ?", [decoded.ID]);
+    // console.log("DB query result:", rows);
+    
     const user = rows[0];
 
     if (!user) {
+      console.log("not found")
       return res.status(404).json({ message: "User not found" });
     }
 

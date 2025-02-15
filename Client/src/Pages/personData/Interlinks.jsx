@@ -1,44 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Profile from "../../Assets/user.jpg";
 import { Tree, TreeNode } from "react-organizational-chart";
+import "../../Styles/interlinks.css";
+import { useParams } from "react-router-dom";
 
-const staticConnections = [
-  {
-    person_id: 1,
-    fullname: "John Doe",
-    address: "Software Engineer",
-    rank: 0,
-    profile: "/path/to/profile1.jpg",
-    children: [
-      {
-        person_id: 2,
-        fullname: "Jane Smith",
-        address: "Data Scientist",
-        rank: 1,
-        profile: "/path/to/profile2.jpg",
-        children: [
-          {
-            person_id: 3,
-            fullname: "Bob Johnson",
-            address: "Product Manager",
-            rank: 2,
-            profile: "/path/to/profile3.jpg",
-          },
-        ],
-      },
-      {
-        person_id: 4,
-        fullname: "Alice Brown",
-        address: "UX Designer",
-        rank: 1,
-        profile: "/path/to/profile4.jpg",
-      },
-    ],
-  },
-];
+const api = process.env.REACT_APP_API;
 
 const renderNode = (connection) => {
   let rectangleClass = "";
-
   switch (connection.rank) {
     case 0:
       rectangleClass = "rectangle1";
@@ -53,23 +22,19 @@ const renderNode = (connection) => {
       rectangleClass = "rectangle4";
       break;
     default:
-      rectangleClass = "rectangle"; // Default class if no rank matches
+      rectangleClass = "rectangle";
       break;
   }
-
+  
   return (
-    <div className="node child">
+    <div className="node child" style={{ display: "flex", justifyContent: "center"}}>
       <div className={`rectangle ${rectangleClass}`}>
         <div className="line"></div>
         <div className="account-container">
-          <img
-            src={connection.profile}
-            alt="Profile"
-            className="account"
-          />
+          <img src={Profile} alt="profile" className="account" />
           <div className="rank-details">
-            <div className="text-item-name">{connection.fullname}</div>
-            <div className="text-item-profession">{connection.address}</div>
+            <div className="text-item-name">{connection.fullname || "Name"}</div>
+            <div className="text-item-profession">{connection.address || "Profession"}</div>
           </div>
         </div>
       </div>
@@ -77,29 +42,70 @@ const renderNode = (connection) => {
   );
 };
 
-const renderRecursive = (connections) => {
-  return connections.map((connection) => (
-    <TreeNode
-      key={connection.person_id}
-      label={renderNode(connection)}
-    >
-      {connection.children && renderRecursive(connection.children)}
-    </TreeNode>
-  ));
-};
-
 export default function Interlinks() {
+  const [mainPerson, setMainPerson] = useState(null);
+  const [subConnections, setSubConnections] = useState([]);
+  const { uuid } = useParams();
+
+  useEffect(() => {
+    const fetchPersonData = async () => {
+      try {
+        const res = await fetch(`${api}/api/person/fetchpersonconnections`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ uuid }),
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        setMainPerson(data.mainPerson);
+        setSubConnections(data.subConnections);
+      } catch (error) {
+        console.error("Error fetching person data:", error);
+      }
+    };
+
+    fetchPersonData();
+  }, [uuid]);
+
+  if (!mainPerson) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div style={{width :"100%", height: "100%", display: 'flex', justifyContent: "center"}}>
+    <div className="interlinks-container">
       <Tree
         lineColor="grey"
-        lineStyle="dashed"
+        lineStyle="dotted" 
         lineWidth="2px"
         lineHeight="30px"
-        label={renderNode(staticConnections[0])}
+        label={renderNode(mainPerson)}
       >
-        {staticConnections[0].children &&
-          renderRecursive(staticConnections[0].children)}
+        <TreeNode
+          label={
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: "20px",
+                justifyContent: "center",
+                paddingTop: "10px",
+              }}
+            >
+              {subConnections.map((child) => (
+                <div key={child.person_id}>
+                  {renderNode(child)}
+                </div>
+              ))}
+            </div>
+          }
+        />
       </Tree>
     </div>
   );

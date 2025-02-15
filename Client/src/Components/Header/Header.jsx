@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default function Header() {
   const [isTablet, setIsTablet] = useState(false);
   const navigate = useNavigate();
+  const name = localStorage.getItem('name');
 
   useEffect(() => {
     const updateScreenSize = () => {
@@ -49,7 +50,7 @@ export default function Header() {
             <img src={picture} alt="User" />
           </div>
           <div className="user-details">
-            <div className="user-name">John Doe</div>
+            <div className="user-name">{name}</div>
             <div className="logout" onClick={handleLogout}>Logout</div>
           </div>
           <hr />

@@ -5,7 +5,16 @@ const fetchHistory = (req, res) => {
   // console.log(uuid)
 
   const getPersonIdQuery = 'SELECT person_id FROM personalinfo WHERE uuid = ?';
-  const fetchHistoryQuery = 'SELECT * FROM history WHERE person_id = ? ORDER BY history_id DESC';
+  const fetchHistoryQuery = `SELECT 
+    h.*, 
+    (SELECT SUM(points) FROM history WHERE person_id = h.person_id) AS total_points
+FROM 
+    history h
+WHERE 
+    h.person_id = ?
+ORDER BY 
+    h.history_id DESC;
+`;
 
   // Fetch person_id using the provided UUID
   db.query(getPersonIdQuery, [uuid], (err, personRows) => {
