@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../Styles/tab.css";
 import { useEffect } from "react";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Persontab({ activeTab, setActiveTab, uuid }) {
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
+  const role = decryptData(localStorage.getItem("role"));
   const location = useLocation();
 
   const handleTabClick = (tabName) => {

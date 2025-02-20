@@ -5,6 +5,7 @@ import NoDataFound from "../Nodatafound/Nodatafound";
 import { FaFilter, FaPlus } from "react-icons/fa";
 import FilterPopover from "../Filter/Filterpophover";
 import { SyncLoader } from "react-spinners";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Networks() {
   const api = process.env.REACT_APP_API;
@@ -30,7 +31,7 @@ export default function Networks() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
       if (!res.ok) throw new Error(`Error: ${res.status} - ${res.statusText}`);

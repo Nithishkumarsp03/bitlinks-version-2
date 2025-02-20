@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
+import { decryptData } from "../Utils/crypto/cryptoHelper";
 
 export default function InteractionDropdown({
   purpose,
@@ -16,7 +17,7 @@ export default function InteractionDropdown({
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "authorization": `Bearer ${localStorage.getItem("token")}`,
+            "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
           },
         });
         if (res.ok) {

@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import Spocdropdown from "../../Dropdown/Spocdropdown";
 import { useParams } from "react-router-dom";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function AddMinutes({ addopen, setAddopen, fetchMinutes, showSnackbar }) {
   const api = process.env.REACT_APP_API;
@@ -44,7 +45,7 @@ export default function AddMinutes({ addopen, setAddopen, fetchMinutes, showSnac
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({
           uuid: uuid,

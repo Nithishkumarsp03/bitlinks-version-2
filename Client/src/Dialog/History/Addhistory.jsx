@@ -26,6 +26,7 @@ import Visited from "../../Assets/Visited.svg";
 import InteractionDropdown from "../../Dropdown/Interactiondropdown";
 import Projectdropdown from "../../Dropdown/Projectdropdown";
 import { useParams } from "react-router-dom";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function AddHistory({ open, setAddhistory, showSnackbar, fetchHistory }) {
   const callTypes = [
@@ -44,8 +45,8 @@ export default function AddHistory({ open, setAddhistory, showSnackbar, fetchHis
 
   const api = process.env.REACT_APP_API;
   const {uuid} = useParams()
-  const name = localStorage.getItem('name');
-  const email = localStorage.getItem('email');
+  const name = decryptData(localStorage.getItem("name"));
+  const email = decryptData(localStorage.getItem("email"));
   const [selectedType, setSelectedType] = useState("");
   const [note, setNote] = useState("");
   const [datetime, setDatetime] = useState("");
@@ -132,7 +133,7 @@ export default function AddHistory({ open, setAddhistory, showSnackbar, fetchHis
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({historyData}),
       });

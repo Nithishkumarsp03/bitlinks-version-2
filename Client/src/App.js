@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import RoutesController from "./Routes/Routes";
 import { useNavigate } from "react-router-dom";
+import { decryptData } from "./Utils/crypto/cryptoHelper";
 
 
 function App() {
 
 
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
-  const token = localStorage.getItem("token");
+  const role = decryptData(localStorage.getItem("role"));
+  const token = decryptData(localStorage.getItem("token"))
 
   useEffect(() => {
     const currentPath = window.location.pathname;

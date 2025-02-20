@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel } from '@mui/material';
 import Select from 'react-select';
+import { decryptData } from '../Utils/crypto/cryptoHelper';
 
 const SkillsetDropdown = ({ value, onChange }) => {
     const [skills, setSkills] = useState([]);
@@ -13,7 +14,7 @@ const SkillsetDropdown = ({ value, onChange }) => {
                     method: 'GET',
                     headers: {
                         "Content-Type": "application/json",
-                        "authorization": `Bearer ${localStorage.getItem("token")}`,
+                        "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
                       },
                 });
 

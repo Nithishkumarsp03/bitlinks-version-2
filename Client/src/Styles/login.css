@@ -16,7 +16,7 @@
     padding: 10px 30px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 400px;
+    width: 450px;
     box-sizing: border-box; /* Prevent overflow */
   }
   
@@ -94,7 +94,7 @@
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .login-box {
-      width: 90%;
+      width: 100%;
       padding: 30px;
     }
   }

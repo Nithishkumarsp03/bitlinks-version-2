@@ -8,6 +8,7 @@ import {
   DialogActions,
   Box,
 } from "@mui/material";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Snooze({
   snoozeopen,
@@ -25,7 +26,7 @@ export default function Snooze({
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ id: id, module: module, days: days }),
       });

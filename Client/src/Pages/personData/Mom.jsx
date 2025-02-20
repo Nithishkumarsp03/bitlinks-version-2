@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import AddProject from "../../Dialog/Project/Addproject";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import NoDataFound from "../../Components/Nodatafound/Nodatafound";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/mom.css";
 
 export default function Mom() {
@@ -14,7 +15,7 @@ export default function Mom() {
   });
   const api = process.env.REACT_APP_API;
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
+  const role = decryptData(localStorage.getItem("role"));
   const [addopen, setAddopen] = useState(false);
   const [projectData, setProjectData] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
@@ -35,7 +36,7 @@ export default function Mom() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ uuid }),
       });

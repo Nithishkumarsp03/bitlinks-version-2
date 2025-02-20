@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useParams } from "react-router-dom";
 import Diamond from "../../Assets/Gem.svg";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Fiveyeargraph({ setTotalPoints }) {
   const [seriesData, setSeriesData] = useState([]);
@@ -22,7 +23,7 @@ export default function Fiveyeargraph({ setTotalPoints }) {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "authorization": `Bearer ${localStorage.getItem("token")}`,
+              "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
             },
             body: JSON.stringify({ uuid }),
           }

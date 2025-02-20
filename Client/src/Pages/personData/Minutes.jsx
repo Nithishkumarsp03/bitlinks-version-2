@@ -4,6 +4,7 @@ import AddMinutes from "../../Dialog/Minutes/Addminutes";
 import Editminutes from "../../Dialog/Minutes/Editminutes";
 import NoDataFound from "../../Components/Nodatafound/Nodatafound";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/minutes.css";
 
 export default function Minutes() {
@@ -18,7 +19,7 @@ export default function Minutes() {
   const [addopen, setAddopen] = useState(false);
   const [editopen, setEditopen] = useState(false);
   const [formValues, setFormValues] = useState([]);
-  const role = localStorage.getItem("role");
+  const role = decryptData(localStorage.getItem("role"));
   const api = process.env.REACT_APP_API;
 
   const showSnackbar = (message, severity) => {
@@ -31,7 +32,7 @@ export default function Minutes() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ uuid: uuid, shaid: shaid }),
       });
@@ -84,7 +85,7 @@ export default function Minutes() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ id: minute.id, status: status }),
       });

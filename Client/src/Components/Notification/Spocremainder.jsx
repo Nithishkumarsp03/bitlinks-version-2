@@ -11,6 +11,7 @@ import Thanksgiving from "../../Dialog/Notification/Visited";
 import { useNavigate } from "react-router-dom";
 import NoDataFound from "../Nodatafound/Nodatafound";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/notification.css";
 
 export default function Spocremainder() {
@@ -20,7 +21,7 @@ export default function Spocremainder() {
       severity: "success",
     });
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
+  const role = decryptData(localStorage.getItem("role"));
   const [apiResponse, setApiResponse] = useState({});
   const [snoozeVisible, setSnoozeVisible] = useState(null); // Track which item the snooze catalog is open for
   const [snoozeDuration, setSnoozeDuration] = useState(0); // Store snooze duration
@@ -35,7 +36,7 @@ export default function Spocremainder() {
   const [thanksgivingemail, setThanksgivingemail] = useState("");
   const [action, setAction] = useState("");
   const api = process.env.REACT_APP_API;
-  const email = localStorage.getItem("email");
+  const email = decryptData(localStorage.getItem("email"));
 
   const showSnackbar = (message, severity) => {
     setSnackbar({ open: true, message, severity });
@@ -56,7 +57,7 @@ export default function Spocremainder() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ email }),
       });

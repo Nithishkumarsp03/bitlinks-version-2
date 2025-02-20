@@ -3,6 +3,7 @@ import "../../Styles/profile.css";
 import ProfileImg from "../../Assets/user.jpg";
 import { useParams } from "react-router-dom";
 import Graph from "../../Components/Graph/Graph";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Profile() {
   const api = process.env.REACT_APP_API;
@@ -18,7 +19,7 @@ export default function Profile() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "authorization": `Bearer ${localStorage.getItem("token")}`,
+            "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
           },
           body: JSON.stringify({ uuid: uuid }),
         }

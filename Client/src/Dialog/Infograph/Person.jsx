@@ -13,6 +13,7 @@ import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useParams } from "react-router-dom";
 import Spocdropdown from '../../Dropdown/Spocdropdown'
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/dialog.css";
 
 export default function Person({ open, setPersonopen, setpersonCompletion, showSnackbar }) {
@@ -131,7 +132,7 @@ export default function Person({ open, setPersonopen, setpersonCompletion, showS
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({finalData}),
       });
@@ -172,7 +173,7 @@ export default function Person({ open, setPersonopen, setpersonCompletion, showS
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ uuid: uuid }),
       });

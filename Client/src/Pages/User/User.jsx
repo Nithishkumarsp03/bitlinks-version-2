@@ -4,10 +4,11 @@ import Tab from "../../Components/Tabs/Tab";
 import "../../Styles/admin.css";
 import Spocuser from "../SPOC/Spocuser";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function User() {
   const [activeTab, setActiveTab] = useState("IECC");
-  const name = localStorage.getItem("name");
+  const name = decryptData(localStorage.getItem("name"));
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -19,12 +20,12 @@ export default function User() {
   };
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const isLoggedIn = decryptData(localStorage.getItem("isLoggedIn"));
     if (isLoggedIn === "true") {
       showSnackbar(`Welcome back ${name}!`, "success");
-      localStorage.removeItem("isLoggedIn");
+      decryptData(localStorage.removeItem("isLoggedIn"));
     }
-  }, []);
+  }, []); 
 
   return (
     <div style={{ width: "100%", height: "100%" }}>

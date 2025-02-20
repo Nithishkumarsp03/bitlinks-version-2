@@ -17,6 +17,7 @@ import Select from "react-select";
 import RoleDropdown from "../../Dropdown/RoleDropdown";
 import Domaindropdown from "../../Dropdown/Domaindropdown";
 import SkillsetDropdown from "../../Dropdown/SkillsetDropdown";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/dialog.css"; // Add your styles here
 import { useParams } from "react-router-dom";
 
@@ -81,7 +82,7 @@ const PlacementDialog = ({ open, setPlacementopen, setplacementCompletion, showS
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ uuid: uuid }),
       });
@@ -145,7 +146,7 @@ const PlacementDialog = ({ open, setPlacementopen, setplacementCompletion, showS
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({updatedPlacementInfo}), // Send plain string
       });

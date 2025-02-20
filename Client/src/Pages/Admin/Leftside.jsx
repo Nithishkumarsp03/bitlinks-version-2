@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Leftside({ role }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const email = localStorage.getItem('email')
+  const email = decryptData(localStorage.getItem("email"));
   const [active, setActive] = useState("myconnections");
 
   useEffect(() => {

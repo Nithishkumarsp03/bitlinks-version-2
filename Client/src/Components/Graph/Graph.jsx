@@ -15,7 +15,7 @@ export default function Graph() {
     }
 
   return (
-    <div style={{height: "100%", width: "100%", display: "flex"}}>
+    <div className='graph-box'>
       <div className="graph-output">
         {graph === 'monthly' && <Monthlygraph setTotalPoints={setTotalPoints} totalPoints={totalPoints}/>}
         {graph === 'yearly' && <Yearlygraph setTotalPoints={setTotalPoints} totalPoints={totalPoints}/>}

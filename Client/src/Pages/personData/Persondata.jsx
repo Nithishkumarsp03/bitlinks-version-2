@@ -9,6 +9,7 @@ import History from "./History";
 import Profile from "./Profile";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import { useNavigate } from "react-router-dom";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Persondata() {
   const [snackbar, setSnackbar] = useState({
@@ -18,7 +19,7 @@ export default function Persondata() {
   });
   const api = process.env.REACT_APP_API;
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
+  const role = decryptData(localStorage.getItem("role"));
   const [activeTab, setActiveTab] = useState("Profile");
   const [actionDialog, setActiondialog] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState(null);
@@ -37,7 +38,7 @@ export default function Persondata() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ uuid: uuid }),
       });
@@ -82,7 +83,7 @@ export default function Persondata() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({
           uuid: selectedPerson.uuid,

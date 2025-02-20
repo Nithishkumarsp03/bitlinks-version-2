@@ -4,11 +4,12 @@ import Logo from "../../Assets/bitlinks logo.svg";
 import picture from "../../Assets/user.jpg";
 import settings from "../../Assets/settings.svg";
 import { useNavigate } from "react-router-dom";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Header() {
   const [isTablet, setIsTablet] = useState(false);
   const navigate = useNavigate();
-  const name = localStorage.getItem('name');
+  const name = decryptData(localStorage.getItem("name"));
 
   useEffect(() => {
     const updateScreenSize = () => {
@@ -30,13 +31,15 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  const handleLogout = () =>{
-    localStorage.removeItem('role')
-    localStorage.removeItem('token')
-    localStorage.removeItem('email')
-    localStorage.removeItem('name')
-    navigate('/login')
-  }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("email");
+    localStorage.removeItem("name");
+    localStorage.removeItem("picture");
+    localStorage.removeItem("isLoggedIn");
+    navigate('/login');
+  };  
 
   return (
     <div className="header">

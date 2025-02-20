@@ -15,10 +15,11 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Securedata() {
   const api = process.env.REACT_APP_API;
-  const name = localStorage.getItem("name");
+  const name = decryptData(localStorage.getItem("name"));
   const [formValues, setformValues] = useState({
     fullname: "",
     email: "",
@@ -48,13 +49,13 @@ export default function Securedata() {
   };
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const isLoggedIn = decryptData(localStorage.getItem("isLoggedIn"));
     if (isLoggedIn === "true") {
       showSnackbar(`Welcome back ${name}!`, "success");
-      localStorage.removeItem("isLoggedIn");
+      decryptData(localStorage.removeItem("isLoggedIn"));
     }
   }, []);
-  
+
 
   const options = [
     { label: "Highly Recommended", value: "Highly Recommended" },
@@ -190,7 +191,7 @@ export default function Securedata() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ finalData }), // Only send the necessary JSON data
       });
@@ -301,9 +302,9 @@ export default function Securedata() {
                 value={
                   formValues.designation
                     ? {
-                        value: formValues.designation,
-                        label: formValues.designation,
-                      }
+                      value: formValues.designation,
+                      label: formValues.designation,
+                    }
                     : null
                 }
                 options={designation}

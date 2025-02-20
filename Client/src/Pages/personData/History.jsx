@@ -29,6 +29,7 @@ import "../../Styles/history.css";
 import { useParams } from "react-router-dom";
 import NoDataFound from "../../Components/Nodatafound/Nodatafound";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 // Custom StepIcon to add image
 const CustomStepIcon = ({ active, completed, icon, image }) => {
@@ -97,7 +98,7 @@ export default function History() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ uuid }),
       });

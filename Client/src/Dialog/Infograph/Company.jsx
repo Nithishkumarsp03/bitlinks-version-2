@@ -14,6 +14,7 @@ import Input from "@mui/joy/Input";
 import AddressDropdown from "../../Dropdown/AddressDropdown";
 import CompanyDropdown from "../../Dropdown/CompanyDropdown";
 import RoleDropdown from "../../Dropdown/RoleDropdown";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/dialog.css";
 
 const CompanyDialog = ({ open, setCompanyopen, setcompanyCompletion, showSnackbar }) => {
@@ -95,7 +96,7 @@ const CompanyDialog = ({ open, setCompanyopen, setcompanyCompletion, showSnackba
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify(updateData),
       });
@@ -119,7 +120,7 @@ const CompanyDialog = ({ open, setCompanyopen, setcompanyCompletion, showSnackba
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ uuid }),
       });

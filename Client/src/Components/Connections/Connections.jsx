@@ -5,6 +5,7 @@ import NoDataFound from "../../Components/Nodatafound/Nodatafound";
 import { FaFilter, FaPlus } from "react-icons/fa";
 import FilterPopover from "../Filter/Filterpophover";
 import { SyncLoader } from "react-spinners";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Connections() {
   const api = process.env.REACT_APP_API;
@@ -35,7 +36,7 @@ export default function Connections() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ email: email }),
       });
