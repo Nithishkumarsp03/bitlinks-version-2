@@ -19,7 +19,7 @@ async function hashPassword(password) {
 }
 
 // Example usage
-const password = '12345';
+const password = 'nivedha@001';
 hashPassword(password).then((hashedPassword) => {
     // Save the hashedPassword to your database
     console.log('Password hashing complete.');

@@ -22,19 +22,34 @@ export default function Login() {
     setSnackbar({ open: true, message, severity });
   };
 
+  
+  const generateSecureCsrfToken = (length = 32) => {
+    // return generateRandomString(length);
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const values = new Uint32Array(length);
+    window.crypto.getRandomValues(values);
+    for (let i = 0; i < length; i++) {
+      result += charset[values[i] % charset.length];
+    }
+    return result;
+  };
+
   const handleGooglesignin = () => {
-    window.location.href = `${api}/api/auth/google`;
-};
+    const csrfToken = generateSecureCsrfToken(); // Generate your CSRF token
+    localStorage.setItem('csrf_token', csrfToken);
+    window.location.href = `${api}/api/auth/google?csrf_token=${csrfToken}`;
+  };
 
   const handleLogin = async (e) => {
-    console.log(email, password, api)
+    console.log(email, password, api);
     e.preventDefault();
     setError("");
     setLoading(true);
 
     if (!email || !password) {
       setError("Email and password are required");
-      showSnackbar("Email and password are required!", "error")
+      showSnackbar("Email and password are required!", "error");
       setLoading(false);
       return;
     }
@@ -61,18 +76,15 @@ export default function Login() {
         localStorage.setItem("email", data.userData.email);
         localStorage.setItem("role", data.userData.role);
         localStorage.setItem("isLoggedIn", "true");
-        
-        if(data.userData.role === 'admin'){
-          navigate('/admin/myconnections')
-        }
-        else if(data.userData.role === 'user'){
-          navigate('/myconnections')
-        }
-        else if(data.userData.role === 'guest'){
-          navigate('/secure-data-hub');
-        }
-        else{
-          navigate('/404')
+
+        if (data.userData.role === "admin") {
+          navigate("/admin/myconnections");
+        } else if (data.userData.role === "user") {
+          navigate("/myconnections");
+        } else if (data.userData.role === "guest") {
+          navigate("/secure-data-hub");
+        } else {
+          navigate("/404");
         }
       } else {
         setLoading(false);
@@ -81,9 +93,9 @@ export default function Login() {
       }
     } catch (err) {
       setLoading(false);
-      showSnackbar("Something went wrong!", "error")
+      showSnackbar("Something went wrong!", "error");
       setError("An error occurred. Please try again.");
-    } 
+    }
     // finally {
     //   showSnackbar("Something went wrong!", "error")
     //   setLoading(false);
@@ -98,36 +110,56 @@ export default function Login() {
         <p>Please log in to continue</p>
         {/* {error && <p className="error-message">{error}</p>} */}
         <form className="login-form" onSubmit={handleLogin}>
-          <Input
-            type="text"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="login-button"
-            disabled={loading}
-          >
+          <div>
+            <label className="label-login">Email</label>
+            <Input
+              type="email"
+              placeholder="bitlinks@bitsathy.ac.in"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="label-login">Password</label>
+            <Input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="login-button" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
-          <button
+          {/* <button
             type="button"
             className="login-button"
             onClick={handleGooglesignin}
           >
             Google-Signin
+          </button> */}
+          <button
+            type="button"
+            className="google-signin-button"
+            onClick={handleGooglesignin}
+          >
+            <div className="google-logo-wrapper">
+              <img
+                src="https://developers.google.com/identity/images/g-logo.png"
+                alt="Google logo"
+              />
+            </div>
+            <span className="google-signin-text">Sign in with Google</span>
           </button>
         </form>
         <br />
         <div className="action-buttons">
-          <p onClick={() => navigate('/register')} style={{cursor: "pointer"}}>New user?</p>
+          <p
+            onClick={() => navigate("/register")}
+            style={{ cursor: "pointer" }}
+          >
+            New user?
+          </p>
         </div>
       </div>
       <CustomSnackbar
