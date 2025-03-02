@@ -4,10 +4,11 @@ import Tab from "../../Components/Tabs/Tab";
 import "../../Styles/admin.css";
 import Iecc from "../IECC/Iecc";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Admin() {
   const [activeTab, setActiveTab] = useState("IECC");
-  const name = localStorage.getItem('name');
+  const name = decryptData(localStorage.getItem("name"));
   const [snackbar, setSnackbar] = useState({
       open: false,
       message: "",
@@ -19,12 +20,12 @@ export default function Admin() {
     };
 
     useEffect(() => {
-      const isLoggedIn = localStorage.getItem("isLoggedIn");
-      if (isLoggedIn === "true") {
+      const isLoggedIn = decryptData(localStorage.getItem("isLoggedIn"));
+      if (isLoggedIn) {
         showSnackbar(`Welcome back ${name}!`, "success");
-        localStorage.removeItem("isLoggedIn");
+        decryptData(localStorage.removeItem("isLoggedIn"));
       }
-    }, []);    
+    }, []);
 
 
   return ( 

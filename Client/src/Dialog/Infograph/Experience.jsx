@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import AddressDropdown from "../../Dropdown/AddressDropdown";
 import RoleDropdown from "../../Dropdown/RoleDropdown";
 import CompanyDropdown from "../../Dropdown/CompanyDropdown";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/dialog.css";
 
 const ExperienceDialog = ({ open, setExperienceopen, setexperienceCompletion, showSnackbar }) => {
@@ -38,7 +39,7 @@ const ExperienceDialog = ({ open, setExperienceopen, setexperienceCompletion, sh
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ uuid }),
       });
@@ -140,7 +141,7 @@ const ExperienceDialog = ({ open, setExperienceopen, setexperienceCompletion, sh
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify(dataToUpdate),
       });

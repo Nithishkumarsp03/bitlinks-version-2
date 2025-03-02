@@ -8,7 +8,7 @@ import {
   DialogActions,
   Box,
 } from "@mui/material";
-import { useAsyncError } from "react-router-dom";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Thanksgiving({
   visitedopen,
@@ -42,7 +42,7 @@ export default function Thanksgiving({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "authorization": `Bearer ${localStorage.getItem("token")}`,
+            "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
           },
           body: JSON.stringify({
             email,

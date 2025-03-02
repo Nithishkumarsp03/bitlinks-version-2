@@ -4,6 +4,7 @@ import Input from '@mui/joy/Input';
 import AddressDropdown from '../../Dropdown/AddressDropdown';  // Assuming it's a custom dropdown
 import "../../Styles/dialog.css"
 import { useParams } from 'react-router-dom';
+import { decryptData } from '../../Utils/crypto/cryptoHelper';
 
 const Alumni = ({ open, setAlumniopen, setalumniCompletion, showSnackbar }) => {
   const api = process.env.REACT_APP_API;
@@ -39,7 +40,7 @@ const Alumni = ({ open, setAlumniopen, setalumniCompletion, showSnackbar }) => {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ uuid: uuid }),
       });
@@ -91,7 +92,7 @@ const Alumni = ({ open, setAlumniopen, setalumniCompletion, showSnackbar }) => {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ updateAlumni }),
       });

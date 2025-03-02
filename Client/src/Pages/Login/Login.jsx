@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Img from "../../Assets/bitlinks-bg.png";
+import Google from "../../Assets/google.png";
 import "../../Styles/login.css";
 import Input from "@mui/joy/Input";
 import { useNavigate } from "react-router-dom";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
+import { encryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Login() {
   const api = process.env.REACT_APP_API;
@@ -37,12 +39,12 @@ export default function Login() {
 
   const handleGooglesignin = () => {
     const csrfToken = generateSecureCsrfToken(); // Generate your CSRF token
-    localStorage.setItem('csrf_token', csrfToken);
+    sessionStorage.setItem('csrf_token', csrfToken);
     window.location.href = `${api}/api/auth/google?csrf_token=${csrfToken}`;
   };
 
   const handleLogin = async (e) => {
-    console.log(email, password, api);
+    // console.log(email, password, api);
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -69,13 +71,13 @@ export default function Login() {
       const data = await res.json();
 
       if (res.ok) {
-        // showSnackbar("Login Successfull!", "success")
         setLoading(false);
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("name", data.userData.name);
-        localStorage.setItem("email", data.userData.email);
-        localStorage.setItem("role", data.userData.role);
-        localStorage.setItem("isLoggedIn", "true");
+
+        localStorage.setItem("token", encryptData(data.token));
+        localStorage.setItem("name", encryptData(data.userData.name));
+        localStorage.setItem("email", encryptData(data.userData.email));
+        localStorage.setItem("role", encryptData(data.userData.role));
+        localStorage.setItem("isLoggedIn", encryptData(true));
 
         if (data.userData.role === "admin") {
           navigate("/admin/myconnections");
@@ -145,7 +147,7 @@ export default function Login() {
           >
             <div className="google-logo-wrapper">
               <img
-                src="https://developers.google.com/identity/images/g-logo.png"
+                src={Google}
                 alt="Google logo"
               />
             </div>
@@ -154,12 +156,7 @@ export default function Login() {
         </form>
         <br />
         <div className="action-buttons">
-          <p
-            onClick={() => navigate("/register")}
-            style={{ cursor: "pointer" }}
-          >
-            New user?
-          </p>
+          <p onClick={() => navigate('/register')} style={{ cursor: "pointer" }}>New user?</p>
         </div>
       </div>
       <CustomSnackbar

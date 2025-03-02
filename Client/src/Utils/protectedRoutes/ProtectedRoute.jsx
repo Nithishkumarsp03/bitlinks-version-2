@@ -1,9 +1,10 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import { decryptData } from "../crypto/cryptoHelper";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const role = localStorage.getItem("role");
-  const token = localStorage.getItem("token");
+  const role = decryptData(localStorage.getItem("role"));
+  const token = decryptData(localStorage.getItem("token"));
 
   if (!token) {
     // If no token, redirect to login

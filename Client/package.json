@@ -6,12 +6,14 @@
     "@chakra-ui/react": "^3.2.3",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@headlessui/react": "^2.2.0",
     "@mui/icons-material": "^6.2.1",
     "@mui/joy": "^5.0.0-beta.51",
     "@mui/material": "^6.3.0",
     "@mui/x-date-pickers": "^7.24.1",
     "apexcharts": "^4.4.0",
     "cra-template": "1.2.0",
+    "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.4.2",
     "js-cookie": "^3.0.5",
@@ -26,11 +28,12 @@
     "react-select": "^5.9.0",
     "react-spinners": "^0.15.0",
     "react-window": "^1.8.11",
-    "web-vitals": "^4.2.4"
+    "web-vitals": "^4.2.4",
+    "zustand": "^5.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -51,5 +54,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

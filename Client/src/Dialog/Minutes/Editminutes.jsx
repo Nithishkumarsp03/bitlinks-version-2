@@ -9,6 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import Spocdropdown from "../../Dropdown/Spocdropdown";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Editminutes({ editopen, setEditopen, formValues, setFormValues, fetchMinutes, showSnackbar }) {
   const handleChange = (e) => {
@@ -31,7 +32,7 @@ export default function Editminutes({ editopen, setEditopen, formValues, setForm
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({formValues}),
       });

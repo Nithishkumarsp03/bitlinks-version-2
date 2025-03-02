@@ -6,11 +6,12 @@ import Userprofile from "../../Assets/user.jpg";
 import Switch from "@mui/material/Switch";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import { useNavigate, useParams } from "react-router-dom";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/addconnection.css";
 
 export default function Addconnection() {
   const api = process.env.REACT_APP_API;
-  const role = localStorage.getItem('role');
+  const role = decryptData(localStorage.getItem("role"));
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const {spocemail} = useParams();
@@ -78,20 +79,24 @@ export default function Addconnection() {
   };
 
   useEffect(() => {
-    console.log(personData.rank);
+    // console.log(personData.rank);
   }, [personData.rank]);
   useEffect(() => {
-    console.log(personData.spoc);
+    // console.log(personData.spoc);
   }, [personData.spoc]);
 
   const checkNameAvailability = async () => {
+    if(!name){
+      showSnackbar('Please Provide a valid name to check availability', 'error');
+      return;
+    }
     setLoading(true);
     try {
       const res = await fetch(`${api}/api/add/check-availability`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ name: name }),
       });
@@ -136,14 +141,14 @@ export default function Addconnection() {
       // Step 1: Upload available photos
       const formData = new FormData();
       if (profilePhoto) {
-        formData.append("images", profilePhoto); // Add profile photo if available
+        formData.append("profileImage", profilePhoto); // Add profile photo if available
       }
       if (visitingCardPhoto) {
-        formData.append("images", visitingCardPhoto); // Add visiting card photo if available
+        formData.append("visitingcard", visitingCardPhoto); // Add visiting card photo if available
       }
 
       let filePaths = [];
-      if (formData.has("images")) {
+      if (formData.has("profileImage") || formData.has("visitingcard")) {
         // Only send request if there are photos to upload
         const uploadResponse = await fetch(`${api}/api/upload`, {
           method: "POST",
@@ -157,22 +162,25 @@ export default function Addconnection() {
         }
 
         const uploadResult = await uploadResponse.json();
-        filePaths = uploadResult.filePaths || [];
+        filePaths = uploadResult || [];
+        // console.log(uploadResult)
       }
+
+      // console.log(filePaths)
 
       // Step 2: Send JSON data with photo paths (if available)
       const finalData = {
         ...personData,
         useremail: spocemail,
-        profilePhoto: filePaths[0] || null, // Use the first file path if available
-        visitingCardPhoto: filePaths[1] || null, // Use the second file path if available
+        profilePhoto: filePaths?.profileImage || null, // Use the first file path if available
+        visitingCardPhoto: filePaths?.visitingcard || null, // Use the second file path if available
       };
 
       const jsonResponse = await fetch(`${api}/api/add/newconnection`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ finalData }), // Only send the necessary JSON data
       });
@@ -378,7 +386,7 @@ export default function Addconnection() {
                   checked={personData.spoc === "yes"}
                   onChange={handleSpocChange}
                 />
-                <label htmlFor="">Spoc(Yes/no)</label>
+                <label htmlFor="">Spoc(no/yes)</label>
               </div>
               <div>
                 <label htmlFor="">

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
+import { decryptData } from "../Utils/crypto/cryptoHelper";
 
 export default function Spocdropdown({ formValues, setFormValues }) {
   const api = process.env.REACT_APP_API;
@@ -12,7 +13,7 @@ export default function Spocdropdown({ formValues, setFormValues }) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
       const data = await res.json();

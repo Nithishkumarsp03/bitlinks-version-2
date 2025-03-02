@@ -29,7 +29,7 @@
 
 .minute-card {
   flex: 0 0 calc(25% - 7.5px); /* Three cards per row */
-  height: 48%;
+  height: 50%;
   background-color: white;
   box-sizing: border-box; /* Include padding and borders in width/height */
   overflow: hidden;
@@ -76,6 +76,10 @@
     font-weight: 600;
     height: fit-content;
     line-height: 1.2;
+    width: 100%;
+    overflow: hidden; /* Ensures the overflowing text is hidden */
+    white-space: nowrap; /* Prevents text from wrapping */
+    text-overflow: ellipsis; /* Adds "..." when text overflows */
 }
 
 .minutes-action .topic-description{

@@ -3,6 +3,7 @@ import Profile from "../../Assets/user.jpg";
 import { Tree, TreeNode } from "react-organizational-chart";
 import "../../Styles/interlinks.css";
 import { useParams } from "react-router-dom";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 const api = process.env.REACT_APP_API;
 
@@ -54,7 +55,7 @@ export default function Interlinks() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "authorization": `Bearer ${localStorage.getItem("token")}`,
+            "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
           },
           body: JSON.stringify({ uuid }),
         });

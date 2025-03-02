@@ -3,7 +3,7 @@ const authenticate = require('../../middleware/authMiddleware')
 
 const addConnection = (req, res, authenticate) => {
   const { finalData } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   const query = `INSERT INTO personalinfo (useremail, profile, fullname, phonenumber, age, email, dob, rating, designation, visitingcard, linkedinurl, address, shortdescription, hashtags, spoc)
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;

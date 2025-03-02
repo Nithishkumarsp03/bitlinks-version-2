@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { encryptData, decryptData } from "../crypto/cryptoHelper";
 
 const Welcome = () => {
   const [searchParams] = useSearchParams();
@@ -17,20 +18,20 @@ const Welcome = () => {
         // console.log("Data fields:", { token, NAME, ROLE, ID, EMAIL, PROFILE_PICTURE });
 
         // Set cookies with encrypted values
-        localStorage.setItem("token", token, { expires: '1d' });
-        localStorage.setItem("name", NAME);
-        localStorage.setItem("role", ROLE);
-        localStorage.setItem("email", EMAIL);
-        localStorage.setItem("picture", PROFILE_PICTURE);
-        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("token", encryptData(token), {expires: '1d'});
+        localStorage.setItem("name", encryptData(NAME));
+        localStorage.setItem("email", encryptData(EMAIL));
+        localStorage.setItem("role", encryptData(ROLE));
+        localStorage.setItem("isLoggedIn", encryptData(true));
+        localStorage.setItem("picture", encryptData(PROFILE_PICTURE));
 
         // Retrieve and decrypt cookies
         const savedData = {
-          token: localStorage.getItem("token"),
-          name: localStorage.getItem("name"),
-          email: localStorage.getItem("email"),
-          role: localStorage.getItem("role"),
-          picture: localStorage.getItem("picture")
+          token: decryptData(localStorage.getItem("token")),
+          name: decryptData(localStorage.getItem("name")),
+          email: decryptData(localStorage.getItem("email")),
+          role: decryptData(localStorage.getItem("role")),
+          picture: decryptData(localStorage.getItem("picture"))
         };
 
         // console.log("Saved JSON data:", savedData);

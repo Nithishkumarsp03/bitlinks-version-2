@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NoDataFound from "../Nodatafound/Nodatafound";
 import { SyncLoader } from "react-spinners";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/project.css";
 
 export default function Projects() {
   const api = process.env.REACT_APP_API;
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
+  const role = decryptData(localStorage.getItem("role"));
 
   const [persondata, setPersondata] = useState([]);
   const [filteredData, setFilteredData] = useState([]); // State for filtered data
@@ -28,7 +29,7 @@ export default function Projects() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
 

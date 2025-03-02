@@ -3,6 +3,7 @@ import "../../Styles/profile.css";
 import ProfileImg from "../../Assets/user.jpg";
 import { useParams } from "react-router-dom";
 import Graph from "../../Components/Graph/Graph";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Profile() {
   const api = process.env.REACT_APP_API;
@@ -12,17 +13,14 @@ export default function Profile() {
 
   const fetchPersonData = async () => {
     try {
-      const res = await fetch(
-        `${api}/api/person/fetchpersondata`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "authorization": `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({ uuid: uuid }),
-        }
-      );
+      const res = await fetch(`${api}/api/person/fetchpersondata`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
+        },
+        body: JSON.stringify({ uuid: uuid }),
+      });
 
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -155,7 +153,23 @@ export default function Profile() {
                 </tr>
                 <tr>
                   <td class="label-cell">Linkedin:</td>
-                  <td class="value-cell">{persondata.linkedinurl || "---"}</td>
+                  <td class="value-cell">
+                    {persondata.linkedinurl ? (
+                      <a
+                        href={
+                          persondata.linkedinurl.startsWith("http")
+                            ? persondata.linkedinurl
+                            : `https://${persondata.linkedinurl}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Linkedin <i class="fa-solid fa-link"></i>
+                      </a>
+                    ) : (
+                      "----"
+                    )}
+                  </td>
                 </tr>
               </table>
             </div>

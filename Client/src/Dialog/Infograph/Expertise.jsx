@@ -6,6 +6,7 @@ import Select from "react-select";
 import "../../Styles/dialog.css";
 import { useParams } from "react-router-dom";
 import SkillsetDropdown from "../../Dropdown/SkillsetDropdown";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 const Expertise = ({ open, setExpertiseopen, setexpertiseCompletion, showSnackbar }) => {
   const api = process.env.REACT_APP_API;
@@ -52,7 +53,7 @@ const Expertise = ({ open, setExpertiseopen, setexpertiseCompletion, showSnackba
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ uuid: uuid }), // Send UUID
       });
@@ -108,7 +109,7 @@ const Expertise = ({ open, setExpertiseopen, setexpertiseCompletion, showSnackba
         method: 'PUT',
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
           body: JSON.stringify(expertiseData),
       });

@@ -5,8 +5,17 @@ import NoDataFound from "../Nodatafound/Nodatafound";
 import { FaFilter, FaPlus } from "react-icons/fa";
 import FilterPopover from "../Filter/Filterpophover";
 import { SyncLoader } from "react-spinners";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import rankminus from "../../Assets/ranks/rankminus.svg";
+import rank3 from "../../Assets/ranks/rank1.svg";
+import rank2 from "../../Assets/ranks/rank2.svg";
+import rank1 from "../../Assets/ranks/rank3.svg";
+import rank0 from "../../Assets/ranks/rank4.svg";
+import inctive from "../../Assets/ranks/inactive.svg";
+import useStore from "../../store/store";
 
 export default function Networks() {
+  const { rank } = useStore();
   const api = process.env.REACT_APP_API;
   const navigate = useNavigate();
   const [persondata, setPersondata] = useState([]);
@@ -30,7 +39,7 @@ export default function Networks() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
       if (!res.ok) throw new Error(`Error: ${res.status} - ${res.statusText}`);
@@ -66,13 +75,52 @@ export default function Networks() {
   };
 
   const filteredData = persondata.filter((person) => {
-    if (
-      searchTerm &&
-      !person.fullname.toLowerCase().includes(searchTerm.toLowerCase())
-    ) {
-      return false;
-    }
-    return true;
+    const matchesSearch = person.fullname
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const matchesRank =
+      rank === "inactive"
+        ? person.status === 0 // If rank is "inactive", filter status = 0
+        : rank !== ""
+        ? person.rank === rank // If rank has a value, filter by rank
+        : true; // Otherwise, show all
+
+    const matchesDomain = filterCriteria.domain
+      ? person.domain?.toLowerCase() === filterCriteria.domain.toLowerCase()
+      : true;
+
+    const matchesLocation = filterCriteria.location
+      ? person.location?.toLowerCase() === filterCriteria.location.toLowerCase()
+      : true;
+
+    const matchesScale = filterCriteria.scale
+      ? person.scale?.toLowerCase() === filterCriteria.scale.toLowerCase()
+      : true;
+
+    const matchesPayScale = filterCriteria.payScale
+      ? person.payScale?.toLowerCase() === filterCriteria.payScale.toLowerCase()
+      : true;
+
+    const matchesCompanyName = filterCriteria.companyName
+      ? person.companyName?.toLowerCase() ===
+        filterCriteria.companyName.toLowerCase()
+      : true;
+
+    const matchesDesignation = filterCriteria.designation
+      ? person.designation?.toLowerCase() ===
+        filterCriteria.designation.toLowerCase()
+      : true;
+
+    return (
+      matchesSearch &&
+      matchesRank &&
+      matchesDomain &&
+      matchesLocation &&
+      matchesScale &&
+      matchesPayScale &&
+      matchesCompanyName
+    );
   });
 
   useEffect(() => {
@@ -94,6 +142,22 @@ export default function Networks() {
     };
   }, [filteredData]);
 
+  const getRank = (person) => {
+    if(person.status === 0) return <img src={inctive} alt="" />;
+    switch (person.rank) {
+      case 0:
+        return <img src={rank0} alt="" />;
+      case 1:
+        return <img src={rank1} alt="" />;
+      case 2:
+        return <img src={rank2} alt="" />;
+      case 3:
+        return <img src={rank3} alt="" />;
+      case -1:
+        return <img src={rankminus} alt="" />;
+    }
+  };
+
   return (
     <div style={{ height: "100%", width: "100%", padding: "4px" }}>
       <div className="search-container-middle">
@@ -113,7 +177,10 @@ export default function Networks() {
       </div>
       {showFilterPopover && (
         <div ref={filterRef}>
-          <FilterPopover onApply={handleApplyFilters} onClose={() => setShowFilterPopover(false)} />
+          <FilterPopover
+            onApply={handleApplyFilters}
+            onClose={() => setShowFilterPopover(false)}
+          />
         </div>
       )}
       {loading ? (
@@ -122,21 +189,31 @@ export default function Networks() {
         </div>
       ) : filteredData.length === 0 ? (
         <div className="no-data-error">
-            <NoDataFound />
-          </div>
+          <NoDataFound />
+        </div>
       ) : (
         <div className="person-contacts">
           {filteredData.slice(0, visibleCount).map((person, index) => (
-            <div className="person-card" onClick={() => handleCardclick(person.uuid)} key={index}>
-              <div className="plus-icon" onClick={(e) => {
-                e.stopPropagation();
-                navigate(`/admin/add-connection/${person.email}`);
-              }}>
+            <div
+              className="person-card"
+              onClick={() => handleCardclick(person.uuid)}
+              key={index}
+            >
+              <div
+                className="plus-icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/admin/add-connection/${person.email}`);
+                }}
+              >
                 <FaPlus />
               </div>
               <div className="image-details">
-                <div className="profile-container">
-                  <img src={person.profile ? `${api}${person.profile}` : Profile} alt="Profile" />
+                <div className="profile-wrapper">
+                  <div className="profile-container">
+                    <img src={person.profile || Profile} alt="Profile" />
+                  </div>
+                  <div className="rank-image">{getRank(person)}</div>
                 </div>
                 <div className="details-container">
                   <div className="name">{person.fullname}</div>
@@ -145,13 +222,40 @@ export default function Networks() {
               </div>
               <div className="person-info">
                 <div className="card-links">
-                  <div><i className="fa-solid fa-phone"></i><div>{person.phonenumber}</div></div>
-                  <div><i className="fa-brands fa-linkedin"></i><div>{person.linkedinurl || "Not Mentioned"}</div></div>
-                  <div><i className="fa-solid fa-envelope"></i><div>{person.email}</div></div>
+                  <div>
+                    <i className="fa-solid fa-phone"></i>
+                    <div>{person.phonenumber}</div>
+                  </div>
+                  <div>
+                    <i className="fa-brands fa-linkedin"></i>
+                    <div>
+                      {person.linkedinurl ? (
+                        <a
+                          href={
+                            person.linkedinurl.startsWith("http")
+                              ? person.linkedinurl
+                              : `https://${person.linkedinurl}`
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Linkedin <i class="fa-solid fa-link"></i>
+                        </a>
+                      ) : (
+                        "Not mentioned"
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <i className="fa-solid fa-envelope"></i>
+                    <div>{person.email}</div>
+                  </div>
                   <div>
                     <i className="fa-solid fa-user"></i>
                     <div>
-                      <span style={{ fontWeight: "600", color: "grey" }}>Referred By</span>
+                      <span style={{ fontWeight: "600", color: "grey" }}>
+                        Referred By
+                      </span>
                       <div>{person.sub_name}</div>
                     </div>
                   </div>

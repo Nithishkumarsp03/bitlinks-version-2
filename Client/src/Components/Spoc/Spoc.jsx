@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Profile from "../../Assets/user.jpg";
 import { useNavigate } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
 export default function Spoc() {
   const api = process.env.REACT_APP_API;
@@ -22,7 +23,7 @@ export default function Spoc() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
 

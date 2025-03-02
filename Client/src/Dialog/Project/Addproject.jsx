@@ -4,6 +4,7 @@ import { Input } from '@mui/joy';
 import { useParams } from 'react-router-dom';
 import Domaindropdown from '../../Dropdown/Domaindropdown';
 import Spocdropdown from '../../Dropdown/Spocdropdown';
+import { decryptData } from '../../Utils/crypto/cryptoHelper';
 
 export default function AddProject({open, setAddopen, fetchPerson, showSnackbar}) {
     const api = process.env.REACT_APP_API;
@@ -37,7 +38,7 @@ export default function AddProject({open, setAddopen, fetchPerson, showSnackbar}
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({uuid, formValues}),
       });

@@ -7,6 +7,7 @@ import ViewContactDialog from "../../Dialog/datahub/ViewContactDialog";
 import NonconflictDialog from "../../Dialog/datahub/NonconflictDialog";
 import NoDataFound from "../../Components/Nodatafound/Nodatafound";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import { SyncLoader } from "react-spinners";
 import "../../Styles/datahub.css";
 
@@ -46,7 +47,7 @@ export default function Datahub() {
 
   const handleMergeInitiate = () => {
     if (selectedContacts.length === 0) {
-      alert("Please select at least one contact to merge");
+      showSnackbar("Please select at least one contact to merge", 'error');
       return;
     }
 
@@ -55,7 +56,7 @@ export default function Datahub() {
     );
 
     if (selected.length === 0) {
-      alert("No valid contacts selected.");
+      showSnackbar("No valid contacts selected.", 'error');
       return;
     }
 
@@ -133,7 +134,7 @@ export default function Datahub() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
       const data = await res.json();
@@ -266,7 +267,7 @@ export default function Datahub() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({
           mergedData,

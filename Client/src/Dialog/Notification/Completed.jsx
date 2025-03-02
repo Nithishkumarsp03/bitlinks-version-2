@@ -8,6 +8,7 @@ import {
     DialogActions,
     Box,
   } from "@mui/material";
+  import { decryptData } from '../../Utils/crypto/cryptoHelper';
 
 export default function Completed({completedopen, setCompletedopen, module, action, id, fetchNotification}) {
     const api = process.env.REACT_APP_API;
@@ -18,7 +19,7 @@ export default function Completed({completedopen, setCompletedopen, module, acti
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
                   },
                 body: JSON.stringify({ id: id, module: module, action: action})
             });

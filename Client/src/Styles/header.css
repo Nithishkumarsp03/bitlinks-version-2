@@ -67,8 +67,8 @@
   .settings-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-top: 5%;
   }
   
   .settings-container img {
@@ -88,6 +88,7 @@
     gap: 5px;
     cursor: pointer;
   }
+  
   
   .hamburger .line {
     width: 25px;
@@ -155,6 +156,10 @@
     font-weight: bold;
   }
 
+  .pop-hover{
+    display: none;
+  }
+
   @media screen and (max-width: 950px){
     .end-container{
         width: 50%;
@@ -165,9 +170,78 @@
     .end-container {
       display: none;
     }
+
+    .pop-hover{
+      display: block;
+    }
   
     .hamburger {
       display: flex;
     }
   }
+
+  /* ------------------------------------ */
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 1000;
+  }
+  
+  .hamburger .line {
+    width: 25px;
+    height: 3px;
+    background-color: #2867b2;
+    border-radius: 2px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .end-container {
+      display: none;
+    }
+  
+    .hamburger {
+      display: flex !important;
+      border:none;
+      outline: none;
+      color: #2867b2;
+      background-color: white;
+    }
+
+    .user-name{
+      width: 100%;
+      font-size: 11px;
+    }
+
+    .settings-container{
+      flex-direction: row;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+  }
+  
+  /* Mobile Popover */
+  .menu {
+    position: absolute;
+    top: 60px;
+    /* right: 20px; */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000; /* Ensures it appears above other elements */
+  }  
+  
   

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import NoDataFound from "../Nodatafound/Nodatafound";
 import { Button, Popover } from "@mui/material";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/notification.css";
 
 export default function Adminremainder() {
@@ -21,7 +22,7 @@ export default function Adminremainder() {
     severity: "success",
   });
   const navigate = useNavigate();
-  const role = localStorage.getItem("role"); // In admin mode, role should be "admin"
+  const role = decryptData(localStorage.getItem("role")); // In admin mode, role should be "admin"
   const [apiResponse, setApiResponse] = useState({});
   
   // Remove snoozeVisible state and use Popover anchor and current item instead
@@ -52,14 +53,14 @@ export default function Adminremainder() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${localStorage.getItem("token")}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setApiResponse(data);
     } catch (error) {
       console.error("Error fetching notifications:", error);

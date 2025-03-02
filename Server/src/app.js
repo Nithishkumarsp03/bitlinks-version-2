@@ -24,8 +24,11 @@ const notificationRoutes = require("./routes/notifications/notificationRoutes")
 const infographRoutes = require("./routes/infograph/infographRoutes");
 const securehubRoutes = require("./routes/entrydata/entryRoutes");
 
+const settingsRoute = require('./routes/settings/settingsRoute.js')
+
 require("dotenv").config();
 const path = require('path');
+const api = process.env.API;
 
 const app = express();
 
@@ -53,56 +56,59 @@ app.use(bodyParser.json());
 
 
 // Root route to show welcome message
-app.get("/", (req, res) => {
+app.get(`${api}/`, (req, res) => {
   res.send("Welcome to the BITLINKS API!");
 });
 
 // Authentication Routes
-app.use("/api/auth", authRoutes); // Use auth routes for login
+app.use(`${api}/api/auth`, authRoutes); // Use auth routes for login
 
 // Static files middleware to serve uploaded files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(`${api}/uploads`, express.static(path.join(__dirname, 'uploads')));
 
 // Image Routes
-app.use('/api', uploadRoutes);
+app.use(`${api}/api`, uploadRoutes);
 
 //Middleware
-app.use(authenticateToken);
+// app.use(authenticateToken);
 
 //Add connection Routes
-app.use("/api/add", addconnectionRoutes);
+app.use(`${api}/api/add`, addconnectionRoutes);
 
 // Person Routes
-app.use("/api/person", personRoutes);
+app.use(`${api}/api/person`, personRoutes);
 
 //Network Routes
-app.use("/api/network", networkRoutes);
+app.use(`${api}/api/network`, networkRoutes);
 
 //Spoc Routes
-app.use("/api/spoc", spocRoutes);
+app.use(`${api}/api/spoc`, spocRoutes);
 
 //History Routes
-app.use('/api/history', historyRoutes);
+app.use(`${api}/api/history`, historyRoutes);
 
 //Project Routes
-app.use('/api/project', projectRoutes);
+app.use(`${api}/api/project`, projectRoutes);
 
 //Minute Routes
-app.use('/api/minutes', minuteRoutes);
+app.use(`${api}/api/minutes`, minuteRoutes);
 
 //Dropdown Routes
-app.use('/api/dropdown', dropdownRoutes);
+app.use(`${api}/api/dropdown`, dropdownRoutes);
 
 //Domain Routes
-app.use('/api/domain', domainRoutes);
+app.use(`${api}/api/domain`, domainRoutes);
 
 //Notification & Email API routes
-app.use('/api/notify', notificationRoutes);
+app.use(`${api}/api/notify`, notificationRoutes);
 
 //Infograph Routes
-app.use('/api/infograph', infographRoutes);
+app.use(`${api}/api/infograph`, infographRoutes);
 
 //Entry data from SecureHub Routes
-app.use('/api/securehub', securehubRoutes);
+app.use(`${api}/api/securehub`, securehubRoutes);
+
+//Settings Route
+app.use(`${api}/api/settings`, settingsRoute);
 
 module.exports = app;

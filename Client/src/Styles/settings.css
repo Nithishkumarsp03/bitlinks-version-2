@@ -1,0 +1,110 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .settings-body {
+    display: flex;
+    height: 90%;
+    width: 100%;
+    background-color: #edf3f7;
+  }
+  
+  /* Sidebar Styles */
+  .sidebar {
+    width: 25%;
+    min-width: 200px;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #f9f9f9;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Sidebar Tabs */
+  .tab-item {
+    margin-bottom: 15px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .tab-item.active {
+    background-color: #deedff;
+    font-weight: bold;
+    color: #2867b2;
+  }
+  
+  /* Content Area */
+  .content {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .settings-body {
+      flex-direction: column;
+      height: 80%;
+    }
+  
+    .sidebar {
+      width: 100%;
+      position: absolute;
+      background: #f9f9f9;
+      transform: translateX(-100%);
+      z-index: 1000;
+    }
+  
+    .sidebar.open {
+      transform: translateX(0);
+    }
+  
+    .menu-toggle {
+      display: block;
+      margin: 10px;
+      padding: 10px;
+      border: none;
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  }
+  
+  /* Hide Menu Button on Larger Screens */
+  @media (min-width: 769px) {
+    .menu-toggle {
+      display: none;
+    }
+  }
+
+
+  .content::-webkit-scrollbar {
+    width: 5px; /* Adjust the scrollbar width */
+    padding: 10px 0px;
+  }
+  
+  .content::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 3px; /* Rounded corners for the scrollbar thumb */
+  }
+  
+  .content::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker color on hover */
+  }
+  
+  .content::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background color of the scrollbar track */
+  }
+  
