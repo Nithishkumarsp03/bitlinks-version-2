@@ -93,7 +93,7 @@ export default function Spoc() {
               <div className="image-details">
                 <br />
                 <div className="profile-container">
-                  <img src={Profile} alt="Profile" />
+                  <img src={`${api}${person.profile}` || Profile} alt="Profile" />
                   <img className="small-image" src="" alt="Small Image" />
                 </div>
                 <div className="details-container">

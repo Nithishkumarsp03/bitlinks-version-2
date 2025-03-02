@@ -230,7 +230,7 @@ export default function Connections() {
               <div className="image-details">
                 <div className="profile-wrapper">
                   <div className="profile-container">
-                    <img src={person.profile || Profile} alt="Profile" />
+                    <img src={`${api}${person.profile}` || Profile} alt="Profile" />
                   </div>
                   <div className="rank-image">{getRank(person)}</div>
                 </div>
