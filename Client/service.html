@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Server Under Maintenance</title>
+  <style>
+    /* Reset some default styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f2f2f2;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+    }
+    .container h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #2867b2;
+    }
+    .container p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .loader {
+      border: 16px solid #f3f3f3;
+      border-top: 16px solid #2867b2;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .contact {
+      font-size: 1rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Under Maintenance</h1>
+    <p>Our server is currently undergoing scheduled maintenance. We apologize for any inconvenience and appreciate your patience.</p>
+    <!-- <div class="loader"></div> -->
+    <p class="contact">Please check back later or contact us at <a href="mailto:bitlinks.bitsathy.ac.in" style="color: #2867b2; text-decoration: none;">bitlinks.bitsathy.ac.in</a>.</p>
+  </div>
+</body>
+</html>
