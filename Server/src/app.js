@@ -130,7 +130,7 @@ cron.schedule('30 12 * * *', () => {
 });
 
 // Schedule a job to run at 3:30 PM every day
-cron.schedule('49 19 * * *', () => {
+cron.schedule('47 19 * * *', () => {
   console.log("Cron job running at 3:30 PM");
   sendMinutesCron((err, result) => {
     if (err) {
