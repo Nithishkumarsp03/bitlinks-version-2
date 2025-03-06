@@ -33,12 +33,14 @@ const sendMinutesCron = (callback) => {
     
     // Create a Nodemailer transporter (using Gmail in this example)
     let transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 2525,
+      secure: false,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
       }
-    });
+    });       
     
     const emailAddresses = Object.keys(emailGroups);
     let groupsProcessed = 0;
