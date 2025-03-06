@@ -93,7 +93,7 @@ const sendMinutesCron = (callback) => {
           console.error(`Error sending email to ${email}:`, mailErr);
           // Optionally, you could call callback here for error—depending on desired behavior
         } else {
-        //   console.log(`Email sent to ${email}:`, info.response);
+          console.log(`Email sent to ${email}:`, info.response);
         }
         
         // Update the minutes records for this group as sent
@@ -103,7 +103,7 @@ const sendMinutesCron = (callback) => {
           if (updateErr) {
             console.error(`Error updating records for email ${email}:`, updateErr);
           } else {
-            // console.log(`Records updated for email ${email}:`, updateResult.affectedRows);
+            console.log(`Records updated for email ${email}:`, updateResult.affectedRows);
           }
           groupsProcessed++;
           if (groupsProcessed === emailAddresses.length) {
