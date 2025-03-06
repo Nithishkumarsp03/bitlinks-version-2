@@ -2,7 +2,7 @@ const db = require("../../../db/config");
 
 const updatePerson = (req, res) => {
   const { finalData } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   const fetchSpoc = `SELECT email, person_id FROM personalinfo WHERE fullname = ?`;
   
