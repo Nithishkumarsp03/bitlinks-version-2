@@ -4,6 +4,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+}
+
+.input-add-box-check{
+  width: 50%;
+  margin-bottom: 10px;
 }
 
 .addconnection-container{
@@ -33,6 +39,26 @@
   overflow-y: scroll;
 }
 
+.leftside-addconnection{
+  width: 70%;
+  padding: 20px;
+}
+
+.rightside-addconnection{
+  width: 30%;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 1px solid #ccc;
+}
+
+.add-connection-button{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
 .add-connection-whole-container::-webkit-scrollbar {
   width: 3px; /* Adjust the scrollbar width */
   padding: 10px 0px;
@@ -49,4 +75,30 @@
 
 .add-connection-whole-container::-webkit-scrollbar-track {
   background: #f1f1f1; /* Background color of the scrollbar track */
+}
+
+@media (max-width: 768px){
+  .input-add-box-check{
+    width: 80%;
+  }
+
+  .add-connection-whole-container{
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 50px;
+  }
+
+  .add-connection-button{
+    width: 60%;
+    margin-bottom: 20px;
+  }
+
+  .leftside-addconnection{
+    width: 100%;
+  }
+
+  .rightside-addconnection{
+    width: 100%;
+    border: none;
+  }
 }

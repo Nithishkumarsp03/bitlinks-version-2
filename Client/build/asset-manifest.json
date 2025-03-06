@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.897a3ccf.css",
-    "main.js": "/static/js/main.5d946b30.js",
+    "main.css": "/static/css/main.13a3dcee.css",
+    "main.js": "/static/js/main.a6c1c153.js",
     "static/js/685.872a02b5.chunk.js": "/static/js/685.872a02b5.chunk.js",
     "static/media/sujith.webp": "/static/media/sujith.d3659bfd64e5dbe3ab2a.webp",
     "static/media/tharun.jpeg": "/static/media/tharun.fad8e04a619dfd9dc448.jpeg",
@@ -50,7 +50,7 @@
     "static/media/rankminus.svg": "/static/media/rankminus.78d8c9afadf9472e014b15fb7bee4911.svg"
   },
   "entrypoints": [
-    "static/css/main.897a3ccf.css",
-    "static/js/main.5d946b30.js"
+    "static/css/main.13a3dcee.css",
+    "static/js/main.a6c1c153.js"
   ]
 }

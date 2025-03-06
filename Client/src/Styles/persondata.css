@@ -1,23 +1,165 @@
-.left-data{
-    /* background-color: #430f0f; */
-    height: 100%;
-    width: 20%;
-}
-.right-data{
-    background-color: white;
-    height: 100%;
-    width: 25%;
-    margin-right: 0.5%;
-}
-.middle-data{
-    /* background-color: white; */
-    height: 100%;
-    width: 54%;
-    margin-right: 0.5%;
-}
-
-.outcome-data{
-    height: 52%;
+/* ----------------------- Base Layout (Mobile/Tablet) ----------------------- */
+/* For screens below 1025px, sections stack vertically */
+.tab-content {
+    display: block;
+  }
+  .left-data,
+  .middle-data,
+  .right-data {
     width: 100%;
     padding: 10px;
-}
+    box-sizing: border-box;
+  }
+
+  .right-data{
+    margin: 10px 0px;
+    background-color: white;
+  }
+
+  .close-btn{
+    display: none;
+  }
+  
+  /* Hide History (right-data) by default on smaller screens */
+  @media (max-width: 1024px) {
+    .right-data {
+      display: none;
+    }
+    /* When toggled open, add a class to display it */
+    .right-data.open {
+      display: block;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 80%;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    /* Floating toggle button for History */
+    .right-data-button {
+      display: block;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #2867b2;
+      color: white;
+      padding: 20px;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+      z-index: 1050;
+    }
+    .close-btn {
+      display: block;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: red;
+    }
+  }
+  
+  /* ----------------------- Desktop Layout ----------------------- */
+  @media (min-width: 1025px) {
+    .tab-content {
+      display: flex;
+    }
+    .left-data {
+      width: 20%;
+    }
+    .middle-data {
+      width: 55%;
+    }
+    .right-data {
+      width: 25%;
+      display: block; /* Always visible on desktop */
+      position: relative;
+      box-shadow: none;
+    }
+    /* Hide the toggle button on desktop */
+    .right-data-button {
+      display: none;
+    }
+  }
+  
+  /* ----------------------- Person Card Styles ----------------------- */
+  .person-card-person-data {
+    position: relative;
+    flex: 0 0 calc(33.33% - 7.5px); /* Three cards per row */
+    height: 50%;
+    background-color: white;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 8px;
+    padding: 10px 7px;
+    transition: transform 0.2s;
+  }
+  
+  .person-card-person-data i {
+    color: #2867b2;
+    font-size: 12px;
+  }
+  
+  .person-card-person-data:hover {
+    transform: scale(1.02);
+  }
+  
+  @media (max-width: 1200px) {
+    .person-card-person-data {
+      flex: 0 0 calc(50% - 7.5px);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .person-card-person-data {
+      flex: 0 0 100%;
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
+    }
+  }
+  
+  @media (max-width: 450px) {
+    .person-card-person-data {
+      width: 100%;
+    }
+  }
+  
+  /* Optional: Visual debugging for small screens */
+  @media (max-width: 768px) {
+    .tab-content{
+        margin-bottom: 20px;
+    }
+    .left-data {
+      /* background-color: #ffe5e5; */
+    }
+  }
+
+  .admin-body::-webkit-scrollbar {
+    width: 3px; /* Adjust the scrollbar width */
+    padding: 10px 0px;
+  }
+  
+  .admin-body::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 3px; /* Rounded corners for the scrollbar thumb */
+  }
+  
+  .admin-body::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker color on hover */
+  }
+  
+  .admin-body::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background color of the scrollbar track */
+  }

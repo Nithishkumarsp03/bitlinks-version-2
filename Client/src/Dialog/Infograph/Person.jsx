@@ -107,7 +107,7 @@ export default function Person({ open, setPersonopen, setpersonCompletion, showS
   
       // ✅ Remove base URL function (to prevent sending full URL)
       const removeBaseUrl = (url) =>
-        url && typeof url === "string" ? url.replace(/^https?:\/\/[^/]+/, "") : null;
+        url && typeof url === "string" ? url.replace(/^https?:\/\/[^/]+\/bitlinks/, "") : null;      
   
       // ✅ Final data payload ensuring existing images are retained
       const finalData = {
@@ -124,7 +124,6 @@ export default function Person({ open, setPersonopen, setpersonCompletion, showS
           newVisitingCardPath && !newVisitingCardPath.startsWith("blob:")
             ? removeBaseUrl(newVisitingCardPath)
             : formValues.visitingcard, // Retain existing if not changed
-    
       };
   
       // ✅ Send correct data to backend

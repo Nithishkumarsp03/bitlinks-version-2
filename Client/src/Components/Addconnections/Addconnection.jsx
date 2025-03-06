@@ -14,7 +14,7 @@ export default function Addconnection() {
   const role = decryptData(localStorage.getItem("role"));
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const {spocemail} = useParams();
+  const { spocemail } = useParams();
   const [isNameAvailable, setIsNameAvailable] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [visitingCardPhoto, setVisitingCardPhoto] = useState(null);
@@ -39,6 +39,17 @@ export default function Addconnection() {
     spoc: "yes",
     rank: -1,
   });
+
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 800);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 800);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const showSnackbar = (message, severity) => {
     setSnackbar({ open: true, message, severity });
@@ -86,8 +97,11 @@ export default function Addconnection() {
   }, [personData.spoc]);
 
   const checkNameAvailability = async () => {
-    if(!name){
-      showSnackbar('Please Provide a valid name to check availability', 'error');
+    if (!name) {
+      showSnackbar(
+        "Please Provide a valid name to check availability",
+        "error"
+      );
       return;
     }
     setLoading(true);
@@ -96,7 +110,7 @@ export default function Addconnection() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ name: name }),
       });
@@ -180,7 +194,7 @@ export default function Addconnection() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ finalData }), // Only send the necessary JSON data
       });
@@ -193,9 +207,10 @@ export default function Addconnection() {
 
       setLoading(false);
       showSnackbar("Data submitted Successfully!", "success");
-      if(role === "admin") navigate("/admin/myconnections");
-      else if(role === "user") navigate("/myconnections");
-      else{}
+      if (role === "admin") navigate("/admin/myconnections");
+      else if (role === "user") navigate("/myconnections");
+      else {
+      }
       const result = await jsonResponse.json();
       setPersonData({
         fullname: "",
@@ -242,10 +257,10 @@ export default function Addconnection() {
           <h2>Check Name Availability</h2>
           <Input
             type="text"
-            placeholder="Enter your name"
+            placeholder="Enter the name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            style={{ width: "50%", marginBottom: "15px" }}
+            className="input-add-box-check"
           />
           <Button onClick={checkNameAvailability} variant="solid">
             {loading
@@ -268,8 +283,8 @@ export default function Addconnection() {
       {isNameAvailable === true && (
         <div className="add-connection-whole-container">
           {/* Left Section: Form Fields */}
-          <div style={{ width: "70%", padding: "20px" }}>
-            <h2>Add Connection</h2>
+          <div className="leftside-addconnection">
+            <h2 style={{marginBottom: "10px"}}>Add Connection</h2>
             <form style={{ display: "flex", flexWrap: "wrap", gap: "15px" }}>
               <Input
                 type="text"
@@ -399,31 +414,25 @@ export default function Addconnection() {
                 />
                 <label htmlFor="">Rank(0/-1)</label>
               </div>
-              <Button
-                type="submit"
-                variant="solid"
-                style={{ width: "100%", marginBottom: "20px" }}
-                onClick={handleSubmit}
-              >
-                {loading
-                  ? "Creating connection... Do not refresh this page. "
-                  : "Create Connection"}
-              </Button>
+              {!isSmallScreen && (
+                <div style={{width: "100%",display:"flex", justifyContent: "center"}}>
+                  <Button
+                    type="submit"
+                    variant="solid"
+                    className="add-connection-button"
+                    onClick={handleSubmit}
+                  >
+                    {loading
+                      ? "Creating connection... Do not refresh this page. "
+                      : "Create Connection"}
+                  </Button>
+                </div>
+              )}
             </form>
           </div>
 
           {/* Right Section: Profile Photo */}
-          <div
-            style={{
-              width: "30%",
-              height: "100%",
-              padding: "20px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              borderLeft: "1px solid #ccc",
-            }}
-          >
+          <div className="rightside-addconnection">
             {/* Profile Photo Section */}
             <h3 style={{ marginBottom: "10px" }}>Profile Photo</h3>
             <div className="addconnection-photosection">
@@ -504,6 +513,20 @@ export default function Addconnection() {
               ) : null}
             </div>
           </div>
+          {isSmallScreen && (
+            <div style={{display:"flex", justifyContent: "center"}}>
+              <Button
+                type="submit"
+                variant="solid"
+                onClick={handleSubmit}
+                className="add-connection-button"
+              >
+                {loading
+                  ? "Creating connection... Do not refresh this page. "
+                  : "Create Connection"}
+              </Button>
+            </div>
+          )}
         </div>
       )}
 

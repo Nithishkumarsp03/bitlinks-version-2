@@ -1,65 +1,107 @@
 .merge-contacts-card-container {
-    height: 85%;
-    padding: 10px 0;
+  height: 85%;
+  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start; /* Align rows to the top without extra space */
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  /* justify-content: center; */
+}
+
+.merge-contacts-card {
+  flex: 0 0 calc(25% - 10px); /* Default: Four cards per row on desktop */
+  height: auto;
+  background-color: white;
+  box-sizing: border-box; /* Include padding and borders in width/height */
+  overflow: hidden;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.merge-contacts-card:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 1200px) {
+  .merge-contacts-card {
+    flex: 0 0 calc(33% - 5px);   
+  }
+}
+
+@media (max-width: 768px) {
+  .merge-contacts-card {
+    flex: 0 0 calc(50% - 10px); /* Two cards per row on smaller tablets */
+  }
+}
+
+@media (max-width: 550px) {
+  .merge-contacts-card-container {
+    justify-content: center;
+  }
+  .merge-contacts-card {
+    flex: 0 0 100%; /* Single column on mobile */
+  }
+  .bottom-box-right{
     display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start; /* Align rows to the top without extra space */
-    gap: 10px;
+    justify-content: end;
+  }
+}
+
+.profile-name-box {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  align-items: center;
+}
+
+.profile-name {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.photo-user {
+  width: 60px;
+  height: 60px;
+  /* border: 1px solid red; */
+  border-radius: 50%;
+  margin-right: 10px;
+  overflow: hidden;
+}
+
+.photo-user img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-name-box input {
+  width: 10%;
+}
+
+.bottom-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* padding: 0px 5px; */
+  font-weight: 600;
+}
+
+.bottom-box div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+
+.bottom-box-left{
     width: 100%;
-    box-sizing: border-box;
-    overflow-y: scroll;
-  }  
-  
-
-.merge-contacts-card{
-    flex: 0 0 calc(25% - 7.5px);
-    height: 30%;
-    background-color: white;
-    box-sizing: border-box; /* Include padding and borders in width/height */
-    overflow: hidden;
 }
 
-.profile-name-box{
-    width: 100%;
-    height: 70%;
-    display: flex;
-    align-items: center;
-}
-
-.profile-name{
-    font-size: 17px;
-    font-weight: 600;
-}
-
-.photo-user{
-    width: 60px;
-    height: 60px;
-    /* border: 1px solid red; */
-    border-radius: 50%;
-    margin-right: 10px;
-    overflow: hidden;
-}
-
-.photo-user img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.profile-name-box input{
-    width: 10%;
-}
-
-.bottom-box{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0px 5px;
-    font-weight: 600;
-}
-
-.bottom-box div{
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.bottom-box-right{
+    width: 40%;
 }

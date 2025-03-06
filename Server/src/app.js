@@ -69,6 +69,9 @@ app.use(`${api}/uploads`, express.static(path.join(__dirname, 'uploads')));
 // Image Routes
 app.use(`${api}/api`, uploadRoutes);
 
+//Minute Routes
+app.use(`${api}/api/minutes`, minuteRoutes);
+
 //Middleware
 app.use(authenticateToken);
 
@@ -90,8 +93,8 @@ app.use(`${api}/api/history`, historyRoutes);
 //Project Routes
 app.use(`${api}/api/project`, projectRoutes);
 
-//Minute Routes
-app.use(`${api}/api/minutes`, minuteRoutes);
+// //Minute Routes
+// app.use(`${api}/api/minutes`, minuteRoutes);
 
 //Dropdown Routes
 app.use(`${api}/api/dropdown`, dropdownRoutes);

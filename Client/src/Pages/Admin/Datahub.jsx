@@ -175,7 +175,7 @@ export default function Datahub() {
       return {}; // Prevents breaking the code
     }
 
-    console.log("Contacts inside createMergedData:", contacts); // Debugging
+    // console.log("Contacts inside createMergedData:", contacts);
 
     const firstContact = contacts[0];
     if (!firstContact) {
@@ -250,11 +250,11 @@ export default function Datahub() {
       return;
     }
 
-    console.log("Contacts being merged:", contacts); // Debugging
+    // console.log("Contacts being merged:", contacts);
 
     const mergedData = createMergedData(contacts, resolutions);
 
-    console.log("Merged Data:", mergedData, "Selected IDs:", selectedContacts); // Debugging
+    // console.log("Merged Data:", mergedData, "Selected IDs:", selectedContacts);
 
     if (Object.keys(mergedData).length === 0) {
       console.error("Merged data is empty. Something went wrong!");
@@ -337,7 +337,9 @@ export default function Datahub() {
                   </div>
                   <div className="bottom-box-right">
                     <Button onClick={() => handleView(contact)}>
-                      <VisibilityIcon />
+                      <div>
+                        <VisibilityIcon />
+                      </div>
                       <div>View</div>
                     </Button>
                   </div>

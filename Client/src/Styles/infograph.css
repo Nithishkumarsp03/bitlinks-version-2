@@ -52,4 +52,16 @@
   .node-label img{
     width: 45%;
   }
+
+
+  @media (max-width: 768px){
+    .node-label{
+      font-size: 12px;
+    }
+    .infograph-container{
+      padding: 0px 20px;
+      overflow-y: scroll;
+      padding-left: 200px;
+    }
+  }
   

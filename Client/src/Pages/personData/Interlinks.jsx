@@ -32,7 +32,7 @@ const renderNode = (connection) => {
       <div className={`rectangle ${rectangleClass}`}>
         <div className="line"></div>
         <div className="account-container">
-          <img src={Profile} alt="profile" className="account" />
+          <img src={`${api}${connection.profile}` || Profile} alt="profile" className="account" />
           <div className="rank-details">
             <div className="text-item-name">{connection.fullname || "Name"}</div>
             <div className="text-item-profession">{connection.address || "Profession"}</div>
@@ -90,17 +90,10 @@ export default function Interlinks() {
       >
         <TreeNode
           label={
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "20px",
-                justifyContent: "center",
-                paddingTop: "10px",
-              }}
+            <div className="card-container-interlinks"
             >
               {subConnections.map((child) => (
-                <div key={child.person_id}>
+                <div key={child.person_id} >
                   {renderNode(child)}
                 </div>
               ))}

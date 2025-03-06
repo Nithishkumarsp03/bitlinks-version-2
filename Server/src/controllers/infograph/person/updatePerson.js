@@ -33,7 +33,7 @@ const updatePerson = (req, res) => {
     finalData.rating,
     finalData.designation,
     finalData.visitingcard,
-    finalData.linkedinurl,
+    finalData.linkedin,
     finalData.address,
     finalData.shortdescription,
     finalData.hashtags,

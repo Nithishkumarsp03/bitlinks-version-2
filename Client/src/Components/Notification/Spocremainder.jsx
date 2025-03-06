@@ -306,6 +306,7 @@ export default function Spocremainder() {
     e.stopPropagation();
     setVisitedopen(true);
     setId(item.history_id);
+    setThanksgivingemail(item.email)
   };
 
   // Combine and filter notifications

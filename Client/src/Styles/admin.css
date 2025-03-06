@@ -47,6 +47,67 @@
   padding: 12px 0px 0px 0px;
 }
 
+/* Floating button for toggling the right-side panel on small screens */
+.floating-right-btn {
+  position: fixed;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: #2867b2;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 1050;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.floating-right-btn:hover {
+  background-color: #1d4b82;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.right-side.active {
+  right: 0;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  transition: transform 0.2s ease;
+}
+
+.close-btn:hover {
+  transform: scale(1.2);
+  color: #ff4d4d;
+}
+
+/* Optionally, adjust the right-side panel styling on small screens */
+@media (max-width: 800px) {
+  .right-side {
+    /* This might be an overlay style if you want it to cover the screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: 100%;
+    background: white;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+  }
+}
+
+
 /* Responsive design for smaller screens */
 @media (max-width: 800px) {
   .left-side {
@@ -60,18 +121,40 @@
   .floating-navbar {
     display: flex;
     position: fixed;
-    bottom: 0px;
+    bottom: 0;
     left: 0;
     right: 0;
     background: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
     z-index: 1000;
   }
-  .right-side {
-    display: none;
+  
+  .floating-navbar button {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    color: #333;
   }
+  
+  .floating-navbar button span {
+    margin-top: 4px;
+    font-size: 10px;
+  }
+
+  .floating-navbar button.active {
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  /* .right-side {
+    display: none;
+  } */
 
   .middle-side {
     width: 100%; /* Expand middle side to full width */
@@ -83,6 +166,10 @@
 }
 
 @media (max-width: 768px) {
+  .tab-content{
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 .navigation-buttons {
@@ -276,14 +363,41 @@
   justify-content: space-between;
   border-radius: 8px;
   padding: 10px 7px;
+  transition: transform 0.2s;
 }
 
 .project-card {
-  flex: 0 0 calc(25% - 7.5px); /* Three cards per row */
-  height: 60%;
+  flex: 0 0 calc(25% - 10px); /* Default: Four cards per row on desktop */
+  height: 55%;
   background-color: white;
   box-sizing: border-box; /* Include padding and borders in width/height */
   overflow: hidden;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.project-card:hover, .person-card:hover{
+  transform: scale(1.02);
+}
+
+@media (max-width: 1024px) {
+  .project-card {
+    flex: 0 0 calc(33.33% - 10px); /* Three cards per row on tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .project-card {
+    flex: 0 0 calc(50% - 10px); /* Two cards per row on smaller tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .project-card {
+    flex: 0 0 100%; /* Single column on mobile */
+  }
 }
 
 .image-details {

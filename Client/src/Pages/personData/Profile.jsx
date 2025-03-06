@@ -44,7 +44,7 @@ export default function Profile() {
         <div className="persondata-leftside">
           <div className="persondata-info">
             <div className="persondata-info-img">
-              <img src={ProfileImg} alt="Profile" />
+              <img src={`${api}${persondata.profile}` || ProfileImg} alt="Profile" />
             </div>
             <div className="persondata-info-details">
               <div className="name">{persondata.fullname}</div>

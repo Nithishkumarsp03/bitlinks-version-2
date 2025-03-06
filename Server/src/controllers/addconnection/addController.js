@@ -1,9 +1,7 @@
 const db = require("../../db/config");
-const authenticate = require('../../middleware/authMiddleware')
 
-const addConnection = (req, res, authenticate) => {
+const addConnection = (req, res) => {
   const { finalData } = req.body;
-  // console.log(req.body);
 
   const query = `INSERT INTO personalinfo (useremail, profile, fullname, phonenumber, age, email, dob, rating, designation, visitingcard, linkedinurl, address, shortdescription, hashtags, spoc)
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -20,7 +18,7 @@ const addConnection = (req, res, authenticate) => {
     finalData.rating,
     finalData.designation,
     finalData.visitingCardPhoto,
-    finalData.linkedinurl,
+    finalData.linkedinUrl,
     finalData.address,
     finalData.shortdescription,
     finalData.hashtags,
