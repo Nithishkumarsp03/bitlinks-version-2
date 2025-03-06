@@ -74,7 +74,7 @@ export default function Adminremainder() {
 
   const handleBirthdayWishes = (e, item) => {
     e.stopPropagation();
-    console.log("Birthday Wishes Clicked - Email Sent Status:", item.emailSent); // Debugging
+    // console.log("Birthday Wishes Clicked - Email Sent Status:", item.emailSent);
     if (item.emailSent === 1) return; // Prevent opening if wishes are already sent
     setBirthdayEmail(item.email);
     setBirthdayopen(true);
@@ -145,9 +145,9 @@ export default function Adminremainder() {
     e.stopPropagation();
     const newDueDate = new Date();
     newDueDate.setDate(newDueDate.getDate() + days);
-    console.log(
-      `Snooze task for ${module} ${item.id || item.history_id} for ${days} days to ${newDueDate}`
-    );
+    // console.log(
+    //   `Snooze task for ${module} ${item.id || item.history_id} for ${days} days to ${newDueDate}`
+    // );
     setModule(module);
     if (module === "history") setId(item.history_id);
     else if (module === "minutes") setId(item.id);
@@ -166,9 +166,9 @@ export default function Adminremainder() {
     } else if (module === "minutes") {
       setId(item.id);
     }
-    console.log(
-      `Action: ${module} ${action} for item ID: ${item.id || item.history_id}`
-    );
+    // console.log(
+    //   `Action: ${module} ${action} for item ID: ${item.id || item.history_id}`
+    // );
   };
 
   // Handles sending a Thanksgiving note

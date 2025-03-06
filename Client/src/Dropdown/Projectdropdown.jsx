@@ -20,7 +20,7 @@ export default function Projectdropdown({ project, setProject }) {
       if (res.ok) {
         setProjectData(data?.data || []);
       } else {
-        console.log("Error: ", data?.message || "Failed to fetch project data");
+        console.error("Error: ", data?.message || "Failed to fetch project data");
       }
     } catch (error) {
       console.error("Fetch error: ", error);

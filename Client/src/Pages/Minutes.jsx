@@ -7,7 +7,7 @@ export default function ApiDataDisplay() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://10.30.10.21/bitlinks/api/minutes/fetchtempminutes");
+        const response = await fetch("http://localhost:8000/bitlinks/api/minutes/fetchtempminutes");
         const apiResponse = await response.json();
         setData(apiResponse);
       } catch (error) {
@@ -32,7 +32,7 @@ export default function ApiDataDisplay() {
             <thead className="api-table-header">
               <tr className="api-table-row">
                 <th className="api-table-heading">ID</th>
-                <th className="api-table-heading">Agent</th>
+                <th className="api-table-heading">Company or Persondetails</th>
                 <th className="api-table-heading">Minutes</th>
                 <th className="api-table-heading">Status</th>
                 <th className="api-table-heading">Handler</th>
@@ -44,7 +44,7 @@ export default function ApiDataDisplay() {
               {data.map((item) => (
                 <tr key={item.id} className="api-table-row">
                   <td className="api-table-cell">{item.id}</td>
-                  <td className="api-table-cell">{item.agent}</td>
+                  <td className="api-table-cell">{item.fullname}</td>
                   <td className="api-table-cell">{item.minutes}</td>
                   <td className="api-table-cell">{item.status}</td>
                   <td className="api-table-cell">{item.handler}</td>

@@ -271,11 +271,11 @@ export default function Spocremainder() {
     e.stopPropagation();
     const newDueDate = new Date();
     newDueDate.setDate(newDueDate.getDate() + days); // Calculate new due date
-    console.log(
-      `Snooze task for ${module} ${
-        item.id || item.history_id
-      } for ${days} days to ${newDueDate}`
-    );
+    // console.log(
+    //   `Snooze task for ${module} ${
+    //     item.id || item.history_id
+    //   } for ${days} days to ${newDueDate}`
+    // );
     setSnoozeVisible(null); // Close the dropdown after selection
     setModule(module);
     if (module === "history") setId(item.history_id);

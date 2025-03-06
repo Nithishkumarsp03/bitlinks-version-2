@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const cron = require('node-cron');
 
 //Auth - Configurations
 const auth = require("./routes/oAuth/auth.js");
@@ -25,6 +26,8 @@ const infographRoutes = require("./routes/infograph/infographRoutes");
 const securehubRoutes = require("./routes/entrydata/entryRoutes");
 
 const settingsRoute = require('./routes/settings/settingsRoute.js')
+
+const { sendMinutesCron } = require('./controllers/notifications/sendMinutesnotification');
 
 require("dotenv").config();
 const path = require('path');
@@ -113,5 +116,29 @@ app.use(`${api}/api/securehub`, securehubRoutes);
 
 //Settings Route
 app.use(`${api}/api/settings`, settingsRoute);
+
+// Schedule a job to run at 12:30 PM every day
+cron.schedule('30 12 * * *', () => {
+  // console.log("Cron job running at 12:30 PM");
+  sendMinutesCron((err, result) => {
+    if (err) {
+      console.error("Error processing minutes at 12:30 PM:", err);
+    } else {
+      // console.log(result.message);
+    }
+  });
+});
+
+// Schedule a job to run at 3:30 PM every day
+cron.schedule('30 15 * * *', () => {
+  // console.log("Cron job running at 3:30 PM");
+  sendMinutesCron((err, result) => {
+    if (err) {
+      console.error("Error processing minutes at 3:30 PM:", err);
+    } else {
+      // console.log(result.message);
+    }
+  });
+});
 
 module.exports = app;

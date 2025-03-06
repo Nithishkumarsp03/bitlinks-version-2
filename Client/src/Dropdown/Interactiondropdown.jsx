@@ -22,7 +22,7 @@ export default function InteractionDropdown({
         });
         if (res.ok) {
           const data = await res.json();
-          console.log('Interactions:', data);
+          // console.log('Interactions:', data);
           // Ensure data is an array
           if (Array.isArray(data.data)) {
             setInteractions(data.data);
@@ -30,10 +30,10 @@ export default function InteractionDropdown({
             console.error("Fetched data is not an array:", data);
           }
         } else {
-          console.log("Failed to fetch interactions:", res.status);
+          console.error("Failed to fetch interactions:", res.status);
         }
       } catch (error) {
-        console.log("Error fetching interactions:", error.message);
+        console.error("Error fetching interactions:", error.message);
       }
     };
 

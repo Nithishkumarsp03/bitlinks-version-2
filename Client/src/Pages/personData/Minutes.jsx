@@ -43,7 +43,7 @@ export default function Minutes() {
       }
 
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       if (data.minutes) setMinutes(data?.minutes);
       // setMinutes(data?.minutes)
       setProjecttitle(data?.title);
@@ -214,6 +214,9 @@ export default function Minutes() {
                       >
                         Mark as Completed
                       </button>
+                      <div onClick={() => handleEdit(key)}>
+                        <i class="fa-solid fa-pen-to-square"></i>
+                      </div>
                     </div>
                   ) : null}
 

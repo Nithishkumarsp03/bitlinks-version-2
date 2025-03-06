@@ -73,7 +73,7 @@ export default function Addconnection() {
 
   const handleSpocChange = (event) => {
     const isChecked = event.target.checked;
-    console.log("Switch toggled:", isChecked); // Logs the switch action
+    // console.log("Switch toggled:", isChecked);
     setPersonData((prevData) => ({
       ...prevData,
       spoc: isChecked ? "yes" : "no",
@@ -82,7 +82,7 @@ export default function Addconnection() {
 
   const handleRankChange = (event) => {
     const isChecked = event.target.checked;
-    console.log("Switch toggled:", isChecked); // Logs the switch action
+    // console.log("Switch toggled:", isChecked); // Logs the switch action
     setPersonData((prevData) => ({
       ...prevData,
       rank: isChecked ? -1 : 0,

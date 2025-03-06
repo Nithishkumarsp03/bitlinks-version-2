@@ -64,6 +64,13 @@ export default function AddMinutes({ addopen, setAddopen, fetchMinutes, showSnac
       showSnackbar('Minutes added successfully', 'success');
       fetchMinutes();
       setAddopen(false)
+      setFormValues({
+        topic: "",
+        description: "",
+        initialDate: "",
+        dueDate: "",
+        projectLeader: "",
+      });
     } catch (error) {
       showSnackbar(error, 'error');
       console.error(error);

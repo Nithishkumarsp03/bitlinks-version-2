@@ -53,8 +53,33 @@ export default function Editminutes({ editopen, setEditopen, formValues, setForm
   };
 
   const handleDelete = async() => {
+    try {
+      const api = process.env.REACT_APP_API;
+      const res = await fetch(`${api}/api/minutes/deleteminutes`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
+        },
+        body: JSON.stringify({id: formValues.id}),
+      });
 
+      if (!res.ok) {
+        showSnackbar('Minutes Deletion failed', 'error');
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      showSnackbar('Minutes Deleted Successfully!', 'success');
+      fetchMinutes();
+      setEditopen(false);
+    } catch (error) {
+      showSnackbar('Failed to update minutes', 'error');
+      console.error(error);
+      // alert("Failed to update minutes.");
+    }
   }
+
+  // console.log(formValues)
 
   return (
     <Dialog open={editopen} onClose={handleCancel} fullWidth>

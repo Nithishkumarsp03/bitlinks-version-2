@@ -20,7 +20,7 @@ export default function NonconflictDialog({
 }) {
   const handleRankChange = (event) => {
     const isChecked = event.target.checked;
-    console.log("Switch toggled:", isChecked); // Logs the switch action
+    // console.log("Switch toggled:", isChecked);
     setFormValues((prevData) => ({
       ...prevData,
       rank: isChecked ? -1 : 0,

@@ -87,7 +87,7 @@ export default function History() {
   };
 
   const handleImageclick = (imagepath) => {
-    console.log(imagepath);
+    // console.log(imagepath);
     setImageopen(true);
     setVisitedimage(imagepath);
   };

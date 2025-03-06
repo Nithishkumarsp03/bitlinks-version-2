@@ -174,7 +174,7 @@ export default function Securedata() {
         }
 
         const uploadResult = await uploadResponse.json();
-        console.log(uploadResult);
+        // console.log(uploadResult);
 
         newProfilePath = uploadResult.profileImage;
         newVisitingCardPath = uploadResult.visitingcard;

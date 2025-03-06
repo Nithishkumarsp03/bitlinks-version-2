@@ -20,7 +20,7 @@ export default function Spocdropdown({ formValues, setFormValues }) {
       if (res.ok) {
         setSpoc(data?.spoc || []);
       } else {
-        console.log("Error: ", data?.error || "Failed to fetch SPOC data");
+        console.error("Error: ", data?.error || "Failed to fetch SPOC data");
       }
     } catch (error) {
       console.error("Fetch error: ", error);
