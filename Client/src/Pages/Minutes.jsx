@@ -7,7 +7,7 @@ export default function ApiDataDisplay() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:8000/bitlinks/api/minutes/fetchtempminutes");
+        const response = await fetch("http://10.30.10.21/bitlinks/api/minutes/fetchtempminutes");
         const apiResponse = await response.json();
         setData(apiResponse);
       } catch (error) {
