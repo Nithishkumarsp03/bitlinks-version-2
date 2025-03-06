@@ -6,7 +6,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   // console.log(req.body)
   try {
-    const [rows] = await db.promise().query("SELECT * FROM login WHERE EMAIL = ? WHERE STATUS = 1", [email]);
+    const [rows] = await db.promise().query("SELECT * FROM login WHERE EMAIL = ? AND STATUS = 1", [email]);
     const user = rows[0];
 
     if (!user) {
