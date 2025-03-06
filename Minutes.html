@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Data Display</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        #loader {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>API Response Data</h2>
+    <div id="loader">Loading data, please wait...</div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Agent</th>
+                <th>Minutes</th>
+                <th>Status</th>
+                <th>Handler</th>
+                <th>Date</th>
+                <th>Deadline</th>
+            </tr>
+        </thead>
+        <tbody id="data-table">
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchData() {
+            const loader = document.getElementById("loader");
+            const tableBody = document.getElementById("data-table");
+            loader.style.display = "block";
+            tableBody.innerHTML = "";
+            
+            try {
+                const response = await fetch("http://10.30.10.21/bitlinks/api/minutes/fetchtempminutes"); // Replace with your actual API URL
+                const apiResponse = await response.json();
+                
+                apiResponse.forEach(item => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${item.id}</td>
+                        <td>${item.agent}</td>
+                        <td>${item.minutes}</td>
+                        <td>${item.status}</td>
+                        <td>${item.handler}</td>
+                        <td>${new Date(item.date).toLocaleString()}</td>
+                        <td>${new Date(item.deadline).toLocaleString()}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            } finally {
+                loader.style.display = "none";
+            }
+        }
+        
+        fetchData();
+    </script>
+</body>
+</html>
