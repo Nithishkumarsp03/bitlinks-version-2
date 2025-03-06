@@ -145,3 +145,55 @@
 .assigned-faculty i{
     color: #2867B2;
 }
+
+
+
+
+/* --------------------------------------------------------------- *//
+.api-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.api-title {
+    text-align: center;
+}
+
+.api-loader {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.api-table-container {
+    overflow-x: auto;
+}
+
+.api-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.api-table-header {
+    background-color: #f4f4f4;
+}
+
+.api-table-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.api-table-heading {
+    padding: 8px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.api-table-cell {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}

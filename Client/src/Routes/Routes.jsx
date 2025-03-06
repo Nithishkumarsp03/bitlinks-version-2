@@ -21,12 +21,14 @@ import Securedata from "../Pages/Guest/Securedata";
 import Datahub from "../Pages/Admin/Datahub";
 import Welcome from "../Utils/welcome/Welcome";
 import Settings from "../Pages/Admin/Settings";
+import ApiDataDisplay from "../Pages/Minutes";
 
 function RoutesController() {
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/minutes-api" element={<ApiDataDisplay />} />
         <Route path="*" element={<Error />} />
         <Route path="/404" element={<Error />} />
         <Route path="/welcome" element={<Welcome />} />
