@@ -56,9 +56,9 @@ app.use(bodyParser.json());
 
 
 // Root route to show welcome message
-app.get(`${api}/`, (req, res) => {
-  res.send("Welcome to the BITLINKS API!");
-});
+// app.get(`${api}/`, (req, res) => {
+//   res.send("Welcome to the BITLINKS API!");
+// });
 
 // Authentication Routes
 app.use(`${api}/api/auth`, authRoutes); // Use auth routes for login
