@@ -66,7 +66,7 @@ export default function Register() {
             onChange={(e) => setName(e.target.value)}
           />
           <Input
-            type="text"
+            type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
