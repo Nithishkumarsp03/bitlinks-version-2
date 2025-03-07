@@ -3,7 +3,7 @@ const db = require('../../db/config');
 const nodemailer = require('nodemailer');
 
 const sendMinutesCron = (callback) => {
-  // Updated query: join minutes, personalinfo, and projects to fetch all needed data
+  // Updated query to fetch all needed data
   const query = `
     SELECT m.id, m.topic, m.description, m.due_date, m.handler, p.email, proj.title AS project_topic
     FROM minutes m
@@ -22,19 +22,26 @@ const sendMinutesCron = (callback) => {
       return callback(null, { message: "No unsent minutes found." });
     }
     
-    // Group records by recipient email so each recipient receives one email
+    // Group records by recipient email.
+    // Then further group by project title so all minutes for a project are together.
     const emailGroups = {};
     results.forEach(record => {
       if (!emailGroups[record.email]) {
-        emailGroups[record.email] = [];
+        emailGroups[record.email] = {
+          handler: record.handler,
+          projects: {}
+        };
       }
-      emailGroups[record.email].push(record);
+      if (!emailGroups[record.email].projects[record.project_topic]) {
+        emailGroups[record.email].projects[record.project_topic] = [];
+      }
+      emailGroups[record.email].projects[record.project_topic].push(record);
     });
     
     // Create a Nodemailer transporter (using Gmail in this example)
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 2525,
+      port: 587,
       secure: false,
       auth: {
         user: process.env.EMAIL_USER,
@@ -45,41 +52,38 @@ const sendMinutesCron = (callback) => {
     const emailAddresses = Object.keys(emailGroups);
     let groupsProcessed = 0;
     
-    // Process each email group separately
+    // Process each email group (one email per recipient)
     emailAddresses.forEach(email => {
-      const groupRecords = emailGroups[email];
-      // Use the first record in the group to get handler and project info
-      const firstRecord = groupRecords[0];
+      const group = emailGroups[email];
       
-      // Build HTML email content with a table
-      let htmlContent = `
-        <h2>Minutes Summary</h2>
-        <p>Hello ${firstRecord.handler}, please find below the details of the minutes for project "${firstRecord.project_topic}".</p>
-        <table style="width:100%; border-collapse: collapse;">
-          <thead>
-            <tr>
-              <th style="border: 1px solid #dddddd; padding: 8px;">Topic</th>
-              <th style="border: 1px solid #dddddd; padding: 8px;">Description</th>
-              <th style="border: 1px solid #dddddd; padding: 8px;">Due Date</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
+      // Build HTML email content with separate sections for each project
+      let htmlContent = `<h2>Minutes Summary</h2>
+        <p>Hello ${group.handler}, please find below the details of your minutes:</p>`;
       
-      groupRecords.forEach(record => {
+      // Iterate over each project for the recipient
+      Object.keys(group.projects).forEach(projectTitle => {
+        htmlContent += `<h3>Project: ${projectTitle}</h3>
+          <table style="width:100%; border-collapse: collapse;">
+            <thead>
+              <tr>
+                <th style="border: 1px solid #dddddd; padding: 8px;">Topic</th>
+                <th style="border: 1px solid #dddddd; padding: 8px;">Description</th>
+                <th style="border: 1px solid #dddddd; padding: 8px;">Due Date</th>
+              </tr>
+            </thead>
+            <tbody>`;
+        group.projects[projectTitle].forEach(record => {
+          htmlContent += `
+              <tr>
+                <td style="border: 1px solid #dddddd; padding: 8px;">${record.topic}</td>
+                <td style="border: 1px solid #dddddd; padding: 8px;">${record.description}</td>
+                <td style="border: 1px solid #dddddd; padding: 8px;">${record.due_date}</td>
+              </tr>`;
+        });
         htmlContent += `
-          <tr>
-            <td style="border: 1px solid #dddddd; padding: 8px;">${record.topic}</td>
-            <td style="border: 1px solid #dddddd; padding: 8px;">${record.description}</td>
-            <td style="border: 1px solid #dddddd; padding: 8px;">${record.due_date}</td>
-          </tr>
-        `;
+            </tbody>
+          </table>`;
       });
-      
-      htmlContent += `
-          </tbody>
-        </table>
-      `;
       
       // Email options for the current recipient
       const mailOptions = {
@@ -89,17 +93,23 @@ const sendMinutesCron = (callback) => {
         html: htmlContent
       };
       
-      // Send the email for this group
+      // Send the email for this recipient
       transporter.sendMail(mailOptions, (mailErr, info) => {
         if (mailErr) {
           console.error(`Error sending email to ${email}:`, mailErr);
-          // Optionally, you could call callback here for error—depending on desired behavior
+          // Optionally handle the error (e.g., continue to update or retry)
         } else {
           console.log(`Email sent to ${email}:`, info.response);
         }
         
-        // Update the minutes records for this group as sent
-        const ids = groupRecords.map(record => record.id);
+        // Update all minutes records for this recipient as sent
+        const ids = [];
+        Object.values(group.projects).forEach(recordsArray => {
+          recordsArray.forEach(record => {
+            ids.push(record.id);
+          });
+        });
+        
         const updateQuery = "UPDATE minutes SET isSent = 1 WHERE id IN (?)";
         db.query(updateQuery, [ids], (updateErr, updateResult) => {
           if (updateErr) {
