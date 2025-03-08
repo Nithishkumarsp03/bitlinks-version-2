@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { decryptData } from "../Utils/crypto/cryptoHelper";
+import useStore from "../store/store";
 
 export default function InteractionDropdown({
   purpose,
   setPurpose,
   handleChange,
 }) {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const [interactions, setInteractions] = useState([]);
 
@@ -20,6 +22,10 @@ export default function InteractionDropdown({
             "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
           },
         });
+        if(res.status == 401){
+          setLogopen(true);
+          return;
+        }
         if (res.ok) {
           const data = await res.json();
           // console.log('Interactions:', data);

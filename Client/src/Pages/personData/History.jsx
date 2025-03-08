@@ -30,6 +30,7 @@ import { useParams } from "react-router-dom";
 import NoDataFound from "../../Components/Nodatafound/Nodatafound";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 // Custom StepIcon to add image
 const CustomStepIcon = ({ active, completed, icon, image }) => {
@@ -58,6 +59,7 @@ const CustomStepIcon = ({ active, completed, icon, image }) => {
 };
 
 export default function History() {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const { uuid } = useParams();
   const [open, setOpen] = useState(false);
@@ -102,6 +104,11 @@ export default function History() {
         },
         body: JSON.stringify({ uuid }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         showSnackbar(

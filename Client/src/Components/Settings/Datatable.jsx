@@ -16,9 +16,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import Adddata from "../../Dialog/settings/Adddata";
 import Deletedata from "../../Dialog/settings/Deletedata";
+import useStore from "../../store/store";
 import { SyncLoader } from "react-spinners";
 
 export default function DataTable({ tab }) {
+  const {setLogopen} = useStore();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -51,6 +53,11 @@ export default function DataTable({ tab }) {
           authorization: `Bearer ${token}`,
         },
       });
+
+      if(response.status == 401){
+        setLogopen(true);
+        return;
+      }
       const responseText = await response.text();
       const result = JSON.parse(responseText);
       setData(result.data);
@@ -103,6 +110,11 @@ export default function DataTable({ tab }) {
         },
         body: JSON.stringify({ id, status: newStatus }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const result = await res.json();
       if (!res.ok) {

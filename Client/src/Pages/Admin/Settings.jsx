@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "../../Components/Header/Header";
 import DataTable from "../../Components/Settings/Datatable";
 import DeveloperContact from "../../Components/Settings/DeveloperContact";
+import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/settings.css";
 
 const tabs = [
@@ -15,7 +16,14 @@ const tabs = [
 ];
 
 export default function Settings() {
-  const [activeTab, setActiveTab] = useState(tabs[0].key);
+  const role = decryptData(localStorage.getItem("role"));
+  const [activeTab, setActiveTab] = useState(
+    role === "user"
+      ? "developerContact"
+      : role === "guest"
+      ? "developerContact"
+      : tabs[0].key
+  );
   const [menuOpen, setMenuOpen] = useState(false); // Sidebar toggle for mobile
 
   return (
@@ -25,33 +33,34 @@ export default function Settings() {
       </div>
 
       {/* Sidebar Toggle Button for Mobile */}
-      <button
-        className="menu-toggle"
-        onClick={() => setMenuOpen(!menuOpen)}
-      >
+      <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
         ☰ Menu
       </button>
 
       <div className="settings-body">
-        {/* Sidebar */}
-        <div className={`sidebar ${menuOpen ? "open" : ""}`}>
-          {tabs.map((tab) => (
-            <div
-              key={tab.key}
-              onClick={() => {
-                setActiveTab(tab.key);
-                setMenuOpen(false); // Close menu after selection on mobile
-              }}
-              className={`tab-item ${activeTab === tab.key ? "active" : ""}`}
-            >
-              {tab.label}
-            </div>
-          ))}
-        </div>
+        {role === "admin" && (
+          <div className={`sidebar ${menuOpen ? "open" : ""}`}>
+            {tabs.map((tab) => (
+              <div
+                key={tab.key}
+                onClick={() => {
+                  setActiveTab(tab.key);
+                  setMenuOpen(false); // Close menu after selection on mobile
+                }}
+                className={`tab-item ${activeTab === tab.key ? "active" : ""}`}
+              >
+                {tab.label}
+              </div>
+            ))}
+          </div>
+        )}
 
-        {/* Right Content Area */}
         <div className="content">
-          {activeTab === "developerContact" ? <DeveloperContact /> : <DataTable tab={activeTab} />}
+          {activeTab === "developerContact" ? (
+            <DeveloperContact />
+          ) : (
+            <DataTable tab={activeTab} />
+          )}
         </div>
       </div>
     </div>

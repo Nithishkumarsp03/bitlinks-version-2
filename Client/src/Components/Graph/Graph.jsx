@@ -6,7 +6,6 @@ import Diamond from "../../Assets/Gem.svg";
 import "../../Styles/profile.css"
 
 export default function Graph() {
-
     const [graph, setGraph] = useState('monthly');
     const [totalPoints, setTotalPoints] = useState(0);
 

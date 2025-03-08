@@ -18,9 +18,11 @@ import AddressDropdown from "../../Dropdown/AddressDropdown";
 import RoleDropdown from "../../Dropdown/RoleDropdown";
 import CompanyDropdown from "../../Dropdown/CompanyDropdown";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 import "../../Styles/dialog.css";
 
 const ExperienceDialog = ({ open, setExperienceopen, setexperienceCompletion, showSnackbar }) => {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const { uuid } = useParams();
   const [experienceInfo, setExperienceInfo] = useState({
@@ -43,6 +45,11 @@ const ExperienceDialog = ({ open, setExperienceopen, setexperienceCompletion, sh
         },
         body: JSON.stringify({ uuid }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const data = await res.json();
       if (!res.ok) {
@@ -145,6 +152,11 @@ const ExperienceDialog = ({ open, setExperienceopen, setexperienceCompletion, sh
         },
         body: JSON.stringify(dataToUpdate),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
       const result = await res.json();
       if (!res.ok) {
         showSnackbar(result.message, 'error');

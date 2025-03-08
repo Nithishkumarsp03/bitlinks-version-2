@@ -10,8 +10,10 @@ import {
 } from "@mui/material";
 import Spocdropdown from "../../Dropdown/Spocdropdown";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 export default function Editminutes({ editopen, setEditopen, formValues, setFormValues, fetchMinutes, showSnackbar }) {
+  const {setLogopen} = useStore();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevData) => ({
@@ -36,6 +38,11 @@ export default function Editminutes({ editopen, setEditopen, formValues, setForm
         },
         body: JSON.stringify({formValues}),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         showSnackbar('Minutes updation failed', 'error');
@@ -63,6 +70,11 @@ export default function Editminutes({ editopen, setEditopen, formValues, setForm
         },
         body: JSON.stringify({id: formValues.id}),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         showSnackbar('Minutes Deletion failed', 'error');

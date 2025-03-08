@@ -5,8 +5,10 @@ import AddressDropdown from '../../Dropdown/AddressDropdown';  // Assuming it's 
 import "../../Styles/dialog.css"
 import { useParams } from 'react-router-dom';
 import { decryptData } from '../../Utils/crypto/cryptoHelper';
+import useStore from '../../store/store';
 
 const Alumni = ({ open, setAlumniopen, setalumniCompletion, showSnackbar }) => {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const { uuid } = useParams();
   const [alumniInfo, setAlumniInfo] = useState({
@@ -44,6 +46,11 @@ const Alumni = ({ open, setAlumniopen, setalumniCompletion, showSnackbar }) => {
         },
         body: JSON.stringify({ uuid: uuid }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const data = await res.json();
       if (!res.ok) {
@@ -96,6 +103,11 @@ const Alumni = ({ open, setAlumniopen, setalumniCompletion, showSnackbar }) => {
         },
         body: JSON.stringify({ updateAlumni }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const data = await res.json()
       if(!res.ok){

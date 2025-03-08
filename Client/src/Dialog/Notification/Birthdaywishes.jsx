@@ -9,6 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 export default function Birthdaywishes({
   birthdayopen,
@@ -18,6 +19,7 @@ export default function Birthdaywishes({
   fetchNotification,
   id
 }) {
+  const {setLogopen} = useStore();
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("Happy Birthday! 🎉");
   const [message, setMessage] = useState(
@@ -53,6 +55,11 @@ export default function Birthdaywishes({
           }),
         }
       );
+
+      if(response.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const result = await response.json();
       if (response.ok) {

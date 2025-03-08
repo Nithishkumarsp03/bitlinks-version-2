@@ -12,13 +12,16 @@ export default function ViewContactDialog({ open, contact, onClose, api }) {
               <strong>Full Name:</strong> {contact.fullname}
             </div>
             <div>
+              <strong>Companyname:</strong> {contact.companyname}
+            </div>
+            <div>
+              <strong>Role:</strong> {contact.role}
+            </div>
+            <div>
               <strong>Guest Name:</strong> {contact.guest_name}
             </div>
             <div>
               <strong>Phone Number:</strong> {contact.phonenumber || 'N/A'}
-            </div>
-            <div>
-              <strong>Age:</strong> {contact.age}
             </div>
             <div>
               <strong>Email:</strong> {contact.email || 'N/A'}

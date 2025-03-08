@@ -15,7 +15,7 @@ import inctive from "../../Assets/ranks/inactive.svg";
 import useStore from "../../store/store";
 
 export default function Networks() {
-  const { rank } = useStore();
+  const { rank, setLogopen } = useStore();
   const api = process.env.REACT_APP_API;
   const navigate = useNavigate();
   const [persondata, setPersondata] = useState([]);
@@ -42,6 +42,10 @@ export default function Networks() {
           authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
       if (!res.ok) throw new Error(`Error: ${res.status} - ${res.statusText}`);
       const responseData = await res.json();
       setPersondata(Array.isArray(responseData.data) ? responseData.data : []);

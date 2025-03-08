@@ -5,8 +5,8 @@ const insertData = (req, res) => {
   // console.log(req.body);
 
   const query = `
-        INSERT into entrydata (profile, guest_name, fullname, phonenumber, age, email, dob, designation, linkedinurl, visitingcard, rating, hashtags, address, purpose) 
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        INSERT into entrydata (profile, guest_name, fullname, phonenumber, companyname, role, email, dob, designation, linkedinurl, visitingcard, rating, hashtags, address, purpose) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     `;
 
   const values = [
@@ -14,7 +14,8 @@ const insertData = (req, res) => {
     finalData.name,
     finalData.fullname,
     finalData.phonenumber,
-    finalData.age,
+    finalData.companyname ? finalData.companyname.value : null,
+    finalData.role ? finalData.role.value : null,
     finalData.email,
     finalData.dob,
     finalData.designation,

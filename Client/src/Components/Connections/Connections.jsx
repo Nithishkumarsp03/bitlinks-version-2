@@ -13,10 +13,11 @@ import rank1 from "../../Assets/ranks/rank3.svg";
 import rank0 from "../../Assets/ranks/rank4.svg";
 import inctive from "../../Assets/ranks/inactive.svg";
 import useStore from "../../store/store";
+import UnauthorizedDialog from "../../Dialog/utilsDialog/Unauthorised";
 
 export default function Connections() {
   const api = process.env.REACT_APP_API;
-  const { rank } = useStore();
+  const { rank, setLogopen } = useStore();
   const navigate = useNavigate();
   const email = decryptData(localStorage.getItem("email"));
   const role = decryptData(localStorage.getItem("role"));
@@ -48,6 +49,11 @@ export default function Connections() {
         },
         body: JSON.stringify({ email: email }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         throw new Error(`Error: ${res.status} - ${res.statusText}`);
@@ -286,6 +292,7 @@ export default function Connections() {
           <div ref={sentinelRef} style={{ height: "1px" }}></div>
         </div>
       )}
+      <UnauthorizedDialog />
     </div>
   );
 }

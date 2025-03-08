@@ -20,8 +20,10 @@ import SkillsetDropdown from "../../Dropdown/SkillsetDropdown";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/dialog.css"; // Add your styles here
 import { useParams } from "react-router-dom";
+import useStore from "../../store/store";
 
 const PlacementDialog = ({ open, setPlacementopen, setplacementCompletion, showSnackbar }) => {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const { uuid } = useParams();
   const [placementInfo, setPlacementInfo] = useState({
@@ -87,6 +89,11 @@ const PlacementDialog = ({ open, setPlacementopen, setplacementCompletion, showS
         body: JSON.stringify({ uuid: uuid }),
       });
 
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
+
       const data = await res.json();
       if (!res.ok) {
         showSnackbar(data.message, 'error');
@@ -150,6 +157,11 @@ const PlacementDialog = ({ open, setPlacementopen, setplacementCompletion, showS
         },
         body: JSON.stringify({updatedPlacementInfo}), // Send plain string
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const data = await res.json();
       if (!res.ok) {

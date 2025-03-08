@@ -4,8 +4,10 @@ import ProfileImg from "../../Assets/user.jpg";
 import { useParams } from "react-router-dom";
 import Graph from "../../Components/Graph/Graph";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 export default function Profile() {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const { uuid } = useParams();
   // console.log(uuid)
@@ -21,6 +23,11 @@ export default function Profile() {
         },
         body: JSON.stringify({ uuid: uuid }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);

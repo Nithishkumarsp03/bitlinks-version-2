@@ -7,9 +7,11 @@ import Switch from "@mui/material/Switch";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import { useNavigate, useParams } from "react-router-dom";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 import "../../Styles/addconnection.css";
 
 export default function Addconnection() {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const role = decryptData(localStorage.getItem("role"));
   const navigate = useNavigate();
@@ -110,12 +112,17 @@ export default function Addconnection() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ name: name }),
       });
 
       const data = await res.json();
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         setLoading(false);
@@ -169,6 +176,11 @@ export default function Addconnection() {
           body: formData,
         });
 
+        if(uploadResponse.status == 401){
+          setLogopen(true);
+          return;
+        }
+
         if (!uploadResponse.ok) {
           setLoading(false);
           showSnackbar("Photo upload failed", "error");
@@ -198,6 +210,11 @@ export default function Addconnection() {
         },
         body: JSON.stringify({ finalData }), // Only send the necessary JSON data
       });
+
+      if(jsonResponse.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!jsonResponse.ok) {
         setLoading(false);

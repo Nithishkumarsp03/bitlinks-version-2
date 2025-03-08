@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import NoDataFound from "../Nodatafound/Nodatafound";
 import { SyncLoader } from "react-spinners";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 import "../../Styles/project.css";
 
 export default function Projects() {
   const api = process.env.REACT_APP_API;
+  const {setLogopen} = useStore();
   const navigate = useNavigate();
   const role = decryptData(localStorage.getItem("role"));
 
@@ -32,6 +34,11 @@ export default function Projects() {
           "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         throw new Error(`Error: ${res.status} - ${res.statusText}`);

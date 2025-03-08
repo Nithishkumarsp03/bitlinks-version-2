@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import Profile from "../../Assets/user.jpg";
 import { Tree, TreeNode } from "react-organizational-chart";
 import "../../Styles/interlinks.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 const api = process.env.REACT_APP_API;
 
@@ -44,9 +45,21 @@ const renderNode = (connection) => {
 };
 
 export default function Interlinks() {
+  const {setLogopen} = useStore();
+  const role = decryptData(localStorage.getItem('role'));
   const [mainPerson, setMainPerson] = useState(null);
   const [subConnections, setSubConnections] = useState([]);
   const { uuid } = useParams();
+  const navigate = useNavigate();
+
+  const handleNavigate = (uuid) => {
+    if(role === 'admin'){
+      navigate(`/admin/${uuid}/person-details`);
+    }
+    else{
+      navigate(`/${uuid}/person-details`);
+    }
+  }
 
   useEffect(() => {
     const fetchPersonData = async () => {
@@ -59,6 +72,11 @@ export default function Interlinks() {
           },
           body: JSON.stringify({ uuid }),
         });
+
+        if(res.status == 401){
+          setLogopen(true);
+          return;
+        }
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -93,7 +111,7 @@ export default function Interlinks() {
             <div className="card-container-interlinks"
             >
               {subConnections.map((child) => (
-                <div key={child.person_id} >
+                <div key={child.person_id} onClick={() => handleNavigate(child.uuid)}>
                   {renderNode(child)}
                 </div>
               ))}

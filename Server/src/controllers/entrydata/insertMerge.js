@@ -32,7 +32,6 @@ const insertMerge = (req, res) => {
           mergedData.profile,
           mergedData.fullname,
           mergedData.phonenumber,
-          mergedData.age,
           mergedData.email,
           mergedData.linkedinurl,
           mergedData.dob,
@@ -47,8 +46,8 @@ const insertMerge = (req, res) => {
 
         db.query(
           `INSERT INTO personalinfo 
-            (useremail, profile, fullname, phonenumber, age, email, linkedinurl, dob, designation, visitingcard, rating, hashtags, address, shortdescription, sub_id) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (useremail, profile, fullname, phonenumber, email, linkedinurl, dob, designation, visitingcard, rating, hashtags, address, shortdescription, sub_id) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
           values,
           (err, insertResult) => {
             if (err) {
@@ -59,6 +58,15 @@ const insertMerge = (req, res) => {
             const insertId = insertResult.insertId;
             console.log("Inserted into personalinfo with ID:", insertId);
 
+            if(mergedData.companyname || mergedData.role){
+              db.query(`INSERT INTO company (person_id, companyname, role) values (?,?,?)`,
+                [insertId, mergedData.companyname, mergedData.role],
+                (err) => {
+                  if (err) console.error("Error inserting into company:", err);
+                }
+              )
+            }
+
             // If spocPersonId exists, insert into person_points_summary
             if (spocPersonId !== null) {
               db.query(
@@ -66,7 +74,6 @@ const insertMerge = (req, res) => {
                 [insertId, formValues.rank],
                 (err) => {
                   if (err) console.error("Error inserting into person_points_summary:", err);
-                  else console.log("Inserted into person_points_summary with person_id:", spocPersonId);
                 }
               );
             }

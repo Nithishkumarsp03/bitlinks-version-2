@@ -14,9 +14,11 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import { useParams } from "react-router-dom";
 import Spocdropdown from '../../Dropdown/Spocdropdown'
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 import "../../Styles/dialog.css";
 
 export default function Person({ open, setPersonopen, setpersonCompletion, showSnackbar }) {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const { uuid } = useParams();
   const [formValues, setFormValues] = useState({
@@ -93,6 +95,11 @@ export default function Person({ open, setPersonopen, setpersonCompletion, showS
           method: "POST",
           body: uploadData,
         });
+
+        if(uploadResponse.status == 401){
+          setLogopen(true);
+          return;
+        }
   
         if (!uploadResponse.ok) {
           showSnackbar("Photo upload failed", 'success');
@@ -135,6 +142,11 @@ export default function Person({ open, setPersonopen, setpersonCompletion, showS
         },
         body: JSON.stringify({finalData}),
       });
+
+      if(jsonResponse.status == 401){
+        setLogopen(true);
+        return;
+      }
   
       if (!jsonResponse.ok) {
         showSnackbar('Data submission failed', 'error');
@@ -176,6 +188,11 @@ export default function Person({ open, setPersonopen, setpersonCompletion, showS
         },
         body: JSON.stringify({ uuid: uuid }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const data = await res.json();
       if (!res.ok) {

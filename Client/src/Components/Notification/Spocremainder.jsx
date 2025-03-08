@@ -3,7 +3,7 @@ import MinutesImg from "../../Assets/minutes.svg";
 import RescheduleCall from "../../Assets/Reschedule.svg"; // Add history logo
 import RescheduleVisit from "../../Assets/RescheduledVisit.svg"; // Add visited logo
 import Visited from "../../Assets/Visited.svg";
-import Tick from "../../Assets/tickicon.png"
+import Tick from "../../Assets/tickicon.png";
 import Birthdaywishes from "../../Dialog/Notification/Birthdaywishes";
 import Snooze from "../../Dialog/Notification/Snooze";
 import Completed from "../../Dialog/Notification/Completed";
@@ -11,15 +11,18 @@ import Thanksgiving from "../../Dialog/Notification/Visited";
 import { useNavigate } from "react-router-dom";
 import NoDataFound from "../Nodatafound/Nodatafound";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
+import { Button, Popover } from "@mui/material";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 import "../../Styles/notification.css";
 
 export default function Spocremainder() {
+  const { setLogopen } = useStore();
   const [snackbar, setSnackbar] = useState({
-      open: false,
-      message: "",
-      severity: "success",
-    });
+    open: false,
+    message: "",
+    severity: "success",
+  });
   const navigate = useNavigate();
   const role = decryptData(localStorage.getItem("role"));
   const [apiResponse, setApiResponse] = useState({});
@@ -38,6 +41,9 @@ export default function Spocremainder() {
   const api = process.env.REACT_APP_API;
   const email = decryptData(localStorage.getItem("email"));
 
+  const [snoozeAnchor, setSnoozeAnchor] = useState(null);
+  const [currentSnoozeItem, setCurrentSnoozeItem] = useState(null);
+
   const showSnackbar = (message, severity) => {
     setSnackbar({ open: true, message, severity });
   };
@@ -48,7 +54,7 @@ export default function Spocremainder() {
     setBirthdayEmail(item.email);
     setBirthdayopen(true);
     setId(item.person_id);
-  };  
+  };
 
   // Fetch notification data
   const fetchNotification = async () => {
@@ -57,10 +63,15 @@ export default function Spocremainder() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ email }),
       });
+
+      if (res.status == 401) {
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -159,25 +170,6 @@ export default function Spocremainder() {
           >
             Snooze
           </button>
-          {snoozeVisible === (item.id || item.history_id) && (
-            <div className="snooze-catalog">
-              <button
-                onClick={(e) => handleSnoozeSelection(e, item, 15, "history")}
-              >
-                Snooze for 15 Days
-              </button>
-              <button
-                onClick={(e) => handleSnoozeSelection(e, item, 30, "history")}
-              >
-                Snooze for 30 Days
-              </button>
-              <button
-                onClick={(e) => handleSnoozeSelection(e, item, 45, "history")}
-              >
-                Snooze for 45 Days
-              </button>
-            </div>
-          )}
         </div>
       );
     }
@@ -204,25 +196,6 @@ export default function Spocremainder() {
           >
             Snooze
           </button>
-          {snoozeVisible === (item.id || item.history_id) && (
-            <div className="snooze-catalog">
-              <button
-                onClick={(e) => handleSnoozeSelection(e, item, 15, "minutes")}
-              >
-                Snooze for 15 Days
-              </button>
-              <button
-                onClick={(e) => handleSnoozeSelection(e, item, 30, "minutes")}
-              >
-                Snooze for 30 Days
-              </button>
-              <button
-                onClick={(e) => handleSnoozeSelection(e, item, 45, "minutes")}
-              >
-                Snooze for 45 Days
-              </button>
-            </div>
-          )}
         </div>
       );
     }
@@ -264,7 +237,8 @@ export default function Spocremainder() {
   const handleSnooze = (e, item) => {
     e.stopPropagation();
     const id = item.id || item.history_id;
-    setSnoozeVisible(snoozeVisible === id ? null : id); // Toggle the visibility
+    setSnoozeAnchor(e.currentTarget);
+    setCurrentSnoozeItem(item);
   };
 
   const handleSnoozeSelection = (e, item, days, module) => {
@@ -306,7 +280,7 @@ export default function Spocremainder() {
     e.stopPropagation();
     setVisitedopen(true);
     setId(item.history_id);
-    setThanksgivingemail(item.email)
+    setThanksgivingemail(item.email);
   };
 
   // Combine and filter notifications
@@ -381,6 +355,87 @@ export default function Spocremainder() {
           ))
         )}
       </div>
+
+      <Popover
+        open={Boolean(snoozeAnchor)}
+        anchorEl={snoozeAnchor}
+        onClose={() => {
+          setSnoozeAnchor(null);
+          setCurrentSnoozeItem(null);
+        }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <div
+          style={{
+            padding: "10px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "5px",
+          }}
+        >
+          <Button
+            onClick={(e) => {
+              if (currentSnoozeItem) {
+                handleSnoozeSelection(
+                  e,
+                  currentSnoozeItem,
+                  15,
+                  currentSnoozeItem.type === "Reschedule Call" ||
+                    currentSnoozeItem.type === "Reschedule Visit"
+                    ? "history"
+                    : "minutes"
+                );
+              }
+              setSnoozeAnchor(null);
+              setCurrentSnoozeItem(null);
+            }}
+          >
+            Snooze for 15 Days
+          </Button>
+          <Button
+            onClick={(e) => {
+              if (currentSnoozeItem) {
+                handleSnoozeSelection(
+                  e,
+                  currentSnoozeItem,
+                  30,
+                  currentSnoozeItem.type === "Reschedule Call" ||
+                    currentSnoozeItem.type === "Reschedule Visit"
+                    ? "history"
+                    : "minutes"
+                );
+              }
+              setSnoozeAnchor(null);
+              setCurrentSnoozeItem(null);
+            }}
+          >
+            Snooze for 30 Days
+          </Button>
+          <Button
+            onClick={(e) => {
+              if (currentSnoozeItem) {
+                handleSnoozeSelection(
+                  e,
+                  currentSnoozeItem,
+                  45,
+                  currentSnoozeItem.type === "Reschedule Call" ||
+                    currentSnoozeItem.type === "Reschedule Visit"
+                    ? "history"
+                    : "minutes"
+                );
+              }
+              setSnoozeAnchor(null);
+              setCurrentSnoozeItem(null);
+            }}
+          >
+            Snooze for 45 Days
+          </Button>
+        </div>
+      </Popover>
+
       <Birthdaywishes
         birthdayopen={birthdayopen}
         setBirthdayopen={setBirthdayopen}

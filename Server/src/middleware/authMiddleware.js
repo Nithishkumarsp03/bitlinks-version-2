@@ -22,8 +22,7 @@ const authenticateToken = async (req, res, next) => {
     const user = rows[0];
 
     if (!user) {
-      console.log("not found")
-      return res.status(404).json({ message: "User not found" });
+      return res.status(401).json({ message: "User not found" });
     }
 
     // Compare the updated_at values

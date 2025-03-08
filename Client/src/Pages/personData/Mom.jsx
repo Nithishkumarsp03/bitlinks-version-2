@@ -4,9 +4,11 @@ import AddProject from "../../Dialog/Project/Addproject";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import NoDataFound from "../../Components/Nodatafound/Nodatafound";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 import "../../Styles/mom.css";
 
 export default function Mom() {
+  const {setLogopen} = useStore();
   const { uuid } = useParams();
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -40,6 +42,11 @@ export default function Mom() {
         },
         body: JSON.stringify({ uuid }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         showSnackbar(`Error: ${res.status} - ${res.statusText}`, "error");

@@ -8,8 +8,10 @@ import SkillsetDropdown from "../../Dropdown/SkillsetDropdown";
 import { decryptData } from '../../Utils/crypto/cryptoHelper';
 import "../../Styles/dialog.css"; // Add your styles here
 import { useParams } from 'react-router-dom';
+import useStore from '../../store/store';
 
 const InternshipDialog = ({open, setInternshipopen, setinternshipCompletion, showSnackbar}) => {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const {uuid} = useParams();
   const [internshipInfo, setInternshipInfo] = useState({
@@ -70,6 +72,11 @@ const InternshipDialog = ({open, setInternshipopen, setinternshipCompletion, sho
         },
         body: JSON.stringify({ uuid: uuid }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
   
       const data = await res.json();
       if (!res.ok) {
@@ -137,6 +144,11 @@ const InternshipDialog = ({open, setInternshipopen, setinternshipCompletion, sho
         },
         body: JSON.stringify({updateInternship})
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const data = await res.json();
       showSnackbar('Internship info updated Succesfully!', 'success');

@@ -11,8 +11,10 @@ import {
 import Spocdropdown from "../../Dropdown/Spocdropdown";
 import { useParams } from "react-router-dom";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 export default function AddMinutes({ addopen, setAddopen, fetchMinutes, showSnackbar }) {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const { uuid, shaid } = useParams();
   const [formValues, setFormValues] = useState({
@@ -53,6 +55,11 @@ export default function AddMinutes({ addopen, setAddopen, fetchMinutes, showSnac
           formValues,
         }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         setAddopen(false);

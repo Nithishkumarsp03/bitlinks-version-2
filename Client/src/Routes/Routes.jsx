@@ -33,6 +33,7 @@ function RoutesController() {
         <Route path="/404" element={<Error />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/settings" element={<Settings />}/>
         <Route
           path="/secure-data-hub"
           element={
@@ -41,11 +42,6 @@ function RoutesController() {
             </ProtectedRoute>
           }
         />
-        <Route path="/admin/settings" element={
-          <ProtectedRoute allowedRoles={["admin"]}>
-            <Settings />
-          </ProtectedRoute>
-        }/>
         <Route
           path="/admin/:uuid/person-details"
           element={

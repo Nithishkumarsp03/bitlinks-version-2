@@ -10,7 +10,7 @@ import rank4 from "../../Assets/ranks/rank4.svg";
 import inactive from "../../Assets/ranks/inactive.svg";
 
 export default function Leftside({ role }) {
-  const {rank, setRank } = useStore();
+  const {rank, setRank, setLogopen } = useStore();
   const navigate = useNavigate();
   const api = process.env.REACT_APP_API;
   const location = useLocation();
@@ -93,6 +93,7 @@ export default function Leftside({ role }) {
           authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       };
+
   
       if (type === "myconnections") {
         endpoint = `${api}/api/person/fetchRanks/connections`;
@@ -109,6 +110,10 @@ export default function Leftside({ role }) {
   
       const res = await fetch(endpoint, options);
   
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
       const text = await res.text();
       const data = JSON.parse(text);
   

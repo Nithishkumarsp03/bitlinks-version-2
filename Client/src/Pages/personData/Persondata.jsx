@@ -18,9 +18,11 @@ import History from "./History";
 import Profile from "./Profile";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 import Input from "@mui/joy/Input";
 
 export default function Persondata() {
+  const { setLogopen } = useStore();
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -52,12 +54,15 @@ export default function Persondata() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${decryptData(
-            localStorage.getItem("token")
-          )}`,
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ uuid }),
       });
+
+      if (res.status == 401) {
+        setLogopen(true);
+        return;
+      }
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
@@ -86,12 +91,15 @@ export default function Persondata() {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${decryptData(
-            localStorage.getItem("token")
-          )}`,
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ id: selectedPerson.person_id }),
       });
+
+      if (res.status == 401) {
+        setLogopen(true);
+        return;
+      }
       const data = await res.json();
       if (!res.ok) {
         showSnackbar(`HTTP error! status: ${res.status}`, "error");
@@ -123,15 +131,18 @@ export default function Persondata() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${decryptData(
-            localStorage.getItem("token")
-          )}`,
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({
           uuid: selectedPerson.uuid,
           status: selectedPerson.status === 1 ? 2 : 3,
         }),
       });
+
+      if (response.status == 401) {
+        setLogopen(true);
+        return;
+      }
       if (!response.ok) {
         showSnackbar(`HTTP error! status: ${response.status}`, "error");
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -164,7 +175,10 @@ export default function Persondata() {
           />
         </div>
         {activeTab === "Profile" ? (
-          <div className="profile-content" style={{ width: "100%", height: "90%" }}>
+          <div
+            className="profile-content"
+            style={{ width: "100%", height: "90%" }}
+          >
             <Profile />
           </div>
         ) : (
@@ -177,13 +191,19 @@ export default function Persondata() {
                   key={index}
                   style={{ border: "2px solid #2867b2" }}
                 >
-                  <div className="plus-icon" onClick={() => handleAddConnection(person.email)}>
+                  <div
+                    className="plus-icon"
+                    onClick={() => handleAddConnection(person.email)}
+                  >
                     <FaPlus />
                   </div>
                   <div className="image-details">
                     <br />
                     <div className="profile-container">
-                      <img src={`${api}${person.profile}` || User} alt="Profile" />
+                      <img
+                        src={`${api}${person.profile}` || User}
+                        alt="Profile"
+                      />
                       <img className="small-image" src="" alt="Small" />
                     </div>
                     <div className="details-container">
@@ -223,14 +243,24 @@ export default function Persondata() {
                       </div>
                       <div>
                         <i className="fa-solid fa-user"></i>
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "start" }}>
-                          <span style={{ fontWeight: "600", color: "grey" }}>Referred By</span>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "start",
+                          }}
+                        >
+                          <span style={{ fontWeight: "600", color: "grey" }}>
+                            Referred By
+                          </span>
                           <div>{person.sub_name}</div>
                         </div>
                       </div>
                       <div className="profile-action-buttons">
                         <button
-                          disabled={!(person.status === 0 || person.status === 1)}
+                          disabled={
+                            !(person.status === 0 || person.status === 1)
+                          }
                           onClick={() => handleOpenDialog(person)}
                         >
                           {person.status === 1
@@ -239,9 +269,14 @@ export default function Persondata() {
                             ? "Mark as Active"
                             : "Request Sent"}
                         </button>
-                        <button onClick={() => handleDeleteClick(person)} style={{ backgroundColor: "red" }}>
-                          <MdDelete /> <div>Delete</div>
-                        </button>
+                        {role === "admin" && (
+                          <button
+                            onClick={() => handleDeleteClick(person)}
+                            style={{ backgroundColor: "red" }}
+                          >
+                            <MdDelete /> <div>Delete</div>
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -249,18 +284,30 @@ export default function Persondata() {
               ))}
             </div>
             {/* Middle Data */}
-            <div className="middle-data" style={{ flex: isFullwidth ? 1 : 2, display: isFullwidth ? "block" : "flex" }}>
+            <div
+              className="middle-data"
+              style={{
+                flex: isFullwidth ? 1 : 2,
+                display: isFullwidth ? "block" : "flex",
+              }}
+            >
               <Outlet />
             </div>
             {!isFullwidth && (
               <>
                 <div className={`right-data ${isRightDataOpen ? "open" : ""}`}>
-                  <button className="close-btn" onClick={() => setIsRightDataOpen(false)}>
+                  <button
+                    className="close-btn"
+                    onClick={() => setIsRightDataOpen(false)}
+                  >
                     <FaTimes />
                   </button>
                   <History />
                 </div>
-                <button className="right-data-button" onClick={() => setIsRightDataOpen(true)}>
+                <button
+                  className="right-data-button"
+                  onClick={() => setIsRightDataOpen(true)}
+                >
                   <FaBars />
                 </button>
               </>
@@ -274,7 +321,11 @@ export default function Persondata() {
           {selectedPerson?.status === 1 ? "Inactive" : "Active"}?
         </DialogTitle>
         <DialogActions>
-          <Button variant="contained" color="error" onClick={() => setActiondialog(false)}>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => setActiondialog(false)}
+          >
             Cancel
           </Button>
           <Button variant="contained" onClick={handleConfirmAction}>
@@ -284,12 +335,15 @@ export default function Persondata() {
       </Dialog>
       <Dialog open={deleteopen} onClose={() => setDeleteopen(false)}>
         <DialogTitle>
-          {step === 1 ? "Are you sure you want to delete this contact?" : "Confirm Deletion"}
+          {step === 1
+            ? "Are you sure you want to delete this contact?"
+            : "Confirm Deletion"}
         </DialogTitle>
         <DialogContent>
           {step === 1 ? (
             <Typography>
-              This action cannot be undone. This will permanently delete this contact.
+              This action cannot be undone. This will permanently delete this
+              contact.
             </Typography>
           ) : (
             <>
@@ -309,15 +363,28 @@ export default function Persondata() {
           )}
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="error" onClick={() => setDeleteopen(false)}>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => setDeleteopen(false)}
+          >
             Cancel
           </Button>
           {step === 1 ? (
-            <Button variant="contained" color="primary" onClick={handleConfirmClick}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleConfirmClick}
+            >
               Yes, Confirm
             </Button>
           ) : (
-            <Button variant="contained" color="error" onClick={handleFinalDelete} disabled={confirmText !== "delete"}>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={handleFinalDelete}
+              disabled={confirmText !== "delete"}
+            >
               Delete Permanently
             </Button>
           )}

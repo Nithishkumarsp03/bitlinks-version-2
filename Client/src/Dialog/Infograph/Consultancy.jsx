@@ -8,8 +8,10 @@ import SkillsetDropdown from "../../Dropdown/SkillsetDropdown";
 import { decryptData } from '../../Utils/crypto/cryptoHelper';
 import "../../Styles/dialog.css"; // Add your styles here
 import { useParams } from 'react-router-dom';
+import useStore from '../../store/store';
 
 const ConsultancyDialog = ({open, setConsultancyopen, setconsultancyCompletion, showSnackbar}) => {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const {uuid} = useParams();
   const [consultancyInfo, setConsultancyInfo] = useState({
@@ -78,6 +80,11 @@ const ConsultancyDialog = ({open, setConsultancyopen, setconsultancyCompletion, 
         },
         body: JSON.stringify({ uuid: uuid }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
   
       const data = await res.json();
       if (!res.ok) {
@@ -143,6 +150,11 @@ const ConsultancyDialog = ({open, setConsultancyopen, setconsultancyCompletion, 
         },
         body: JSON.stringify({consultancyUpdate})
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const data = await res.json();
       if(!res.ok){

@@ -5,9 +5,11 @@ import Editminutes from "../../Dialog/Minutes/Editminutes";
 import NoDataFound from "../../Components/Nodatafound/Nodatafound";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 import "../../Styles/minutes.css";
 
 export default function Minutes() {
+  const {setLogopen} = useStore();
   const { shaid, uuid } = useParams();
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -36,6 +38,11 @@ export default function Minutes() {
         },
         body: JSON.stringify({ uuid: uuid, shaid: shaid }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         showSnackbar(`HTTP error! status: ${res.status}`, "error");
@@ -89,6 +96,11 @@ export default function Minutes() {
         },
         body: JSON.stringify({ id: minute.id, status: status }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         showSnackbar(`HTTP error! status: ${res.status}`, "error");

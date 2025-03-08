@@ -15,9 +15,13 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
+import CompanyDropdown from "../../Dropdown/CompanyDropdown";
+import RoleDropdown from "../../Dropdown/RoleDropdown";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 export default function Securedata() {
+  const { setLogopen } = useStore();
   const api = process.env.REACT_APP_API;
   const name = decryptData(localStorage.getItem("name"));
   const [formValues, setformValues] = useState({
@@ -26,7 +30,8 @@ export default function Securedata() {
     phonenumber: "",
     linkedinurl: "",
     designation: "",
-    age: "",
+    companyname: null,
+    role: null,
     dob: "",
     rating: "",
     hashtags: "",
@@ -48,6 +53,10 @@ export default function Securedata() {
     setSnackbar({ open: true, message, severity });
   };
 
+  const handlecompanyChange = (newValue) => {
+    setformValues((prev) => ({ ...prev, companyname: newValue }));
+  };
+
   useEffect(() => {
     const isLoggedIn = decryptData(localStorage.getItem("isLoggedIn"));
     if (isLoggedIn) {
@@ -55,7 +64,6 @@ export default function Securedata() {
       decryptData(localStorage.removeItem("isLoggedIn"));
     }
   }, []);
-
 
   const options = [
     { label: "Highly Recommended", value: "Highly Recommended" },
@@ -132,7 +140,8 @@ export default function Securedata() {
       phonenumber: "",
       linkedinurl: "",
       designation: "",
-      age: "",
+      companyname: null,
+      role: null,
       dob: "",
       rating: "",
       hashtags: "",
@@ -168,6 +177,11 @@ export default function Securedata() {
           body: formData,
         });
 
+        if (uploadResponse.status == 401) {
+          setLogopen(true);
+          return;
+        }
+
         if (!uploadResponse.ok) {
           showSnackbar("Photo upload Failed", "error");
           throw new Error("Photo upload failed");
@@ -191,10 +205,15 @@ export default function Securedata() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ finalData }), // Only send the necessary JSON data
       });
+
+      if (jsonResponse.status == 401) {
+        setLogopen(true);
+        return;
+      }
 
       if (!jsonResponse.ok) {
         showSnackbar("Data submission Failed", "error");
@@ -296,15 +315,15 @@ export default function Securedata() {
               />
             </div>
             <div className="input-fields">
-              <label>Designation</label>
+              <label>Division:</label>
               <Select
-                placeholder="Select designation"
+                placeholder="Select division"
                 value={
                   formValues.designation
                     ? {
-                      value: formValues.designation,
-                      label: formValues.designation,
-                    }
+                        value: formValues.designation,
+                        label: formValues.designation,
+                      }
                     : null
                 }
                 options={designation}
@@ -357,16 +376,6 @@ export default function Securedata() {
 
           <div className="right-side-sections">
             <div className="input-fields">
-              <label>Age:</label>
-              <Input
-                placeholder="Enter your age"
-                value={formValues.age}
-                type="number"
-                name="age"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="input-fields">
               <label>Date of Birth</label>
               <Input
                 type="date"
@@ -387,6 +396,22 @@ export default function Securedata() {
                 options={options}
                 name="rating"
                 onChange={(option) => handleSelectChange(option, "rating")}
+              />
+            </div>
+            <div className="input-fields">
+              <label>CompanyName</label>
+              <CompanyDropdown 
+                onChange={handlecompanyChange}
+                value={formValues.companyname}
+              />
+            </div>
+            <div className="input-fields">
+              <label>Role</label>
+              <RoleDropdown
+                onChange={(newValue) =>
+                  setformValues({ ...formValues, role: newValue })
+                }
+                value={formValues.role}
               />
             </div>
             <div className="input-fields">

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { decryptData } from "../Utils/crypto/cryptoHelper";
+import useStore from "../store/store";
 
 export default function Projectdropdown({ project, setProject }) {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const [projectData, setProjectData] = useState([]);
 
@@ -16,6 +18,11 @@ export default function Projectdropdown({ project, setProject }) {
           "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
       const data = await res.json();
       if (res.ok) {
         setProjectData(data?.data || []);

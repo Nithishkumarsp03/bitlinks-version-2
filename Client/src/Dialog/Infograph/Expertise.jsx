@@ -7,8 +7,10 @@ import "../../Styles/dialog.css";
 import { useParams } from "react-router-dom";
 import SkillsetDropdown from "../../Dropdown/SkillsetDropdown";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 const Expertise = ({ open, setExpertiseopen, setexpertiseCompletion, showSnackbar }) => {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const {uuid} = useParams()
   const [expertiseInfo, setExpertiseInfo] = useState({
@@ -57,6 +59,11 @@ const Expertise = ({ open, setExpertiseopen, setexpertiseCompletion, showSnackba
         },
         body: JSON.stringify({ uuid: uuid }), // Send UUID
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
   
       const data = await res.json();
       if (!res.ok) {
@@ -113,6 +120,11 @@ const Expertise = ({ open, setExpertiseopen, setexpertiseCompletion, showSnackba
         },
           body: JSON.stringify(expertiseData),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const data = await res.json();
       if(!res.ok){

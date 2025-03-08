@@ -27,8 +27,10 @@ import InteractionDropdown from "../../Dropdown/Interactiondropdown";
 import Projectdropdown from "../../Dropdown/Projectdropdown";
 import { useParams } from "react-router-dom";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 export default function AddHistory({ open, setAddhistory, showSnackbar, fetchHistory }) {
+  const {setLogopen} = useStore();
   const callTypes = [
     { label: "Call", icon: Call },
     { label: "Minutes", icon: Minutes },
@@ -99,6 +101,11 @@ export default function AddHistory({ open, setAddhistory, showSnackbar, fetchHis
         method: "POST",
         body: formData,
       });
+
+      if(uploadResponse.status == 401){
+        setLogopen(true);
+        return;
+      }
       const uploadData = await uploadResponse.json();
   
       if (!uploadResponse.ok) {
@@ -137,6 +144,11 @@ export default function AddHistory({ open, setAddhistory, showSnackbar, fetchHis
         },
         body: JSON.stringify({historyData}),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
   
       if (!res.ok) {
         setAddhistory(false);

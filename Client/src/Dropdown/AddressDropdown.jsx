@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel } from '@mui/material';
 import Select from 'react-select';
 import { decryptData } from '../Utils/crypto/cryptoHelper';
+import useStore from '../store/store';
 
 const AddressDropdown = ({ value, onChange }) => {
+    const {setLogopen} = useStore();
     const [addresses, setAddresses] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
 
@@ -17,6 +19,11 @@ const AddressDropdown = ({ value, onChange }) => {
                         "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
                       },
                 });
+
+                if(response.status == 401){
+                    setLogopen(true);
+                    return;
+                  }
 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

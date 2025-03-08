@@ -3,7 +3,7 @@ import MinutesImg from "../../Assets/minutes.svg";
 import RescheduleCall from "../../Assets/minutes.svg"; // Replace with your Reschedule Call image if different
 import RescheduleVisit from "../../Assets/RescheduledVisit.svg";
 import Visited from "../../Assets/Visited.svg";
-import Tick from "../../Assets/tickicon.png"
+import Tick from "../../Assets/tickicon.png";
 import Birthdaywishes from "../../Dialog/Notification/Birthdaywishes";
 import Snooze from "../../Dialog/Notification/Snooze";
 import Completed from "../../Dialog/Notification/Completed";
@@ -13,9 +13,11 @@ import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import NoDataFound from "../Nodatafound/Nodatafound";
 import { Button, Popover } from "@mui/material";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 import "../../Styles/notification.css";
 
 export default function Adminremainder() {
+  const { setLogopen } = useStore();
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -24,7 +26,7 @@ export default function Adminremainder() {
   const navigate = useNavigate();
   const role = decryptData(localStorage.getItem("role")); // In admin mode, role should be "admin"
   const [apiResponse, setApiResponse] = useState({});
-  
+
   // Remove snoozeVisible state and use Popover anchor and current item instead
   const [snoozeAnchor, setSnoozeAnchor] = useState(null);
   const [currentSnoozeItem, setCurrentSnoozeItem] = useState(null);
@@ -53,9 +55,13 @@ export default function Adminremainder() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
@@ -71,7 +77,6 @@ export default function Adminremainder() {
     fetchNotification();
   }, []);
 
-
   const handleBirthdayWishes = (e, item) => {
     e.stopPropagation();
     // console.log("Birthday Wishes Clicked - Email Sent Status:", item.emailSent);
@@ -80,8 +85,6 @@ export default function Adminremainder() {
     setBirthdayopen(true);
     setId(item.person_id);
   };
-  
-  
 
   // Define navigation when a notification card is clicked.
   const handleCardclick = (item) => {
@@ -102,7 +105,7 @@ export default function Adminremainder() {
     }
     // else if (item.source === "birthdays_today") {
     //   setBirthdayopen(true);
-    // } 
+    // }
     else {
       navigate("/404");
     }
@@ -217,7 +220,7 @@ export default function Adminremainder() {
     }
 
     if (item.dob) {
-      if(item.emailSent === 0){
+      if (item.emailSent === 0) {
         return (
           <button
             onClick={(e) => handleBirthdayWishes(e, item)}
@@ -226,14 +229,14 @@ export default function Adminremainder() {
             Send Birthday Wishes
           </button>
         );
-      }
-      else{
+      } else {
         return (
           <button
             onClick={(e) => handleBirthdayWishes(e, item)}
             className="notification-action-buttons-sent"
           >
-            <div>Birthday wishes sent</div> <img src={Tick} alt="" width={"25px"}/>
+            <div>Birthday wishes sent</div>{" "}
+            <img src={Tick} alt="" width={"25px"} />
           </button>
         );
       }
@@ -400,8 +403,8 @@ export default function Adminremainder() {
                   e,
                   currentSnoozeItem,
                   15,
-                  (currentSnoozeItem.type === "Reschedule Call" ||
-                    currentSnoozeItem.type === "Reschedule Visit")
+                  currentSnoozeItem.type === "Reschedule Call" ||
+                    currentSnoozeItem.type === "Reschedule Visit"
                     ? "history"
                     : "minutes"
                 );
@@ -419,8 +422,8 @@ export default function Adminremainder() {
                   e,
                   currentSnoozeItem,
                   30,
-                  (currentSnoozeItem.type === "Reschedule Call" ||
-                    currentSnoozeItem.type === "Reschedule Visit")
+                  currentSnoozeItem.type === "Reschedule Call" ||
+                    currentSnoozeItem.type === "Reschedule Visit"
                     ? "history"
                     : "minutes"
                 );
@@ -438,8 +441,8 @@ export default function Adminremainder() {
                   e,
                   currentSnoozeItem,
                   45,
-                  (currentSnoozeItem.type === "Reschedule Call" ||
-                    currentSnoozeItem.type === "Reschedule Visit")
+                  currentSnoozeItem.type === "Reschedule Call" ||
+                    currentSnoozeItem.type === "Reschedule Visit"
                     ? "history"
                     : "minutes"
                 );

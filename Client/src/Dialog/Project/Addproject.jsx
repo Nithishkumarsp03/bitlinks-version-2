@@ -5,8 +5,10 @@ import { useParams } from 'react-router-dom';
 import Domaindropdown from '../../Dropdown/Domaindropdown';
 import Spocdropdown from '../../Dropdown/Spocdropdown';
 import { decryptData } from '../../Utils/crypto/cryptoHelper';
+import useStore from '../../store/store';
 
 export default function AddProject({open, setAddopen, fetchPerson, showSnackbar}) {
+  const {setLogopen} = useStore();
     const api = process.env.REACT_APP_API;
     const {uuid} = useParams();
   const [formValues, setFormValues] = useState({
@@ -42,6 +44,11 @@ export default function AddProject({open, setAddopen, fetchPerson, showSnackbar}
         },
         body: JSON.stringify({uuid, formValues}),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
   
       if (!res.ok) {
         showSnackbar("Failed to submit history data", 'error')
@@ -60,8 +67,7 @@ export default function AddProject({open, setAddopen, fetchPerson, showSnackbar}
         fetchPerson();
         showSnackbar('Project added Successfully!', 'success');
       }
-  
-    //   alert("History submitted successfully!");
+      
     } catch (error) {
       console.error("Error:", error.message);
       showSnackbar("Something went wrong. Please try again.", 'error');

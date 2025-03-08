@@ -3,8 +3,10 @@ import ReactApexChart from "react-apexcharts";
 import { useParams } from "react-router-dom";
 import Diamond from "../../Assets/Gem.svg";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 export default function Fiveyeargraph({ setTotalPoints }) {
+  const {setLogopen} = useStore();
   const [seriesData, setSeriesData] = useState([]);
   const [labels, setLabels] = useState([]);
   const { uuid } = useParams();
@@ -28,6 +30,11 @@ export default function Fiveyeargraph({ setTotalPoints }) {
             body: JSON.stringify({ uuid }),
           }
         );
+
+        if(response.status == 401){
+          setLogopen(true);
+          return;
+        }
 
         if (!response.ok) {
           console.error("Failed to fetch data:", response.statusText);

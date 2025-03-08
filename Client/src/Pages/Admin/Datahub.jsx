@@ -9,9 +9,11 @@ import NoDataFound from "../../Components/Nodatafound/Nodatafound";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import { SyncLoader } from "react-spinners";
+import useStore from "../../store/store";
 import "../../Styles/datahub.css";
 
 export default function Datahub() {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const [fetchData, setfetchData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -93,7 +95,8 @@ export default function Datahub() {
       "fullname",
       "guest_name",
       "phonenumber",
-      "age",
+      "companyname",
+      "role",
       "email",
       "dob",
       "designation",
@@ -137,6 +140,11 @@ export default function Datahub() {
           "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
       const data = await res.json();
       if (!res.ok) {
         throw new Error(data.message);
@@ -246,7 +254,17 @@ export default function Datahub() {
   const handleMergeComplete = async (contacts) => {
     if (!contacts || contacts.length === 0) {
       console.error("No contacts selected for merging.");
-      alert("No contacts selected for merging.");
+      showSnackbar("No contacts selected for merging.", 'error');
+      // alert("No contacts selected for merging.");
+      return;
+    }
+
+    if(!contacts.email){
+      showSnackbar('Email is required to insertdata', 'error')
+      return;
+    }
+    if(!contacts.phonenumber){
+      showSnackbar('Phonenumber is required to insertdata', 'error')
       return;
     }
 
@@ -275,6 +293,11 @@ export default function Datahub() {
           formValues,
         }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) throw new Error("Merge failed");
 

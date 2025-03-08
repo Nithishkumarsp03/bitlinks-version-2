@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Profile from "../../Assets/user.jpg";
+import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 export default function Spoc() {
   const api = process.env.REACT_APP_API;
+  const { setLogopen } = useStore();
   const navigate = useNavigate();
   const [persondata, setPersondata] = useState([]);
   const [filteredData, setFilteredData] = useState([]); // State for filtered data
@@ -23,9 +26,14 @@ export default function Spoc() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
       });
+
+      if (res.status == 401) {
+        setLogopen(true);
+        return;
+      }
 
       if (!res.ok) {
         throw new Error(`Error: ${res.status} - ${res.statusText}`);
@@ -55,10 +63,11 @@ export default function Spoc() {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
 
-    const filtered = persondata.filter((person) =>
-      person.fullname.toLowerCase().includes(query) ||
-      person.phonenumber.includes(query) ||
-      person.email.toLowerCase().includes(query)
+    const filtered = persondata.filter(
+      (person) =>
+        person.fullname.toLowerCase().includes(query) ||
+        person.phonenumber.includes(query) ||
+        person.email.toLowerCase().includes(query)
     );
 
     setFilteredData(filtered);
@@ -90,10 +99,22 @@ export default function Spoc() {
               onClick={() => handleCardclick(person.uuid)}
               key={index}
             >
+              <div
+                className="plus-icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/admin/add-connection/${person.email}`);
+                }}
+              >
+                <FaPlus />
+              </div>
               <div className="image-details">
                 <br />
                 <div className="profile-container">
-                  <img src={`${api}${person.profile}` || Profile} alt="Profile" />
+                  <img
+                    src={`${api}${person.profile}` || Profile}
+                    alt="Profile"
+                  />
                   <img className="small-image" src="" alt="Small Image" />
                 </div>
                 <div className="details-container">

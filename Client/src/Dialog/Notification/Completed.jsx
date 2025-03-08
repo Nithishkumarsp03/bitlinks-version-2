@@ -9,8 +9,10 @@ import {
     Box,
   } from "@mui/material";
   import { decryptData } from '../../Utils/crypto/cryptoHelper';
+  import useStore from '../../store/store';
 
 export default function Completed({completedopen, setCompletedopen, module, action, id, fetchNotification}) {
+    const {setLogopen} = useStore();
     const api = process.env.REACT_APP_API;
 
     const handleConfirm = async() =>{
@@ -23,6 +25,11 @@ export default function Completed({completedopen, setCompletedopen, module, acti
                   },
                 body: JSON.stringify({ id: id, module: module, action: action})
             });
+
+            if(res.status == 401){
+                setLogopen(true);
+                return;
+              }
 
             const data = await res.json();
             if(!res.ok){

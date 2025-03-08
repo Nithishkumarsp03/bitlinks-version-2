@@ -8,8 +8,10 @@ import {
 } from "@mui/material";
 import { Input } from "@mui/joy";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 export default function Adddata({ tab, open, setOpen, fetchData }) {
+  const {setLogopen} = useStore();
   const [value, setValue] = useState("");
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
@@ -28,6 +30,11 @@ export default function Adddata({ tab, open, setOpen, fetchData }) {
         },
         body: JSON.stringify(payload),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
   
       const data = await res.json();
       if(!res.ok){

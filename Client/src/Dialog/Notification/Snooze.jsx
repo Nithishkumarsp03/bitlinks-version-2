@@ -9,6 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 export default function Snooze({
   snoozeopen,
@@ -18,6 +19,7 @@ export default function Snooze({
   days,
   fetchNotification
 }) {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
 
   const handleConfirm = async () => {
@@ -30,6 +32,11 @@ export default function Snooze({
         },
         body: JSON.stringify({ id: id, module: module, days: days }),
       });
+
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const data = await res.json();
 

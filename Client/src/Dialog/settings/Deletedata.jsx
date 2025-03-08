@@ -6,8 +6,10 @@ import {
   Button,
 } from "@mui/material";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 
 export default function Deletedata({tab, open, setOpen, fetchData, id}) {
+    const {setLogopen} = useStore();
 
     const api = process.env.REACT_APP_API;
 
@@ -21,6 +23,11 @@ export default function Deletedata({tab, open, setOpen, fetchData, id}) {
                 },
                 body: JSON.stringify({id})
             });
+
+            if(res.status == 401){
+                setLogopen(true);
+                return;
+              }
 
             const data = await res.json()
             if(!res.ok){

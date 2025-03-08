@@ -15,9 +15,11 @@ import AddressDropdown from "../../Dropdown/AddressDropdown";
 import CompanyDropdown from "../../Dropdown/CompanyDropdown";
 import RoleDropdown from "../../Dropdown/RoleDropdown";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import useStore from "../../store/store";
 import "../../Styles/dialog.css";
 
 const CompanyDialog = ({ open, setCompanyopen, setcompanyCompletion, showSnackbar }) => {
+  const {setLogopen} = useStore();
   const api = process.env.REACT_APP_API;
   const { uuid } = useParams();
   const [companyInfo, setCompanyInfo] = useState({
@@ -100,6 +102,10 @@ const CompanyDialog = ({ open, setCompanyopen, setcompanyCompletion, showSnackba
         },
         body: JSON.stringify(updateData),
       });
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
       const data = await res.json();
       if (!res.ok) {
         showSnackbar(data.message, 'error')
@@ -124,6 +130,10 @@ const CompanyDialog = ({ open, setCompanyopen, setcompanyCompletion, showSnackba
         },
         body: JSON.stringify({ uuid }),
       });
+      if(res.status == 401){
+        setLogopen(true);
+        return;
+      }
 
       const data = await res.json();
       if (!res.ok) {
