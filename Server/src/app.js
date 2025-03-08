@@ -127,15 +127,15 @@ app.use(`${api}/api/settings`, settingsRoute);
 // });
 
 // Schedule a job to run at 3:30 PM every day
-cron.schedule('46 14 * * *', () => {
-  console.log("Cron job running at 3:30 PM");
-  sendMinutesCron((err, result) => {
-    if (err) {
-      console.error("Error processing minutes at 3:30 PM:", err);
-    } else {
-      // console.log(result.message);
-    }
-  });
-});
+// cron.schedule('30 15 * * *', () => {
+//   console.log("Cron job running at 3:30 PM");
+//   sendMinutesCron((err, result) => {
+//     if (err) {
+//       console.error("Error processing minutes at 3:30 PM:", err);
+//     } else {
+//       // console.log(result.message);
+//     }
+//   });
+// });
 
 module.exports = app;
