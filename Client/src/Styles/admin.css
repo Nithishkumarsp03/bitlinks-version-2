@@ -107,7 +107,6 @@
   }
 }
 
-
 /* Responsive design for smaller screens */
 @media (max-width: 800px) {
   .left-side {
@@ -131,7 +130,7 @@
     align-items: center;
     z-index: 1000;
   }
-  
+
   .floating-navbar button {
     background: none;
     border: none;
@@ -141,7 +140,7 @@
     font-size: 12px;
     color: #333;
   }
-  
+
   .floating-navbar button span {
     margin-top: 4px;
     font-size: 10px;
@@ -166,7 +165,7 @@
 }
 
 @media (max-width: 768px) {
-  .tab-content{
+  .tab-content {
     flex-direction: column;
     width: 100%;
   }
@@ -219,14 +218,14 @@
   transition: all 1 s ease-in-out;
 }
 
-.rank-containers{
+.rank-containers {
   display: grid;
   grid-template-columns: auto auto;
   margin-top: 10px;
   margin-bottom: 10px;
   gap: 10px;
 }
-.ranks{
+.ranks {
   background-color: white;
   border-radius: 10px;
   display: flex;
@@ -236,19 +235,19 @@
   padding: 10px;
   gap: 5px;
 }
-.ranks div{
+.ranks div {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
 }
 
-.ranks div div{
-  color: #64696C;
+.ranks div div {
+  color: #64696c;
 }
 
-.ranks>div:nth-child(2){
-  color: #2867B2;
+.ranks > div:nth-child(2) {
+  color: #2867b2;
   font-weight: 500;
 }
 
@@ -378,7 +377,8 @@
   transition: transform 0.2s;
 }
 
-.project-card:hover, .person-card:hover{
+.project-card:hover,
+.person-card:hover {
   transform: scale(1.02);
 }
 
@@ -443,12 +443,11 @@
   transform: translate(17%, 17%);
 }
 
-.rank-image img{
+.rank-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 
 .details-container {
   width: 65%;
@@ -510,7 +509,7 @@
   text-overflow: ellipsis;
 }
 
-.card-links a{
+.card-links a {
   text-decoration: none;
   color: black;
 }
@@ -631,7 +630,7 @@
   background: #0056b3; /* Darker blue on hover */
 }
 
-.loader-component{
+.loader-component {
   height: 100%;
   width: 100%;
   display: flex;
@@ -639,7 +638,7 @@
   align-items: center;
 }
 
-.profile-action-buttons{
+.profile-action-buttons {
   width: 100%;
   display: flex;
   /* flex-direction: column; */
@@ -649,7 +648,7 @@
   margin-top: 5px;
 }
 
-.profile-action-buttons button{
+.profile-action-buttons button {
   width: 50%;
   padding: 8px 6px;
   border-radius: 7px;
@@ -661,4 +660,12 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5%;
 }
