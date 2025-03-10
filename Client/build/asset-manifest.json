@@ -1,13 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.2a7d5a27.css",
-    "main.js": "/static/js/main.3f2c3e77.js",
+    "main.css": "/static/css/main.720fe4b0.css",
+    "main.js": "/static/js/main.c5c1ddbd.js",
     "static/js/685.872a02b5.chunk.js": "/static/js/685.872a02b5.chunk.js",
     "static/media/sujith.webp": "/static/media/sujith.d3659bfd64e5dbe3ab2a.webp",
+    "static/media/Animation-1741581870586.gif": "/static/media/Animation-1741581870586.9d02834a5ee03b65916c.gif",
     "static/media/tharun.jpeg": "/static/media/tharun.fad8e04a619dfd9dc448.jpeg",
+    "static/media/amico.png": "/static/media/amico.b2305aa21e3440d5d391.png",
     "static/media/dhanusri.png": "/static/media/dhanusri.fd975f36e4c25eaed7a3.png",
-    "static/media/thayanithi.jpg": "/static/media/thayanithi.effee0a61bfe3be3a8ec.jpg",
     "static/media/nithish.jpg": "/static/media/nithish.90b55a8f39f6063577d3.jpg",
+    "static/media/thayanithi.jpg": "/static/media/thayanithi.e7a544240ab04b526044.jpg",
     "static/media/tickicon.png": "/static/media/tickicon.ec897016604da987d14e.png",
     "static/media/bitlinks-bg.png": "/static/media/bitlinks-bg.529612f1bb0e42966458.png",
     "static/media/user.jpg": "/static/media/user.900505a2e95287f7e05c.jpg",
@@ -50,7 +52,7 @@
     "static/media/rankminus.svg": "/static/media/rankminus.78d8c9afadf9472e014b15fb7bee4911.svg"
   },
   "entrypoints": [
-    "static/css/main.2a7d5a27.css",
-    "static/js/main.3f2c3e77.js"
+    "static/css/main.720fe4b0.css",
+    "static/js/main.c5c1ddbd.js"
   ]
 }
