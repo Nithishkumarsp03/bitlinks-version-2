@@ -19,7 +19,7 @@ export default function Header() {
   };
 
   const handleSettings = () => {
-    navigate('/settings');
+    navigate('/admin/settings');
   }
 
   return (
