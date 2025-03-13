@@ -9,7 +9,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "/google/callback", // This must match Google Cloud Console
+    callbackURL: `${process.env.API}/google/callback`, // This must match Google Cloud Console
     scope: ["profile", "email"]
 }, async (accessToken, refreshToken, profile, done) => {
     try {
