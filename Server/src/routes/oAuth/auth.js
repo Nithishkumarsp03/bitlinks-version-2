@@ -9,13 +9,13 @@ const api = process.env.API;
 const router = express.Router();
 
 router.get(`${api}/api/auth/google`, (req, res, next) => {
-  const csrfToken = req.query.csrf_token;
+  // const csrfToken = req.query.csrf_token;
 
-  if (!csrfToken) {
-      return res.status(400).json({ error: "You are not authorized to proceed. Token Missing" });
-  }
+  // if (!csrfToken) {
+  //     return res.status(400).json({ error: "You are not authorized to proceed. Token Missing" });
+  // }
 
-  req.session.csrfToken = csrfToken;
+  // req.session.csrfToken = csrfToken;
 
   next();
 }, passport.authenticate("google", { scope: ["profile", "email"] }));

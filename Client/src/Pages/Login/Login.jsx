@@ -39,8 +39,9 @@ export default function Login() {
 
   const handleGooglesignin = () => {
     const csrfToken = generateSecureCsrfToken(); // Generate your CSRF token
-    sessionStorage.setItem('csrf_token', csrfToken);
-    window.location.href = `${api}/api/auth/google?csrf_token=${csrfToken}`;
+    // sessionStorage.setItem('csrf_token', csrfToken);
+    // window.location.href = `${api}/api/auth/google?csrf_token=${csrfToken}`;
+    window.location.href = `${api}/api/auth/google`;
   };
 
   const handleLogin = async (e) => {
