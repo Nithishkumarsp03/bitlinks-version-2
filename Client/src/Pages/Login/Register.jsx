@@ -59,35 +59,42 @@ export default function Register() {
         <p>Please fill all the details to create an Account</p>
         {error && <p className="error-message">{error}</p>}
         <form className="login-form" onSubmit={handleLogin}>
-          <Input
-            type="text"
-            placeholder="Enter your fullname"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <Input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="login-button"
-            disabled={loading}
-          >
+          <div>
+            <label className="label-login">Name</label>
+            <Input
+              type="text"
+              placeholder="Enter your fullname"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="label-login">Email</label>
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="label-login">Password</label>
+            <Input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="login-button" disabled={loading}>
             {loading ? "Creating..." : "Create account"}
           </button>
         </form>
         <br />
         <div className="action-buttons">
-          <p onClick={()=>navigate('/login')} style={{cursor: "pointer"}}>Existing user?</p>
+          <p onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>
+            Existing user?
+          </p>
         </div>
       </div>
     </div>
