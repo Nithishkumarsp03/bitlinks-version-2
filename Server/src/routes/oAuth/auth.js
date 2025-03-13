@@ -23,7 +23,7 @@ router.get(`${api}/api/auth/google`, (req, res, next) => {
 
 // Callback route
 router.get(
-  "/google/callback",
+  `${api}/google/callback`,
   passport.authenticate("google", {
     failureRedirect: `${process.env.REACT_APP_URL}/`,
   }),
