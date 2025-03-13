@@ -16,7 +16,7 @@ router.get(`${api}/api/auth/google`, (req, res, next) => {
   // }
 
   // req.session.csrfToken = csrfToken;
-
+  console.log('In')
   next();
 }, passport.authenticate("google", { scope: ["profile", "email"] }));
 
@@ -39,7 +39,7 @@ router.get(
       req.user.PROFILE_PICTURE,
       req.user.updatedAt
     );
-    // console.log("token:", req.user.token);
+    console.log("token:", req.user.token);
 
     // Prepare the JSON response with profile picture
     const responseJson = {
