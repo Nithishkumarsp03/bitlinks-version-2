@@ -24,6 +24,7 @@ export default function Securedata() {
   const { setLogopen } = useStore();
   const api = process.env.REACT_APP_API;
   const name = decryptData(localStorage.getItem("name"));
+  const [loading, setLoading] = useState(false);
   const [formValues, setformValues] = useState({
     fullname: "",
     email: "",
@@ -153,8 +154,10 @@ export default function Securedata() {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true)
     if (!formValues.fullname) {
       showSnackbar("Please enter the name to proceed!", "error");
+      setLoading(false);
       return;
     }
     e.preventDefault();
@@ -184,6 +187,7 @@ export default function Securedata() {
 
         if (!uploadResponse.ok) {
           showSnackbar("Photo upload Failed", "error");
+          setLoading(false);
           throw new Error("Photo upload failed");
         }
 
@@ -217,6 +221,7 @@ export default function Securedata() {
 
       if (!jsonResponse.ok) {
         showSnackbar("Data submission Failed", "error");
+        setLoading(false);
         throw new Error("Data submission failed");
       }
 
@@ -226,8 +231,10 @@ export default function Securedata() {
         "Data submitted Succesfully. You will receive a mail once it is approved!",
         "success"
       );
+      setLoading(false);
     } catch (error) {
       showSnackbar(error.message, "error");
+      setLoading(false)
       console.error("Error:", error.message);
     }
   };
@@ -449,8 +456,9 @@ export default function Securedata() {
                 variant="contained"
                 color="success"
                 onClick={handleSubmit}
+                disabled={loading}
               >
-                Submit
+                {loading ? "Please wait...": "Submit"}
               </Button>
             </div>
           </div>

@@ -252,6 +252,7 @@ export default function Datahub() {
 
   // Complete merge by sending merged data to the API.
   const handleMergeComplete = async (contacts) => {
+    console.log(contacts)
     if (!contacts || contacts.length === 0) {
       console.error("No contacts selected for merging.");
       showSnackbar("No contacts selected for merging.", 'error');
@@ -259,14 +260,14 @@ export default function Datahub() {
       return;
     }
 
-    if(!contacts.email){
-      showSnackbar('Email is required to insertdata', 'error')
-      return;
-    }
-    if(!contacts.phonenumber){
-      showSnackbar('Phonenumber is required to insertdata', 'error')
-      return;
-    }
+    // if(!contacts.email){
+    //   showSnackbar('Email is required to insertdata', 'error')
+    //   return;
+    // }
+    // if(!contacts.phonenumber){
+    //   showSnackbar('Phonenumber is required to insertdata', 'error')
+    //   return;
+    // }
 
     // console.log("Contacts being merged:", contacts);
 
@@ -276,7 +277,7 @@ export default function Datahub() {
 
     if (Object.keys(mergedData).length === 0) {
       console.error("Merged data is empty. Something went wrong!");
-      alert("Merged data is empty. Please check your merge process.");
+      // alert("Merged data is empty. Please check your merge process.");
       return;
     }
 

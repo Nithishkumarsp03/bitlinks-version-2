@@ -24,8 +24,6 @@ export default function Login() {
     setSnackbar({ open: true, message, severity });
   };
 
-  console.log(`${api}/api/auth/google`)
-
   
   const generateSecureCsrfToken = (length = 32) => {
     // return generateRandomString(length);

@@ -5,6 +5,7 @@ import { decryptData } from "./Utils/crypto/cryptoHelper";
 import UnauthorizedDialog from "./Dialog/utilsDialog/Unauthorised";
 import { useApi } from "./hooks/useApi";
 import useStore from "./store/store";
+import NoInternetPage from "./Components/offline/Offlinepage";
 
 const OfflinePage = () => (
   <div style={{ textAlign: "center", padding: "50px", color: "red" }}>
@@ -65,7 +66,7 @@ function App() {
   }, [role, token, navigate, isOnline]);
 
   if (!isOnline) {
-    return <OfflinePage />;
+    return <NoInternetPage onRetry={() => navigate('/login')}/>;
   }
 
   return (
