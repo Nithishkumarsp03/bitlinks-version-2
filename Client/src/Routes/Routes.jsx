@@ -16,6 +16,7 @@ import Infograph from "../Pages/personData/Infograph";
 import Graph from "../Pages/personData/Graph";
 import Spoc from "../Components/Spoc/Spoc";
 import Project from "../Components/Project/Project";
+import UserProjects from "../Pages/User/Projects";
 import Minutes from "../Pages/personData/Minutes";
 import Securedata from "../Pages/Guest/Securedata";
 import Datahub from "../Pages/Admin/Datahub";
@@ -81,7 +82,7 @@ function RoutesController() {
           }
         >
           <Route path="myconnections" element={<Connections />} />
-          <Route path="projects" element={<Project />} />
+          <Route path="projects" element={<UserProjects />} />
           <Route path="add-connection/:spocemail" element={<Addconnection />} />
         </Route>
         <Route

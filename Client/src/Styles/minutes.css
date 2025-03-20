@@ -150,6 +150,20 @@
     color: #2867B2;
 }
 
+@media (max-width: 1199px) {
+    .minute-card {
+      flex: 0 0 calc(50% - 7.5px); /* Two cards per row for tablets */
+      height: 250px; /* Increase height for better visibility */
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .minute-card {
+      flex: 0 0 100%; /* One card per row for mobile */
+      height: 250px; /* Increase height for readability */
+    }
+  }
+
 
 
 
