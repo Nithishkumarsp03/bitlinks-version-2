@@ -52,7 +52,7 @@ export default function Connections() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
+          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ email: email }),
       });

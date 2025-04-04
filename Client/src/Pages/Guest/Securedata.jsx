@@ -74,6 +74,7 @@ export default function Securedata() {
 
   const designation = [
     { label: "Industry", value: "Industry" },
+    { label: "Alumni", value: "Alumni" },
     { label: "College", value: "College" },
     { label: "School", value: "School" },
     { label: "Student", value: "Student" },

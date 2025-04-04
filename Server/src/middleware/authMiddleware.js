@@ -1,9 +1,16 @@
 const jwt = require("jsonwebtoken");
 const db = require("../db/config");
 
+const API_SECRET_KEY = process.env.API_SECRET_KEY;
+
 const authenticateToken = async (req, res, next) => {
   if (req.method === "OPTIONS") {
     return next();
+  }
+
+  const apiKey = req.headers["x-api-key"];
+  if (apiKey && apiKey === API_SECRET_KEY) {
+    return next(); // Allow access without JWT for external apps
   }
   
   const token = req.headers["authorization"]?.split(" ")[1];

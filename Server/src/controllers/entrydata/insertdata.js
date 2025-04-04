@@ -20,7 +20,7 @@ const insertData = (req, res) => {
     finalData.dob,
     finalData.designation,
     finalData.linkedinurl,
-    finalData.visitingCard,
+    finalData.visitingCard || null,
     finalData.rating,
     finalData.hashtags,
     finalData.address,
