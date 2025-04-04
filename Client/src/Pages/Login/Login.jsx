@@ -159,7 +159,7 @@ export default function Login() {
         </form>
         <br />
         <div className="action-buttons">
-          <p onClick={() => navigate('/register')} style={{ cursor: "pointer" }}>New user?</p>
+          {/* <p onClick={() => navigate('/register')} style={{ cursor: "pointer" }}>New user?</p> */}
         </div>
       </div>
       <CustomSnackbar
