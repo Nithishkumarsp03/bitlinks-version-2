@@ -24,7 +24,7 @@ const fetchSpocnotification = (req, res) => {
     
     // Now fetch the DOB information (birthday records where emailSent is 0)
     const dobQuery = `
-      SELECT uuid, profile, fullname, dob, emailSent
+      SELECT uuid, profile, fullname, dob, emailSent, email, person_id
       FROM personalinfo
       WHERE useremail = ?
         AND dob IS NOT NULL

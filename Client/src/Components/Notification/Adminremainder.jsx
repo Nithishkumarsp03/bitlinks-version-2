@@ -34,6 +34,7 @@ export default function Adminremainder() {
   const [snoozeDuration, setSnoozeDuration] = useState(0);
   const [birthdayopen, setBirthdayopen] = useState(false);
   const [birthdayEmail, setBirthdayEmail] = useState("");
+  const [recipient, setRecipient] = useState("")
   const [visitedopen, setVisitedopen] = useState(false);
   const [thanksgivingemail, setThanksgivingemail] = useState("");
   const [snoozeopen, setSnoozeopen] = useState(false);
@@ -84,6 +85,7 @@ export default function Adminremainder() {
     setBirthdayEmail(item.email);
     setBirthdayopen(true);
     setId(item.person_id);
+    setRecipient(item.fullname)
   };
 
   // Define navigation when a notification card is clicked.
@@ -180,6 +182,7 @@ export default function Adminremainder() {
     e.stopPropagation();
     setVisitedopen(true);
     setId(item.history_id);
+    setRecipient(item.fullname)
   };
 
   // Render action buttons based on the notification type/status
@@ -464,6 +467,7 @@ export default function Adminremainder() {
         showSnackbar={showSnackbar}
         fetchNotification={fetchNotification}
         id={id}
+        recipient={recipient}
       />
       <Snooze
         snoozeopen={snoozeopen}
@@ -488,6 +492,7 @@ export default function Adminremainder() {
         showSnackbar={showSnackbar}
         id={id}
         fetchNotification={fetchNotification}
+        recipient={recipient}
       />
       <CustomSnackbar
         open={snackbar.open}

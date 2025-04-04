@@ -17,7 +17,7 @@ export default function Tab({activeTab, setActiveTab}) {
           </svg>
           <p>IECC</p>
           </div>
-          <div className={`tab ${activeTab === 'Colleges' ? 'active' : ''}`} onClick={() => handleTabClick('Colleges')} >
+          <div className={`tab ${activeTab === 'Alumni' ? 'active' : ''}`} onClick={() => handleTabClick('Alumni')} >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000   " fill="none">
               <path d="M2.5 6L8 4L13.5 6L11 7.5V9C11 9 10.3333 8.5 8 8.5C5.66667 8.5 5 9 5 9V7.5L2.5 6ZM2.5 6V10"  />
               <path d="M11 8.5V9.38889C11 11.1071 9.65685 12.5 8 12.5C6.34315 12.5 5 11.1071 5 9.38889V8.5" />
@@ -25,7 +25,7 @@ export default function Tab({activeTab, setActiveTab}) {
               <path d="M4.38505 15.926C3.44187 16.4525 0.96891 17.5276 2.47511 18.8729C3.21087 19.53 4.03033 20 5.06058 20H10.9394C11.9697 20 12.7891 19.53 13.5249 18.8729C15.0311 17.5276 12.5581 16.4525 11.6149 15.926C9.40321 14.6913 6.59679 14.6913 4.38505 15.926Z" />
               <path d="M16 20H19.7048C20.4775 20 21.0921 19.624 21.6439 19.0983C22.7736 18.0221 20.9189 17.162 20.2115 16.7408C18.9362 15.9814 17.3972 15.8059 16 16.2141" />
           </svg>
-          <p>Colleges</p>
+          <p>Alumni</p>
           </div>
           <div className={`tab ${activeTab === 'Schools' ? 'active' : ''}`} onClick={() => handleTabClick('Schools')} >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill={"none"}>

@@ -22,19 +22,20 @@ import Securedata from "../Pages/Guest/Securedata";
 import Datahub from "../Pages/Admin/Datahub";
 import Welcome from "../Utils/welcome/Welcome";
 import Settings from "../Pages/Admin/Settings";
-import ApiDataDisplay from "../Pages/Minutes";
+import Intern from "../Pages/Intern/Intern";
+import Add from "../Pages/Intern/Addconnection/Add"
 
 function RoutesController() {
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/minutes-api" element={<ApiDataDisplay />} />
         <Route path="*" element={<Error />} />
         <Route path="/404" element={<Error />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin/settings" element={<Settings />}/>
+        <Route path="/alumni/settings" element={<Settings />}/>
         <Route
           path="/secure-data-hub"
           element={
@@ -61,7 +62,7 @@ function RoutesController() {
         <Route
           path="/:uuid/person-details"
           element={
-            <ProtectedRoute allowedRoles={["user"]}>
+            <ProtectedRoute allowedRoles={["user", "intern", "admin"]}>
               <Persondata />
             </ProtectedRoute>
           }
@@ -83,6 +84,7 @@ function RoutesController() {
         >
           <Route path="myconnections" element={<Connections />} />
           <Route path="projects" element={<UserProjects />} />
+          <Route path="spoc" element={<Spoc />} />
           <Route path="add-connection/:spocemail" element={<Addconnection />} />
         </Route>
         <Route
@@ -99,6 +101,19 @@ function RoutesController() {
           <Route path="projects" element={<Project />} />
           <Route path="data-hub" element={<Datahub />} />
           <Route path="add-connection/:spocemail" element={<Addconnection />} />
+        </Route>
+        <Route
+          path="/alumni"
+          element={
+            <ProtectedRoute allowedRoles={["intern"]}>
+              <Intern />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="" element={<Connections />} />
+          <Route path="myconnections" element={<Connections />} />
+          <Route path="projects" element={<UserProjects />} />
+          <Route path="add-connection/:email" element={<Add />} />  
         </Route>
       </Routes>
     </div>

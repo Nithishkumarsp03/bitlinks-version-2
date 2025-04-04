@@ -6,6 +6,7 @@ const roleRoute = require('../../controllers/settings/role');
 const skillsetRoute = require('../../controllers/settings/skillset');
 const domainRoute = require('../../controllers/settings/domain');
 const loginRoute = require('../../controllers/settings/login');
+const report = require('../../controllers/settings/report')
 
 router.get('/location/fetchdata', locationRoute.fetchLocation); 
 router.get('/companyname/fetchdata', companyRoute.fetchCompany);
@@ -13,6 +14,7 @@ router.get('/role/fetchdata', roleRoute.fetchRole);
 router.get('/skillset/fetchdata', skillsetRoute.fetchSkillset);
 router.get('/domain/fetchdata', domainRoute.fetchDomain);
 router.get('/login/fetchdata', loginRoute.fetchLogin);
+router.post('/generatereport', report.generateReport);
 
 router.post('/location/adddata', locationRoute.addLocation);
 router.post('/companyname/adddata', companyRoute.addCompany);

@@ -17,13 +17,27 @@ export default function Birthdaywishes({
   birthdayEmail,
   showSnackbar,
   fetchNotification,
-  id
+  id,
+  recipient,
 }) {
-  const {setLogopen} = useStore();
+  const { setLogopen } = useStore();
   const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("Happy Birthday! 🎉");
+  const [subject, setSubject] = useState(
+    "Wishing You a Very Happy Birthday! 🎉"
+  );
   const [message, setMessage] = useState(
-    "Wishing you a fantastic birthday filled with joy and success!"
+    `
+Dear ${recipient}
+    
+On behalf of Bannari Amman Institute of Technology, Sathyamangalam, Erode, we extend our warmest wishes on your special day! 🎂✨
+
+Your contributions to the industry have been truly inspiring, and we deeply appreciate your dedication and expertise. May this year bring you happiness, success, and good health.
+
+We look forward to continued collaboration and learning from your invaluable insights. Have a fantastic birthday celebration!
+
+Best Regards,
+Bannari Amman Institute of Technology.
+`
   );
   const [loading, setLoading] = useState(false);
 
@@ -35,49 +49,79 @@ export default function Birthdaywishes({
     setEmail(birthdayEmail);
   }, [birthdayEmail]);
 
+  useEffect(() => {
+  }, [id]);
+
+  useEffect(() => {
+    if (recipient) {
+      setMessage(
+        `Dear ${recipient}
+    
+On behalf of Bannari Amman Institute of Technology, Sathyamangalam, Erode, we extend our warmest wishes on your special day! 🎂✨
+
+Your contributions to the industry have been truly inspiring, and we deeply appreciate your dedication and expertise. May this year bring you happiness, success, and good health.
+
+We look forward to continued collaboration and learning from your invaluable insights. Have a fantastic birthday celebration!
+
+Best Regards,
+Bannari Amman Institute of Technology.
+`
+      );
+    }
+  }, [recipient]); // Runs whenever recipient changes
+
   const handleSendEmail = async () => {
     setLoading(true);
+    const token = decryptData(localStorage.getItem("token"));
+    const requestBody = {
+        email,
+        subject,
+        message,
+        id,
+        module: "dob", // This is different from "history"
+    };
+
+    console.log("Sending request with body:", requestBody);
+    console.log("API URL:", `${process.env.REACT_APP_API}/api/notify/send-email`);
+    console.log("Authorization Token:", token);
+
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API}/api/notify/send-email`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
-          },
-          body: JSON.stringify({
-            email,
-            subject,
-            message,
-            id,
-            module: "dob"
-          }),
+        const response = await fetch(
+            `${process.env.REACT_APP_API}/api/notify/send-email`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify(requestBody),
+            }
+        );
+
+        const result = await response.json();
+        console.log("Response Status:", response.status);
+        console.log("Response Body:", result);
+
+        if (response.status === 401) {
+            setLogopen(true);
+            return;
         }
-      );
 
-      if(response.status == 401){
-        setLogopen(true);
-        return;
-      }
-
-      const result = await response.json();
-      if (response.ok) {
-        setLoading(false);
-        showSnackbar("Birthday wishes sent successfully!", "success");
-        setBirthdayopen(false);
-        fetchNotification();
-      } else {
-        setLoading(false);
-        showSnackbar("Failed to send email", "error");
-        // alert("Failed to send email: " + result.error);
-      }
+        if (response.ok) {
+            setLoading(false);
+            showSnackbar("Birthday wishes sent successfully!", "success");
+            setBirthdayopen(false);
+            fetchNotification();
+        } else {
+            setLoading(false);
+            showSnackbar(`Failed to send email: ${result.error || "Unknown error"}`, "error");
+        }
     } catch (error) {
-      setLoading(false);
-      console.error("Error sending email:", error);
-      showSnackbar("An error occurred while sending the email.", "error");
+        setLoading(false);
+        console.error("Error sending email:", error);
+        showSnackbar("An error occurred while sending the email.", "error");
     }
-  };
+};
 
   return (
     <Dialog open={birthdayopen} onClose={handleClose}>

@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import useStore from "../../store/store";
+import { Receipt } from "lucide-react";
 
 export default function Thanksgiving({
   visitedopen,
@@ -17,13 +18,22 @@ export default function Thanksgiving({
   id,
   showSnackbar,
   thanksgivingemail,
-  fetchNotification
+  fetchNotification, recipient
 }) {
   const {setLogopen} = useStore();
   const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("Happy Birthday! 🎉");
+  const [subject, setSubject] = useState("Thank You for Visiting Bannari Amman institute of Technology");
   const [message, setMessage] = useState(
-    "Wishing you a fantastic birthday filled with joy and success!"
+    `Dear ${recipient}
+
+On behalf of Bannari Amman Institute of Technology, Sathyamangalam, Erode, we sincerely thank you for taking the time to visit us and share your valuable insights. Your presence and expertise have greatly enriched our students' learning experience.
+
+Your words of wisdom and industry knowledge have inspired us all, and we truly appreciate your support in bridging the gap between academia and industry. We look forward to future collaborations and the opportunity to welcome you again.
+
+Once again, thank you for your time and contribution.
+
+Best regards,
+Bannari amman institute of technology.`
   );
   const [loading, setLoading] = useState(false);
 
@@ -34,6 +44,23 @@ export default function Thanksgiving({
   useEffect(() => {
     setEmail(thanksgivingemail);
   }, [thanksgivingemail]);
+
+  useEffect(() => {
+    if (recipient) {
+      setMessage(
+        `Dear ${recipient}
+  
+  On behalf of Bannari Amman Institute of Technology, Sathyamangalam, Erode, we sincerely thank you for taking the time to visit us and share your valuable insights. Your presence and expertise have greatly enriched our students' learning experience.
+  
+  Your words of wisdom and industry knowledge have inspired us all, and we truly appreciate your support in bridging the gap between academia and industry. We look forward to future collaborations and the opportunity to welcome you again.
+  
+  Once again, thank you for your time and contribution.
+  
+  Best regards,
+  Bannari Amman Institute of Technology.`
+      );
+    }
+  }, [recipient]); // Runs whenever recipient changes
 
   const handleSendEmail = async () => {
     setLoading(true)

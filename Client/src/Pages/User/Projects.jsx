@@ -21,7 +21,7 @@ export default function UserProjects() {
   const handleCardclick = (uuid, shaid) => {
     if (role === "admin")
       navigate(`/admin/${uuid}/person-details/minutes/${shaid}`);
-    else if (role === "user")
+    else if (role === "user" || role === "intern")
       navigate(`/${uuid}/person-details/minutes/${shaid}`);
   };
 

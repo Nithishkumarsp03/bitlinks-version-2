@@ -73,7 +73,7 @@ app.use(`${api}/uploads`, express.static(path.join(__dirname, 'uploads')));
 app.use(`${api}/api`, uploadRoutes);
 
 //Middleware
-// app.use(authenticateToken);
+app.use(authenticateToken);
 
 //Add connection Routes
 app.use(`${api}/api/add`, addconnectionRoutes);

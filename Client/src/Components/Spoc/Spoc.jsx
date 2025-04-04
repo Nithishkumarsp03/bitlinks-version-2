@@ -9,6 +9,7 @@ import useStore from "../../store/store";
 export default function Spoc() {
   const api = process.env.REACT_APP_API;
   const { setLogopen } = useStore();
+  const role = decryptData(localStorage.getItem("role"));
   const navigate = useNavigate();
   const [persondata, setPersondata] = useState([]);
   const [filteredData, setFilteredData] = useState([]); // State for filtered data
@@ -16,8 +17,15 @@ export default function Spoc() {
   const [loading, setLoading] = useState(true); // Loader state
 
   const handleCardclick = (uuid) => {
-    navigate(`/admin/${uuid}/person-details`);
+    if(role === 'admin') navigate(`/admin/${uuid}/person-details`);
+    else if(role === 'user') navigate(`/${uuid}/person-details`);
   };
+
+  const handleAdd = (e, email) => {
+    e.stopPropagation();
+    if(role === 'admin') navigate(`/admin/add-connection/${email}`);
+    else if(role === 'user') navigate(`/add-connection/${email}`);
+  }
 
   const fetchPerson = async () => {
     setLoading(true); // Start loading
@@ -101,10 +109,7 @@ export default function Spoc() {
             >
               <div
                 className="plus-icon"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/admin/add-connection/${person.email}`);
-                }}
+                onClick={(e) => handleAdd(e, person.email)}
               >
                 <FaPlus />
               </div>

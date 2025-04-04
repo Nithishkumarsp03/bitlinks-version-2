@@ -86,6 +86,7 @@ export default function Persondata() {
   const handleConfirmClick = () => setStep(2);
 
   const handleFinalDelete = async () => {
+    console.log("sele",selectedPerson)
     try {
       const res = await fetch(`${api}/api/person/delete`, {
         method: "DELETE",

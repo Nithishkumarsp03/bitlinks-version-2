@@ -86,6 +86,8 @@ export default function Login() {
           navigate("/myconnections");
         } else if (data.userData.role === "guest") {
           navigate("/secure-data-hub");
+        } else if (data.userData.role === "intern") {
+          navigate("/alumni");
         } else {
           navigate("/404");
         }

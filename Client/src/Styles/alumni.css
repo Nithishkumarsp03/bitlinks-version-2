@@ -1,0 +1,30 @@
+.left-alumni{
+    width: 20%;
+    height: 100%;
+}
+
+.right-alumni{
+    width: 80%;
+    height: 100%;
+    overflow-y: scroll;
+    margin: 5px 0;
+}
+
+.right-alumni::-webkit-scrollbar {
+    width: 3px; /* Adjust the scrollbar width */
+    padding: 10px 0px;
+  }
+  
+  .right-alumni::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 3px; /* Rounded corners for the scrollbar thumb */
+  }
+  
+  .right-alumni::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker color on hover */
+  }
+  
+  .right-alumni::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background color of the scrollbar track */
+  }
+

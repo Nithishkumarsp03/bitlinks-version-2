@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import Header from "../../Components/Header/Header";
 import Tab from "../../Components/Tabs/Tab";
 import "../../Styles/admin.css";
-import Spocuser from "../SPOC/Spocuser";
+import Alumni from "./Alumni";
 import CustomSnackbar from "../../Utils/snackbar/CustomsnackBar";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
 
-export default function User() {
-  const [activeTab, setActiveTab] = useState("IECC");
+export default function Intern() {
+  const [activeTab, setActiveTab] = useState("Alumni");
   const name = decryptData(localStorage.getItem("name"));
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -32,15 +32,15 @@ export default function User() {
       <div className="header">
         <Header />
       </div>
-      <div className="admin-body">
-        <div className="tabs">
+      <div className="admin-body" style={{margin: "0", padding: "0"}}>
+        <div className="tabs" style={{display: "none"}}>
           <Tab activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
-        <div className="tab-content">
+        <div className="tab-content" style={{height: "100%"}}>
           {activeTab === "IECC" ? (
-            <Spocuser />
+            "IECC"
           ) : activeTab === "Alumni" ? (
-            "Alumni"
+            <Alumni />
           ) : activeTab === "Schools" ? (
             "Schools"
           ) : activeTab === "Students" ? (

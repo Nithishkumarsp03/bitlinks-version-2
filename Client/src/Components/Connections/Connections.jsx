@@ -33,9 +33,16 @@ export default function Connections() {
   const handleCardclick = (uuid) => {
     if (role === "admin") {
       navigate(`/admin/${uuid}/person-details`);
-    } else if (role === "user") {
+    } else if (role === "user" || role === "intern") {
       navigate(`/${uuid}/person-details`);
     }
+  };
+
+  const handleAdd = (e, email) => {
+    e.stopPropagation();
+    if (role === "admin") navigate(`/admin/add-connection/${email}`);
+    else if (role === "user") navigate(`/add-connection/${email}`);
+    else if (role === "intern") navigate(`/alumni/add-connection/${email}`);
   };
 
   const fetchPerson = async () => {
@@ -45,12 +52,12 @@ export default function Connections() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
+          authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
         body: JSON.stringify({ email: email }),
       });
 
-      if(res.status == 401){
+      if (res.status == 401) {
         setLogopen(true);
         return;
       }
@@ -168,7 +175,7 @@ export default function Connections() {
   }, [filteredData, rank]);
 
   const getRank = (person) => {
-    if(person.status === 0) return <img src={inctive} alt="" />;
+    if (person.status === 0) return <img src={inctive} alt="" />;
     switch (person.rank) {
       case 0:
         return <img src={rank0} alt="" />;
@@ -226,17 +233,17 @@ export default function Connections() {
             >
               <div
                 className="plus-icon"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/admin/add-connection/${person.email}`);
-                }}
+                onClick={(e) => handleAdd(e, person?.email)}
               >
                 <FaPlus />
               </div>
               <div className="image-details">
                 <div className="profile-wrapper">
                   <div className="profile-container">
-                    <img src={`${api}${person.profile}` || Profile} alt="Profile" />
+                    <img
+                      src={`${api}${person.profile}` || Profile}
+                      alt="Profile"
+                    />
                   </div>
                   <div className="rank-image">{getRank(person)}</div>
                 </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "../../Components/Header/Header";
 import DataTable from "../../Components/Settings/Datatable";
 import DeveloperContact from "../../Components/Settings/DeveloperContact";
+import Report from "../../Components/Settings/Report";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
 import "../../Styles/settings.css";
 
@@ -12,6 +13,7 @@ const tabs = [
   { label: "Skillset", key: "skillset" },
   { label: "Domain", key: "domain" },
   { label: "Login", key: "login" },
+  { label: "Generate Report", key: "Generate Report" },
   { label: "Developer Contact", key: "developerContact" },
 ];
 
@@ -21,6 +23,8 @@ export default function Settings() {
     role === "user"
       ? "developerContact"
       : role === "guest"
+      ? "developerContact"
+      : role === "intern"
       ? "developerContact"
       : tabs[0].key
   );
@@ -58,7 +62,7 @@ export default function Settings() {
         <div className="content">
           {activeTab === "developerContact" ? (
             <DeveloperContact />
-          ) : (
+          ) : activeTab === "Generate Report" ? (<Report />) : (
             <DataTable tab={activeTab} />
           )}
         </div>

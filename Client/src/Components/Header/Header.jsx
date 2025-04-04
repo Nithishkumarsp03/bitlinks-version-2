@@ -39,7 +39,7 @@ export default function Header() {
         <hr />
         <div className="settings-container" onClick={handleSettings}>
           <img src={settings} alt="Settings" />
-          <p>SETTINGS</p>
+          <p>SUPPORT</p>
         </div>
       </div>
 

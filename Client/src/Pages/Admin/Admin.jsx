@@ -40,8 +40,8 @@ export default function Admin() {
         <div className="tab-content">
           {activeTab === "IECC"
             ? <Iecc />
-            : activeTab === "Colleges"
-            ? "Colleges"
+            : activeTab === "Alumni"
+            ? "Alumni"
             : activeTab === "Schools"
             ? "Schools"
             : activeTab === "Students"

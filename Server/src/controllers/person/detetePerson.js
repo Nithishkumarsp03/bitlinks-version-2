@@ -2,6 +2,7 @@ const db = require("../../db/config");
 
 const deletePerson = (req, res) => {
     const { id } = req.body;
+    // console.log(req.body)
 
     if (!id) {
         return res.status(400).json({ error: "Person ID is required" });
@@ -26,7 +27,7 @@ const deletePerson = (req, res) => {
             const tables = [
                 "alumni", "company", "consultancy", "expertise", "history",
                 "internship", "minutes", "person_points_summary",
-                "placement", "previousexperience", "projects"
+                "placement", "previousexperience", "projects", "spouse"
             ];
 
             // Function to delete data from each table

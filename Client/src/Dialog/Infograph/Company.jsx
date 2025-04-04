@@ -191,7 +191,7 @@ const CompanyDialog = ({ open, setCompanyopen, setcompanyCompletion, showSnackba
       <DialogTitle className="dialog-title">Company Details</DialogTitle>
       <DialogContent>
         <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-          <CompanyDropdown value={companyInfo.companyname} onChange={handlecompanyChange}/>
+          <CompanyDropdown value={companyInfo.companyname} onChange={ handlecompanyChange}/>
           <div className="input-group" style={{ marginTop: "0" }}>
             <div>
               <Input

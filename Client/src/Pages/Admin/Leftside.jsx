@@ -28,12 +28,14 @@ export default function Leftside({ role }) {
   useEffect(() => {
     if (
       location.pathname === "/admin/projects" ||
-      location.pathname === "/projects"
+      location.pathname === "/projects" ||
+      location.pathname === "/alumni/projects"
     ) {
       setActive("projects");
     } else if (
       location.pathname.startsWith("/admin/add-connection/") ||
-      location.pathname.startsWith("/add-connection/")
+      location.pathname.startsWith("/add-connection/") ||
+      location.pathname.startsWith("/alumni/add-connection/")
     ) {
       setActive("addConnection");
     } else if (location.pathname === "/admin/network") {
@@ -63,7 +65,13 @@ export default function Leftside({ role }) {
     user: {
       myconnections: "/myconnections",
       projects: "/projects",
+      spoc: "/spoc",
       addConnection: `/add-connection/${email}`,
+    },
+    alumni: {
+      myconnections: "/alumni/myconnections",
+      projects: "/alumni/projects",
+      addConnection: `/alumni/add-connection/${email}`,
     },
   };
 
@@ -77,6 +85,12 @@ export default function Leftside({ role }) {
       { name: "Add connections", key: "addConnection" },
     ],
     user: [
+      { name: "My connections", key: "myconnections" },
+      { name: "Projects", key: "projects" },
+      { name: "SPOC", key: "spoc" },
+      { name: "Add connections", key: "addConnection" },
+    ],
+    alumni: [
       { name: "My connections", key: "myconnections" },
       { name: "Projects", key: "projects" },
       { name: "Add connections", key: "addConnection" },

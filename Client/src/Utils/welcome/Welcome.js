@@ -48,6 +48,9 @@ const Welcome = () => {
         else if(savedData.role === 'guest'){
             navigate("/secure-data-hub");
         }
+        else if(savedData.role === 'intern'){
+            navigate("/alumni");
+        }
         else {}
       } catch (error) {
         console.error("Error processing data:", error);

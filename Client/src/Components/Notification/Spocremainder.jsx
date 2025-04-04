@@ -30,6 +30,7 @@ export default function Spocremainder() {
   const [snoozeDuration, setSnoozeDuration] = useState(0); // Store snooze duration
   const [birthdayopen, setBirthdayopen] = useState(false);
   const [birthdayEmail, setBirthdayEmail] = useState("");
+  const [recipient, setRecipient] = useState("")
   const [visitedopen, setVisitedopen] = useState(false);
   const [snoozeopen, setSnoozeopen] = useState(false);
   const [completedopen, setCompletedopen] = useState(false);
@@ -54,6 +55,7 @@ export default function Spocremainder() {
     setBirthdayEmail(item.email);
     setBirthdayopen(true);
     setId(item.person_id);
+    setRecipient(item.fullname);
   };
 
   // Fetch notification data
@@ -281,6 +283,7 @@ export default function Spocremainder() {
     setVisitedopen(true);
     setId(item.history_id);
     setThanksgivingemail(item.email);
+    setRecipient(item.fullname);
   };
 
   // Combine and filter notifications
@@ -442,6 +445,7 @@ export default function Spocremainder() {
         birthdayEmail={birthdayEmail}
         showSnackbar={showSnackbar}
         fetchNotification={fetchNotification}
+        recipient={recipient}
         id={id}
       />
       <Snooze
@@ -467,6 +471,7 @@ export default function Spocremainder() {
         fetchNotification={fetchNotification}
         thanksgivingemail={thanksgivingemail}
         showSnackbar={showSnackbar}
+        recipient={recipient}
       />
       <CustomSnackbar
         open={snackbar.open}
