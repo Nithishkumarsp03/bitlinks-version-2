@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { FormControl, InputLabel } from '@mui/material';
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 import { decryptData } from '../Utils/crypto/cryptoHelper';
 import useStore from '../store/store';
+import { components } from 'react-select';
+import SearchIcon from '@mui/icons-material/Search';
+
+const DropdownIndicator = (props) => {
+    return (
+        <components.DropdownIndicator {...props}>
+            <SearchIcon fontSize="small" />
+        </components.DropdownIndicator>
+    );
+};
 
 const RoleDropdown = ({ value, onChange }) => {
-    const {setLogopen} = useStore();
+    const { setLogopen } = useStore();
     const [roles, setRoles] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
 
@@ -17,21 +26,22 @@ const RoleDropdown = ({ value, onChange }) => {
                     headers: {
                         "Content-Type": "application/json",
                         "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
-                      },
+                    },
                 });
 
-                if(response.status == 401){
+                if (response.status === 401) {
                     setLogopen(true);
                     return;
-                  }
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
                 }
 
                 const data = await response.json();
                 const filteredRoles = data.results.filter(role => role.status === 1);
-                setRoles(filteredRoles);
+                const formattedRoles = filteredRoles.map(role => ({
+                    value: role.role_column,
+                    label: role.role_column,
+                }));
+
+                setRoles(formattedRoles);
             } catch (error) {
                 console.error('Error fetching roles:', error);
             }
@@ -42,29 +52,58 @@ const RoleDropdown = ({ value, onChange }) => {
 
     useEffect(() => {
         if (typeof value === "string") {
-            setSelectedOption({ value, label: value }); // Convert string to object
+            setSelectedOption({ value, label: value });
         } else {
             setSelectedOption(value);
         }
     }, [value]);
 
-    const handleSelectChange = (selectedOption) => {
-        setSelectedOption(selectedOption);
-        onChange(selectedOption);
+    const handleChange = (option) => {
+        setSelectedOption(option);
+        onChange(option);
     };
 
-    const options = roles.map(role => ({
-        value: role.role_column,
-        label: role.role_column,
-    }));
+    const handleCreate = async (inputValue) => {
+        const newRole = { role_column: inputValue };
+
+        try {
+            const response = await fetch(process.env.REACT_APP_API + '/api/dropdown/roledata/add', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
+                },
+                body: JSON.stringify(newRole)
+            });
+
+            if (response.status === 401) {
+                setLogopen(true);
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error('Failed to add new role');
+            }
+
+            const result = await response.json();
+            const createdOption = { value: inputValue, label: inputValue };
+            setRoles(prev => [...prev, createdOption]);
+            setSelectedOption(createdOption);
+            onChange(createdOption);
+        } catch (error) {
+            console.error('Error creating role:', error);
+        }
+    };
 
     return (
-        <Select
-            placeholder="Select Role"
+        <CreatableSelect
+            placeholder="Search for Role"
             value={selectedOption}
-            onChange={handleSelectChange}
-            options={options}
+            onChange={handleChange}
+            onCreateOption={handleCreate}
+            options={roles}
             isClearable
+            components={{ DropdownIndicator }}
         />
     );
 };

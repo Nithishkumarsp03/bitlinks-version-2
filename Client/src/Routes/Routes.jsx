@@ -23,6 +23,7 @@ import Datahub from "../Pages/Admin/Datahub";
 import Welcome from "../Utils/welcome/Welcome";
 import Settings from "../Pages/Admin/Settings";
 import Intern from "../Pages/Intern/Intern";
+import CompanyDropdown from "../Dropdown/CompanyDropdown"
 import Add from "../Pages/Intern/Addconnection/Add"
 
 function RoutesController() {
@@ -115,6 +116,8 @@ function RoutesController() {
           <Route path="projects" element={<UserProjects />} />
           <Route path="add-connection/:email" element={<Add />} />  
         </Route>
+
+        <Route path="/dropdown" element={<CompanyDropdown/>} />
       </Routes>
     </div>
   );

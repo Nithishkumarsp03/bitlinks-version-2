@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel } from '@mui/material';
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 import { decryptData } from '../Utils/crypto/cryptoHelper';
 import useStore from '../store/store';
+import { components } from 'react-select';
+import SearchIcon from '@mui/icons-material/Search';
+
+const DropdownIndicator = (props) => {
+    return (
+        <components.DropdownIndicator {...props}>
+            <SearchIcon fontSize="small" />
+        </components.DropdownIndicator>
+    );
+};
 
 const SkillsetDropdown = ({ value, onChange }) => {
-    const {setLogopen} = useStore();
+    const { setLogopen } = useStore();
     const [skills, setSkills] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
 
@@ -17,13 +27,13 @@ const SkillsetDropdown = ({ value, onChange }) => {
                     headers: {
                         "Content-Type": "application/json",
                         "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
-                      },
+                    },
                 });
 
-                if(response.status == 401){
+                if (response.status === 401) {
                     setLogopen(true);
                     return;
-                  }
+                }
 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -31,7 +41,11 @@ const SkillsetDropdown = ({ value, onChange }) => {
 
                 const data = await response.json();
                 const filteredSkills = data.results.filter(skills => skills.status === 1);
-                setSkills(filteredSkills); 
+                const formattedOptions = filteredSkills.map(skill => ({
+                    value: skill.skillset_column,
+                    label: skill.skillset_column,
+                }));
+                setSkills(formattedOptions);
             } catch (error) {
                 console.error('Error fetching skills:', error);
             }
@@ -41,16 +55,52 @@ const SkillsetDropdown = ({ value, onChange }) => {
     }, []);
 
     useEffect(() => {
-        if (typeof value === "string") {
-            setSelectedOption({ value, label: value }); // Convert string to object
+        if (Array.isArray(value)) {
+            setSelectedOption(value.map(val =>
+                typeof val === 'string' ? { value: val, label: val } : val
+            ));
+        } else if (typeof value === 'string') {
+            setSelectedOption([{ value, label: value }]);
         } else {
-            setSelectedOption(value);
+            setSelectedOption(value || []);
         }
     }, [value]);
 
-    const handleSelectChange = (selectedOption) => {
-        setSelectedOption(selectedOption);
-        onChange(selectedOption); // Pass selected object to parent
+    const handleChange = (selected) => {
+        setSelectedOption(selected);
+        onChange(selected);
+    };
+
+    const handleCreate = async (inputValue) => {
+        const newSkill = { skillset_column: inputValue };
+
+        try {
+            const response = await fetch(process.env.REACT_APP_API + '/api/dropdown/skillsets/add', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
+                },
+                body: JSON.stringify(newSkill)
+            });
+
+            if (response.status === 401) {
+                setLogopen(true);
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error('Failed to add skill');
+            }
+
+            const newOption = { value: inputValue, label: inputValue };
+            setSkills(prev => [...prev, newOption]);
+            const updatedSelection = [...(selectedOption || []), newOption];
+            setSelectedOption(updatedSelection);
+            onChange(updatedSelection);
+        } catch (error) {
+            console.error('Error creating skill:', error);
+        }
     };
 
     const customStyles = {
@@ -61,23 +111,20 @@ const SkillsetDropdown = ({ value, onChange }) => {
         }),
     };
 
-    const options = skills.map(skills => ({
-        value: skills.skillset_column,
-        label: skills.skillset_column,
-    }));
-
     return (
         <FormControl fullWidth>
             <InputLabel id="skill-select-label" style={{ display: 'none' }}>Skillset</InputLabel>
-            <Select
-                placeholder="Select Skillsets"
+            <CreatableSelect
+                placeholder="Select or Add Skillsets"
                 labelId="skill-select-label"
                 value={selectedOption}
-                onChange={handleSelectChange}
-                options={options}
+                onChange={handleChange}
+                onCreateOption={handleCreate}
+                options={skills}
                 isMulti
                 isClearable
                 styles={customStyles}
+                components={{ DropdownIndicator }}
             />
         </FormControl>
     );
