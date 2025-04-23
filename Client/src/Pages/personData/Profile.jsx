@@ -137,7 +137,22 @@ export default function Profile() {
                 </tr>
                 <tr>
                   <td class="label-cell">Website:</td>
-                  <td class="value-cell">{persondata.websiteurl || "---"}</td>
+                  {/* <td class="value-cell">{persondata.websiteurl || "---"}</td> */}
+                  <td class="value-cell">{persondata.websiteurl ? (
+                        <a
+                          href={
+                            persondata.websiteurl.startsWith("http")
+                              ? persondata.websiteurl
+                              : `https://${persondata.websiteurl}`
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Website <i class="fa-solid fa-link"></i>
+                        </a>
+                      ) : (
+                        "---"
+                      )}</td>
                 </tr>
               </table>
             </div>

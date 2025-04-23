@@ -26,6 +26,9 @@ const addAlumni = (req, res) => {
   // Insert into personalinfo first
   db.query(personquery, personvalues, (err, result) => {
     if (err) {
+      if (err.code === "ER_DUP_ENTRY") {
+        return res.status(400).json({ error: "Contact already exists in the database" });
+      }
       console.error("Error inserting into personalinfo:", err);
       return res.status(500).json({ error: "Database error" });
     }

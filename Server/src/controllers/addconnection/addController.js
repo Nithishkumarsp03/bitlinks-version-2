@@ -9,7 +9,7 @@ const addConnection = (req, res) => {
 
   const values = [
     finalData.useremail,
-    finalData.profilePhoto || "/uploads/1738045401481-user.jpg", // Fixed profilePhoto reference
+    finalData.profilePhoto || "/uploads/1738045401481-user.jpg",
     finalData.fullname,
     finalData.phonenumber,
     finalData.age,
@@ -27,15 +27,15 @@ const addConnection = (req, res) => {
 
   db.query(query, values, (err, result) => {
     if (err) {
+      if (err.code === "ER_DUP_ENTRY") {
+        return res.status(400).json({ error: "Contact already exists in the database" });
+      }
       console.error("Error inserting data in personalinfo:", err);
       return res.status(500).json({ error: "Failed to add person to database" });
     }
 
-    // Fetch the inserted ID
     const insertedId = result.insertId;
-    console.log("Inserted ID:", insertedId);
 
-    // Insert into rank table and only send response after it's done
     db.query(rankQuery, [insertedId, finalData.rank], (err) => {
       if (err) {
         console.error("Error inserting data in person_points_summary:", err);
@@ -44,7 +44,6 @@ const addConnection = (req, res) => {
 
       res.status(200).json({
         message: "Connection created successfully",
-        // insertedId: insertedId,
       });
     });
   });

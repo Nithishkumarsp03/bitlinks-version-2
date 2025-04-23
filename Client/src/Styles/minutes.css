@@ -1,5 +1,5 @@
 .project-card-container {
-  height: 85%;
+  /* height: 85%; */
   padding: 10px 0px;
   display: flex;
   flex-wrap: wrap; /* Ensure wrapping to new rows */
@@ -28,8 +28,8 @@
 }
 
 .minute-card {
-  flex: 0 0 calc(25% - 7.5px); /* Three cards per row */
-  height: 52%;
+  flex: 0 0 285px; /* Three cards per row */
+  height: 240px;
   background-color: white;
   box-sizing: border-box; /* Include padding and borders in width/height */
   overflow: hidden;
@@ -235,5 +235,5 @@
   }
   
   .minutes-action .topic-description::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Background color of the scrollbar track */
+    background: #ffffff; /* Background color of the scrollbar track */
   }

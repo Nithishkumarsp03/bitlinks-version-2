@@ -211,6 +211,8 @@ export default function Addconnection() {
         body: JSON.stringify({ finalData }), // Only send the necessary JSON data
       });
 
+      const data = await jsonResponse.json();
+
       if(jsonResponse.status == 401){
         setLogopen(true);
         return;
@@ -218,8 +220,8 @@ export default function Addconnection() {
 
       if (!jsonResponse.ok) {
         setLoading(false);
-        showSnackbar("Data Submission failed", "error");
-        throw new Error("Data submission failed");
+        showSnackbar(data.error, "error");
+        throw new Error(data.error);
       }
 
       setLoading(false);
@@ -246,7 +248,7 @@ export default function Addconnection() {
       });
     } catch (error) {
       setLoading(false);
-      showSnackbar(error.message, "error");
+      showSnackbar(error.message, "warning");
       console.error("Error:", error.message);
     }
   };

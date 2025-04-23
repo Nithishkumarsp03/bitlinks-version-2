@@ -145,7 +145,23 @@ export default function Spoc() {
                   </div>
                   <div>
                     <i className="fa-brands fa-linkedin"></i>
-                    <div>{person.linkedinurl || "Not Mentioned"}</div>
+                    <div>
+                      {person.linkedinurl ? (
+                        <a
+                          href={
+                            person.linkedinurl.startsWith("http")
+                              ? person.linkedinurl
+                              : `https://${person.linkedinurl}`
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Linkedin <i class="fa-solid fa-link"></i>
+                        </a>
+                      ) : (
+                        "Not mentioned"
+                      )}
+                    </div>
                   </div>
                   <div>
                     <i className="fa-solid fa-envelope"></i>

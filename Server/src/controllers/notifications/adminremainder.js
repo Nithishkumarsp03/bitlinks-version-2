@@ -30,11 +30,14 @@ const fetchAdminnotification = async (req, res) => {
         personalinfo.fullname, 
         personalinfo.uuid, 
         personalinfo.email, 
+        projects.sha_id,
         m.*
       FROM 
         minutes m
       JOIN 
         personalinfo ON m.person_id = personalinfo.person_id
+      INNER JOIN
+        projects ON m.project_id = projects.project_id
       WHERE 
         STR_TO_DATE(m.due_date, '%Y-%m-%d') < CURDATE()
         AND m.status = 'Pending';
@@ -110,11 +113,14 @@ const fetchAdminnotification = async (req, res) => {
                 personalinfo.fullname,
                 personalinfo.uuid, 
                 personalinfo.email, 
+                projects.sha_id,
                 m.*
               FROM 
                 minutes m
               JOIN 
                 personalinfo ON m.person_id = personalinfo.person_id
+              INNER JOIN
+                projects ON m.project_id = projects.project_id
               WHERE
                 m.status = 'Completed'; 
             `;
@@ -130,11 +136,14 @@ const fetchAdminnotification = async (req, res) => {
                   personalinfo.fullname, 
                   personalinfo.uuid, 
                   personalinfo.email, 
+                  projects.sha_id,
                   m.*
                 FROM 
                   minutes m
                 JOIN 
                   personalinfo ON m.person_id = personalinfo.person_id
+                INNER JOIN
+                  projects ON m.project_id = projects.project_id
                 WHERE 
                   m.status IN ('Approved', 'Rejected') 
                   AND m.updated_at >= NOW() - INTERVAL 2 DAY;

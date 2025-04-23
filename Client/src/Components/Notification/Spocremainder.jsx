@@ -159,7 +159,7 @@ export default function Spocremainder() {
 
     if (item.type === "Reschedule Call" || item.type === "Reschedule Visit") {
       return (
-        <div>
+        <div style={{display: "flex", gap: "5px"}}>
           <button
             onClick={(e) => handleAction(e, item, "Completed", "history")}
             className="notification-action-buttons"
@@ -185,7 +185,7 @@ export default function Spocremainder() {
 
     if (item.status === "Pending") {
       return (
-        <div>
+        <div style={{display: "flex", gap: "5px"}}>
           <button
             onClick={(e) => handleAction(e, item, "Completed", "minutes")}
             className="notification-action-buttons"

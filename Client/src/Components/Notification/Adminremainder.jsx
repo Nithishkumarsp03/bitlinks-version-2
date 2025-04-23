@@ -91,6 +91,7 @@ export default function Adminremainder() {
   // Define navigation when a notification card is clicked.
   const handleCardclick = (item) => {
     // History-related notifications (snoozed or overdue history)
+    console.log("details", item)
     if (
       item.source === "snoozed_notifications" ||
       item.source === "overdue_history"
@@ -101,13 +102,13 @@ export default function Adminremainder() {
     else if (
       item.source === "overdue_minutes" ||
       item.source === "completed_minutes" ||
-      item.source === "recently_updated_status"
+      item.source === "recently_updated_status" 
     ) {
-      // navigate(`/admin/${item.uuid}/person-details/minutes/${item.sha_id}`);
+      navigate(`/admin/${item.uuid}/person-details/minutes/${item.sha_id}`);
     }
-    // else if (item.source === "birthdays_today") {
-    //   setBirthdayopen(true);
-    // }
+    else if (item.source === "birthdays_today") {
+      setBirthdayopen(true);
+    }
     else {
       navigate("/404");
     }
@@ -194,7 +195,7 @@ export default function Adminremainder() {
     // For completed minutes, render Approve and Reject buttons.
     if (item.source === "completed_minutes" && item.status === "Completed") {
       return (
-        <div>
+        <div style={{display: "flex", gap: "5px"}}>
           <button
             onClick={(e) => handleAction(e, item, "Approved", "minutes")}
             className="notification-action-buttons"
@@ -254,7 +255,7 @@ export default function Adminremainder() {
 
     if (item.type === "Reschedule Call" || item.type === "Reschedule Visit") {
       return (
-        <div>
+        <div style={{display: "flex", gap: "5px"}}>
           <button
             onClick={(e) => handleAction(e, item, "complete", "history")}
             className="notification-action-buttons"
@@ -273,7 +274,7 @@ export default function Adminremainder() {
 
     if (item.status === "Pending") {
       return (
-        <div>
+        <div style={{display: "flex", gap: "5px"}}>
           <button
             onClick={(e) => handleAction(e, item, "Completed", "minutes")}
             className="notification-action-buttons"

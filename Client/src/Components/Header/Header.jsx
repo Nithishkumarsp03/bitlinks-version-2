@@ -12,6 +12,7 @@ export default function Header() {
   const navigate = useNavigate();
   const name = decryptData(localStorage.getItem("name"));
   const profile = decryptData(localStorage.getItem("picture"));
+  const role = decryptData(localStorage.getItem("role"));
 
   const handleLogout = () => {
     localStorage.clear();
@@ -22,9 +23,15 @@ export default function Header() {
     navigate('/admin/settings');
   }
 
+  const handlelogoclick = () => {
+    if(role === 'admin') navigate('/admin/myconnections')
+    else if(role === 'user') navigate('/myconnections')
+    else if(role === 'intern') navigate('/alumni/myconnections')
+  }
+
   return (
     <div className="header">
-      <div className="logo-container">
+      <div className="logo-container" onClick={handlelogoclick}>
         <img src={Logo} alt="BITLINKS" />
       </div>
 

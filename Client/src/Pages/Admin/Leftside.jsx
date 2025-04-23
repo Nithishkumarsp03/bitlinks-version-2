@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { decryptData } from "../../Utils/crypto/cryptoHelper";
+import { Home, Users, Network, Folder, UserPlus, Database, BellDot, CircleX } from "lucide-react";
 import useStore from "../../store/store";
 import rankminus from "../../Assets/ranks/rankminus.svg";
 import rank1 from "../../Assets/ranks/rank1.svg";
@@ -77,23 +78,23 @@ export default function Leftside({ role }) {
 
   const buttons = {
     admin: [
-      { name: "My connections", key: "myconnections" },
-      { name: "Networks", key: "networks" },
-      { name: "Projects", key: "projects" },
-      { name: "SPOC", key: "spoc" },
-      { name: "Data Hub", key: "merge" },
-      { name: "Add connections", key: "addConnection" },
+      { name: "My connections", key: "myconnections", icon: <Users size={20}/> },
+      { name: "Networks", key: "networks", icon: <Network size={20}/> },
+      { name: "Projects", key: "projects", icon: <Folder size={20}/> },
+      { name: "SPOC", key: "spoc", icon: <UserPlus size={20}/> },
+      { name: "Data Hub", key: "merge", icon: <Database size={20}/> },
+      { name: "Add connections", key: "addConnection", icon: <Home size={20}/> },
     ],
     user: [
-      { name: "My connections", key: "myconnections" },
-      { name: "Projects", key: "projects" },
-      { name: "SPOC", key: "spoc" },
-      { name: "Add connections", key: "addConnection" },
+      { name: "My connections", key: "myconnections", icon: <Users size={20}/> },
+      { name: "Projects", key: "projects", icon: <Folder size={20}/> },
+      { name: "SPOC", key: "spoc", icon: <UserPlus size={20}/> },
+      { name: "Add connections", key: "addConnection", icon: <Home size={20}/> },
     ],
     alumni: [
-      { name: "My connections", key: "myconnections" },
-      { name: "Projects", key: "projects" },
-      { name: "Add connections", key: "addConnection" },
+      { name: "My connections", key: "myconnections", icon: <Users size={20}/> },
+      { name: "Projects", key: "projects", icon: <Folder size={20}/> },
+      { name: "Add connections", key: "addConnection", icon: <UserPlus size={20}/> },
     ],
   };
 
@@ -162,6 +163,7 @@ export default function Leftside({ role }) {
               active === button.key ? "open" : ""
             }`}
           >
+            {button.icon}
             {button.name}
           </div>
         ))}
