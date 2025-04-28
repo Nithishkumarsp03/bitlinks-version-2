@@ -25,6 +25,7 @@ export default function Spoc() {
     e.stopPropagation();
     if(role === 'admin') navigate(`/admin/add-connection/${email}`);
     else if(role === 'user') navigate(`/add-connection/${email}`);
+    else if(role === 'intern') navigate(`/alumni/add-connection/${email}`)
   }
 
   const fetchPerson = async () => {

@@ -113,6 +113,7 @@ function RoutesController() {
         >
           <Route path="" element={<Connections />} />
           <Route path="myconnections" element={<Connections />} />
+          <Route path="spoc" element={<Spoc />} />
           <Route path="projects" element={<UserProjects />} />
           <Route path="add-connection/:email" element={<Add />} />  
         </Route>

@@ -71,6 +71,7 @@ export default function Leftside({ role }) {
     },
     alumni: {
       myconnections: "/alumni/myconnections",
+      spoc: "/alumni/spoc",
       projects: "/alumni/projects",
       addConnection: `/alumni/add-connection/${email}`,
     },
@@ -93,6 +94,7 @@ export default function Leftside({ role }) {
     ],
     alumni: [
       { name: "My connections", key: "myconnections", icon: <Users size={20}/> },
+      { name: "SPOC", key: "spoc", icon: <UserPlus size={20}/> },
       { name: "Projects", key: "projects", icon: <Folder size={20}/> },
       { name: "Add connections", key: "addConnection", icon: <UserPlus size={20}/> },
     ],
