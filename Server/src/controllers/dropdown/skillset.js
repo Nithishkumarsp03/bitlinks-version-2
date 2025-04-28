@@ -1,7 +1,7 @@
 const db = require("../../db/config");
 
 const fetchdata = (req, res) => {
-  db.query(`SELECT * FROM skillset_table`, (err, results) => {
+  db.query(`SELECT skillset_column FROM skillset_table`, (err, results) => {
     if (err) {
       console.error("Fetching error:", err);
       return res.status(500).json({ message: "Internal server error" });

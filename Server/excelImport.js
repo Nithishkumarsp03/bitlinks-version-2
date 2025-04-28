@@ -2,7 +2,7 @@ var fs = require('fs');
 var csv = require('csv-parser');
 var mysql = require('mysql2');
 
-// Create a connection pool.
+// Create a connection pool
 var pool = mysql.createPool({
   connectionLimit: 10,
   host: '10.30.10.21',
@@ -11,7 +11,15 @@ var pool = mysql.createPool({
   database: 'bitlinks'
 });
 
-// Process a single row from the CSV.
+// Helper to safely handle NaN, undefined, empty string
+function safeValue(value) {
+  if (value === undefined || value === null || value === '' || value === 'NaN') {
+    return null;
+  }
+  return value;
+}
+
+// Process a single row
 function processRow(row, callback) {
   pool.getConnection(function (err, connection) {
     if (err) {
@@ -25,7 +33,7 @@ function processRow(row, callback) {
         return callback(err);
       }
 
-      // Step 1: Fetch SPOC details using the spoc column value.
+      // Step 1: Fetch SPOC details
       connection.query(
         "SELECT email, person_id FROM personalinfo WHERE fullname = ? LIMIT 1",
         [row.spoc],
@@ -38,7 +46,6 @@ function processRow(row, callback) {
           }
 
           var spocEmail, spocPersonId;
-          // If no SPOC is found, use fallback values.
           if (spocRows.length === 0) {
             spocEmail = "iecc@bitsathy.ac.in";
             spocPersonId = 1270;
@@ -47,31 +54,29 @@ function processRow(row, callback) {
             spocPersonId = spocRows[0].person_id;
           }
 
-          // Step 2: Insert the primary person record.
-          // If a duplicate entry error occurs, skip the row.
+          // Step 2: Insert personalinfo
           connection.query(
             "INSERT INTO personalinfo (useremail, profile, fullname, phonenumber, age, email, dob, rating, designation, visitingcard, linkedinurl, address, shortdescription, hashtags, spoc, sub_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [
-              spocEmail,            // useremail fetched from SPOC lookup or fallback
-              row.profile,          // profile
-              row.fullname,         // fullname
-              row.phonenumber,      // phonenumber
-              row.age,              // age
-              row.email,            // email
-              row.dob,              // dob
-              row.rating,           // rating
-              row.designation,      // designation
-              row.visitingcard,     // visitingcard
-              row.linkedinurl,      // linkedinurl
-              row.address,          // address
-              row.shortdescription, // shortdescription
-              row.hashtags,         // hashtags
-              "no",                 // spoc (set to "no" as per your logic)
-              spocPersonId          // sub_id from SPOC lookup or fallback
+              spocEmail,
+              safeValue(row.profile),
+              safeValue(row.fullname),
+              safeValue(row.phonenumber),
+              safeValue(row.age),
+              safeValue(row.email),
+              safeValue(row.dob),
+              safeValue(row.rating),
+              safeValue(row.designation),
+              safeValue(row.visitingcard),
+              safeValue(row.linkedinurl),
+              safeValue(row.address),
+              safeValue(row.shortdescription),
+              safeValue(row.hashtags),
+              "no",
+              spocPersonId
             ],
             function (err, personResult) {
               if (err) {
-                // Check if error is a duplicate entry error.
                 if (err.code === 'ER_DUP_ENTRY') {
                   console.log("Duplicate entry for email: " + row.email + ". Skipping row.");
                   return connection.rollback(function () {
@@ -88,19 +93,19 @@ function processRow(row, callback) {
 
               var personId = personResult.insertId;
 
-              // Step 3: Insert company data.
+              // Step 3: Insert company
               connection.query(
                 "INSERT INTO company (person_id, companyname, position, experience, role, companyaddress, websiteurl, scale, payscale) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 [
                   personId,
-                  row.companyname,
-                  row.position,
-                  row.experience,
-                  row.role,
-                  row.companyaddress,
-                  row.websiteurl,
-                  row.scale,
-                  row.payscale
+                  safeValue(row.companyname),
+                  safeValue(row.position),
+                  safeValue(row.experience),
+                  safeValue(row.role),
+                  safeValue(row.companyaddress),
+                  safeValue(row.websiteurl),
+                  safeValue(row.scale),
+                  safeValue(row.payscale)
                 ],
                 function (err, companyResult) {
                   if (err) {
@@ -110,14 +115,14 @@ function processRow(row, callback) {
                     });
                   }
 
-                  // Step 4: Insert expertise data.
+                  // Step 4: Insert expertise
                   connection.query(
                     "INSERT INTO expertise (person_id, domain, specialistskills, skillset) VALUES (?, ?, ?, ?)",
                     [
                       personId,
-                      row.domain,
-                      row.specialistskills,
-                      row.skillset
+                      safeValue(row.domain),
+                      safeValue(row.specialistskills),
+                      safeValue(row.skillset)
                     ],
                     function (err, expertiseResult) {
                       if (err) {
@@ -127,13 +132,12 @@ function processRow(row, callback) {
                         });
                       }
 
-                      // Step 5: Insert rank into person_points_summary.
-                      // The reserved keyword "rank" is escaped using backticks.
+                      // Step 5: Insert into person_points_summary
                       connection.query(
-                        "INSERT INTO person_points_summary (person_id, `rank`, last_updated) VALUES (?, ?, NOW())",
+                        "INSERT INTO person_points_summary (person_id, `rank`, last_updated) VALUES (?, 0, NOW())",
                         [
                           personId,
-                          Number(row.rank)
+                          safeValue(row.rank)
                         ],
                         function (err, rankResult) {
                           if (err) {
@@ -142,7 +146,8 @@ function processRow(row, callback) {
                               return callback(err);
                             });
                           }
-                          // Commit the transaction.
+
+                          // All inserts done! Commit
                           connection.commit(function (err) {
                             if (err) {
                               return connection.rollback(function () {
@@ -155,20 +160,20 @@ function processRow(row, callback) {
                             callback(null);
                           });
                         }
-                      ); // End insert into person_points_summary.
+                      );
                     }
-                  ); // End expertise insert.
+                  );
                 }
-              ); // End company insert.
+              );
             }
-          ); // End personalinfo insert.
+          );
         }
-      ); // End SPOC query.
-    }); // End beginTransaction.
-  }); // End getConnection.
+      );
+    });
+  });
 }
 
-// Process all rows from the CSV (one by one).
+// Process all rows
 function processAllRows(rows, index) {
   if (index >= rows.length) {
     console.log("All rows processed");
@@ -182,7 +187,7 @@ function processAllRows(rows, index) {
   });
 }
 
-// Read CSV file and convert it to an array of objects.
+// Read CSV file
 function readCsvFile(filePath, callback) {
   var results = [];
   fs.createReadStream(filePath)
@@ -198,10 +203,10 @@ function readCsvFile(filePath, callback) {
     });
 }
 
-// Specify the path to your CSV file.
-var csvFilePath = "./data.csv";
+// Path to your CSV
+var csvFilePath = "./Contact App data - Sheet1.csv";
 
-// Read the CSV and start processing.
+// Start
 readCsvFile(csvFilePath, function (err, rows) {
   if (err) {
     return console.error("Error reading CSV file:", err);

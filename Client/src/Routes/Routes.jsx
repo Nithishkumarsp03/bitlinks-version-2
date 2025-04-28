@@ -116,8 +116,6 @@ function RoutesController() {
           <Route path="projects" element={<UserProjects />} />
           <Route path="add-connection/:email" element={<Add />} />  
         </Route>
-
-        <Route path="/dropdown" element={<CompanyDropdown/>} />
       </Routes>
     </div>
   );
