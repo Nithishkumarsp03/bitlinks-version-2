@@ -41,7 +41,7 @@ export default function Leftside({ role }) {
       setActive("addConnection");
     } else if (location.pathname === "/admin/network") {
       setActive("networks");
-    } else if (location.pathname === "/admin/spoc") {
+    } else if (location.pathname === "/admin/spoc" || location.pathname === "/alumni/spoc") {
       setActive("spoc");
     } else if (location.pathname === "/admin/data-hub") {
       setActive("merge");

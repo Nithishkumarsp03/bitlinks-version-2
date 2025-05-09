@@ -62,7 +62,7 @@ function App() {
       ) {
         navigate("/secure-data-hub");
       }
-      else if(role === "intern" && !currentPath.startsWith("/alumni")) navigate('/alumni')
+      else if(role === "intern" && !currentPath.startsWith("/alumni")) navigate('/alumni/myconnections')
     }
   }, [role, token, navigate, isOnline]);
 

@@ -21,8 +21,10 @@ export default function UserProjects() {
   const handleCardclick = (uuid, shaid) => {
     if (role === "admin")
       navigate(`/admin/${uuid}/person-details/minutes/${shaid}`);
-    else if (role === "user" || role === "intern")
+    else if (role === "user" )
       navigate(`/${uuid}/person-details/minutes/${shaid}`);
+    else if (role === "intern")
+      navigate(`/alumni/${uuid}/person-details/minutes/${shaid}`);
   };
 
   const fetchPerson = async () => {

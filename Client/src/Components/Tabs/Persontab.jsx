@@ -14,31 +14,37 @@ export default function Persontab({ activeTab, setActiveTab, uuid }) {
     if (tabName === "Interlinks") {
       if (role === "admin")
         navigate(`/admin/${uuid}/person-details/interlinks`);
-      else if (role === "user" || role === "intern") navigate(`/${uuid}/person-details/interlinks`);
+      else if (role === "user") navigate(`/${uuid}/person-details/interlinks`);
+      else if (role === "intern") navigate(`/alumni/${uuid}/person-details/interlinks`);
       else {
       }
     } else if (tabName === "M.O.M") {
       if (role === "admin")
         navigate(`/admin/${uuid}/person-details/minutes-of-meeting`);
-      else if (role === "user" || role === "intern")
+      else if (role === "user")
         navigate(`/${uuid}/person-details/minutes-of-meeting`);
+      else if (role === "intern")
+        navigate(`/alumni/${uuid}/person-details/minutes-of-meeting`);
       else {
       }
     } else if (tabName === "Infograph") {
       if (role === "admin")
         navigate(`/admin/${uuid}/person-details/info-graph`);
-      else if (role === "user" || role === "intern") navigate(`/${uuid}/person-details/info-graph`);
+      else if (role === "user") navigate(`/${uuid}/person-details/info-graph`);
+      else if (role === "intern") navigate(`/alumni/${uuid}/person-details/info-graph`);
       else {
       }
     } else if (tabName === "Graph") {
       navigate(`/admin/${uuid}/person-details/graph`);
       if (role === "admin") navigate(`/admin/${uuid}/person-details/graph`);
-      else if (role === "user" || role === "intern") navigate(`/${uuid}/person-details/graph`);
+      else if (role === "user") navigate(`/${uuid}/person-details/graph`);
+      else if (role === "intern") navigate(`/alumni/${uuid}/person-details/graph`);
       else {
       }
     } else {
       if (role === "admin") navigate(`/admin/${uuid}/person-details`);
-      else if (role === "user" || role === "intern") navigate(`/${uuid}/person-details`);
+      else if (role === "user") navigate(`/${uuid}/person-details`);
+      else if (role === "intern") navigate(`/alumni/${uuid}/person-details`);
       else {
       }
     }

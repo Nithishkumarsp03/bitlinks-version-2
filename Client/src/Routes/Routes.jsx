@@ -61,6 +61,21 @@ function RoutesController() {
           <Route path="minutes/:shaid" element={<Minutes />} />
         </Route>
         <Route
+          path="/alumni/:uuid/person-details"
+          element={
+            <ProtectedRoute allowedRoles={["intern"]}>
+              <Persondata />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="" element={<Profile />} />
+          <Route path="interlinks" element={<Interlinks />} />
+          <Route path="minutes-of-meeting" element={<Mom />} />
+          <Route path="graph" element={<Graph />} />
+          <Route path="info-graph" element={<Infograph />} />
+          <Route path="minutes/:shaid" element={<Minutes />} />
+        </Route>
+        <Route
           path="/:uuid/person-details"
           element={
             <ProtectedRoute allowedRoles={["user", "intern", "admin"]}>

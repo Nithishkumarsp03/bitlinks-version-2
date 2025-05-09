@@ -148,6 +148,7 @@ export default function Addconnection() {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!personData.fullname || !personData.phonenumber || !personData.email) {
       showSnackbar(
         "Please provide the basic information like Name, email & Contact details to proceed",
@@ -156,8 +157,32 @@ export default function Addconnection() {
       return;
     }
 
+    if (personData.shortdescription) {
+      // First check character length against database limits
+      if (personData.shortdescription.length > 255) {
+        // Adjust this number based on your DB column size
+        showSnackbar(
+          "Description exceeds the maximum character limit. Please shorten your text.",
+          "error"
+        );
+        return;
+      }
+
+      // Also keep your word count validation if needed
+      const wordCount = personData.shortdescription
+        .trim()
+        .split(/\s+/).length;
+      if (wordCount > 250) {
+        showSnackbar(
+          "Description exceeds the 250-word limit. Please shorten your text.",
+          "error"
+        );
+        return;
+      }
+    }
+
     setLoading(true);
-    e.preventDefault();
+    
     try {
       // Step 1: Upload available photos
       const formData = new FormData();

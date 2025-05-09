@@ -1,4 +1,4 @@
-.project-card-container {
+.minute-card-container {
   /* height: 85%; */
   padding: 10px 0px;
   display: flex;
@@ -24,6 +24,23 @@
 }
 
 .project-card-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background color of the scrollbar track */
+}
+.minute-card-container::-webkit-scrollbar {
+  width: 3px; /* Adjust the scrollbar width */
+  padding: 10px 0px;
+}
+
+.minute-card-container::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 3px; /* Rounded corners for the scrollbar thumb */
+}
+
+.minute-card-container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}
+
+.minute-card-container::-webkit-scrollbar-track {
   background: #f1f1f1; /* Background color of the scrollbar track */
 }
 

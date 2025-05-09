@@ -94,8 +94,8 @@ function ImageUpload({ preview, onFileSelect, onDelete }) {
 }
 
 export default function AlumniForm() {
-  const {email} = useParams();
-  const {setLogopen} = useStore();
+  const { email } = useParams();
+  const { setLogopen } = useStore();
   const [activeStep, setActiveStep] = useState(0);
   const [profilePhotoPreview, setProfilePhotoPreview] = useState(null);
   const [visitingCardPreview, setVisitingCardPreview] = useState(null);
@@ -156,41 +156,75 @@ export default function AlumniForm() {
   });
 
   const handleSubmit = async (e) => {
-    if (!formData.personalInfo.name || !formData.personalInfo.phone || !formData.personalInfo.email) {
+    if (
+      !formData.personalInfo.name ||
+      !formData.personalInfo.phone ||
+      !formData.personalInfo.email
+    ) {
       showSnackbar("Please provide Name, Email & Phone", "error");
       return;
     }
-  
+
+    if (formData.personalInfo.shortDescription) {
+      // First check character length against database limits
+      if (formData.personalInfo.shortDescription.length > 255) {
+        // Adjust this number based on your DB column size
+        showSnackbar(
+          "Description exceeds the maximum character limit. Please shorten your text.",
+          "error"
+        );
+        return;
+      }
+
+      // Also keep your word count validation if needed
+      const wordCount = formData.personalInfo.shortDescription
+        .trim()
+        .split(/\s+/).length;
+      if (wordCount > 250) {
+        showSnackbar(
+          "Description exceeds the 250-word limit. Please shorten your text.",
+          "error"
+        );
+        return;
+      }
+    }
+
     e.preventDefault();
-  
+
     try {
       // Step 1: Upload photos if available
       const fileUploadData = new FormData();
       if (profile) fileUploadData.append("profileImage", profile);
       if (visiting) fileUploadData.append("visitingcard", visiting);
-  
+
       let filePaths = {};
-      if (fileUploadData.has("profileImage") || fileUploadData.has("visitingcard")) {
-        const uploadResponse = await fetch(`${api}/api/upload`, { method: "POST", body: fileUploadData });
-  
+      if (
+        fileUploadData.has("profileImage") ||
+        fileUploadData.has("visitingcard")
+      ) {
+        const uploadResponse = await fetch(`${api}/api/upload`, {
+          method: "POST",
+          body: fileUploadData,
+        });
+
         if (uploadResponse.status === 401) {
           setLogopen(true);
           return;
         }
-  
+
         if (!uploadResponse.ok) {
           showSnackbar("Photo upload failed", "error");
           throw new Error("Photo upload failed");
         }
-  
+
         const uploadResponseText = await uploadResponse.text();
         // console.log("Raw Upload Response:", uploadResponseText);
-  
+
         filePaths = JSON.parse(uploadResponseText) || {};
       }
 
       // console.log("File Paths Before Assigning:", filePaths);
-  
+
       // Step 2: Send final data
       const finalData = {
         ...formData,
@@ -203,37 +237,56 @@ export default function AlumniForm() {
           visitingCard: filePaths.visitingcard,
         },
       };
-    
-  
+
       const res = await fetch(`${api}/api/add/alumni`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${decryptData(localStorage.getItem("token"))}`,
         },
-        body: JSON.stringify({finalData}),
+        body: JSON.stringify({ finalData }),
       });
-  
+
+      const data = await res.json();
+
       if (res.status === 401) {
         setLogopen(true);
         return;
       }
-  
+
       if (!res.ok) {
-        showSnackbar("Data submission failed", "error");
-        throw new Error("Data submission failed");
+        showSnackbar(data.error, "error");
+        throw new Error(data.error);
       }
-  
-      showSnackbar("Data submitted Successfully!", "success");
-      navigate('/alumni/myconnections')
+
+      // Show success message with countdown
+      showSnackbar(
+        "Data submitted successfully! Redirecting in 3...",
+        "success"
+      );
+
+      // Start countdown and redirect
+      let countdown = 3;
+      const redirectTimer = setInterval(() => {
+        countdown--;
+
+        if (countdown > 0) {
+          // Update message with new countdown number
+          showSnackbar(
+            `Data submitted successfully! Redirecting in ${countdown}...`,
+            "success"
+          );
+        } else {
+          // Clear the interval and redirect when countdown reaches 0
+          clearInterval(redirectTimer);
+          navigate("/alumni/myconnections");
+        }
+      }, 1000);
     } catch (error) {
-      showSnackbar(error.message, "error");
+      showSnackbar(error.message, "warning");
       console.error("Error:", error.message);
     }
   };
-  
-  
-  
 
   const handleNext = () => setActiveStep((prev) => prev + 1);
   const handleBack = () => setActiveStep((prev) => prev - 1);
@@ -721,7 +774,14 @@ export default function AlumniForm() {
   };
 
   return (
-    <div style={{backgroundColor: "white", height: "100%", width: "100%", overflowY: "scroll"}}>
+    <div
+      style={{
+        backgroundColor: "white",
+        height: "100%",
+        width: "100%",
+        overflowY: "scroll",
+      }}
+    >
       <MuiBox sx={{ width: "60%", margin: "auto", mt: 4 }}>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
@@ -763,6 +823,6 @@ export default function AlumniForm() {
         severity={snackbar.severity}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
       />
-   </div>
+    </div>
   );
 }

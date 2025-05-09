@@ -132,7 +132,7 @@ export default function Minutes() {
         <hr />
         <input type="text" placeholder="Search Projects" />
       </div>
-      <div className="project-card-container">
+      <div className="minute-card-container">
         {minutes.length === 0 ? (
           <div className="no-data-error">
             <NoDataFound />

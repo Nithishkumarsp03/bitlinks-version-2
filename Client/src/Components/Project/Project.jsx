@@ -55,8 +55,14 @@ export default function Projects() {
       });
 
       if (Array.isArray(responseData.project)) {
-        setPersondata(responseData.project);
-        setFilteredData(responseData.project); // Set filtered data initially
+        const duplicated = [
+          ...responseData.project,
+          ...responseData.project,
+          ...responseData.project,
+        ];
+        setPersondata(duplicated);
+        setFilteredData(duplicated);
+      
       } else {
         setPersondata([]);
         setFilteredData([]);

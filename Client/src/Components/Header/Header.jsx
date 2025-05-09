@@ -20,14 +20,17 @@ export default function Header() {
   };
 
   const handleSettings = () => {
-    navigate('/admin/settings');
-  }
+    if(role === "intern") {
+      navigate("/alumni/settings") 
+      return;}
+    navigate("/admin/settings");
+  };
 
   const handlelogoclick = () => {
-    if(role === 'admin') navigate('/admin/myconnections')
-    else if(role === 'user') navigate('/myconnections')
-    else if(role === 'intern') navigate('/alumni/myconnections')
-  }
+    if (role === "admin") navigate("/admin/myconnections");
+    else if (role === "user") navigate("/myconnections");
+    else if (role === "intern") navigate("/alumni/myconnections");
+  };
 
   return (
     <div className="header">
@@ -41,13 +44,17 @@ export default function Header() {
         </div>
         <div className="user-details">
           <div className="user-name">{name}</div>
-          <div className="logout" onClick={handleLogout}>Logout</div>
+          <div className="logout" onClick={handleLogout}>
+            Logout
+          </div>
         </div>
         <hr />
-        <div className="settings-container" onClick={handleSettings}>
-          <img src={settings} alt="Settings" />
-          <p>SUPPORT</p>
-        </div>
+        {/* {role !== "intern" ? ( */}
+          <div className="settings-container" onClick={handleSettings}>
+            <img src={settings} alt="Settings" />
+            <p>SUPPORT</p>
+          </div>
+        {/* // ) : ("")} */}
       </div>
 
       {/* Hamburger & Popover Menu for Mobile */}
@@ -62,7 +69,9 @@ export default function Header() {
             </div>
             <div className="user-details">
               <div className="user-name">{name}</div>
-              <div className="logout" onClick={handleLogout}>Logout</div>
+              <div className="logout" onClick={handleLogout}>
+                Logout
+              </div>
             </div>
             <div className="settings-container" onClick={handleSettings}>
               <img src={settings} alt="Settings" />
