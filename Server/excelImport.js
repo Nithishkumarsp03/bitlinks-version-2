@@ -59,19 +59,19 @@ function processRow(row, callback) {
             "INSERT INTO personalinfo (useremail, profile, fullname, phonenumber, age, email, dob, rating, designation, visitingcard, linkedinurl, address, shortdescription, hashtags, spoc, sub_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [
               spocEmail,
-              safeValue(row.profile),
+              row.profile,
               safeValue(row.fullname),
-              safeValue(row.phonenumber),
-              safeValue(row.age),
-              safeValue(row.email),
-              safeValue(row.dob),
-              safeValue(row.rating),
-              safeValue(row.designation),
-              safeValue(row.visitingcard),
-              safeValue(row.linkedinurl),
-              safeValue(row.address),
-              safeValue(row.shortdescription),
-              safeValue(row.hashtags),
+              row.phonenumber,
+              row.age,
+              row.email,
+              row.dob,
+              row.rating,
+              row.designation,
+              row.visitingcard,
+              row.linkedinurl,
+              row.address,
+              row.shortdescription,
+              row.hashtags,
               "no",
               spocPersonId
             ],
@@ -98,14 +98,14 @@ function processRow(row, callback) {
                 "INSERT INTO company (person_id, companyname, position, experience, role, companyaddress, websiteurl, scale, payscale) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 [
                   personId,
-                  safeValue(row.companyname),
-                  safeValue(row.position),
-                  safeValue(row.experience),
-                  safeValue(row.role),
-                  safeValue(row.companyaddress),
-                  safeValue(row.websiteurl),
-                  safeValue(row.scale),
-                  safeValue(row.payscale)
+                  row.companyname,
+                  row.position,
+                  row.experience,
+                  row.role,
+                  row.companyaddress,
+                  row.websiteurl,
+                  row.scale,
+                  row.payscale
                 ],
                 function (err, companyResult) {
                   if (err) {
@@ -120,9 +120,9 @@ function processRow(row, callback) {
                     "INSERT INTO expertise (person_id, domain, specialistskills, skillset) VALUES (?, ?, ?, ?)",
                     [
                       personId,
-                      safeValue(row.domain),
-                      safeValue(row.specialistskills),
-                      safeValue(row.skillset)
+                      row.domain,
+                      row.specialistskills,
+                      row.skillset
                     ],
                     function (err, expertiseResult) {
                       if (err) {
@@ -204,7 +204,7 @@ function readCsvFile(filePath, callback) {
 }
 
 // Path to your CSV
-var csvFilePath = "./Contact App data - Sheet1.csv";
+var csvFilePath = "./datanew.csv";
 
 // Start
 readCsvFile(csvFilePath, function (err, rows) {
