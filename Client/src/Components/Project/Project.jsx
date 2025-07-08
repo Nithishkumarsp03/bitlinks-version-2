@@ -23,19 +23,22 @@ export default function Projects() {
 
   const observer = useRef();
 
-  const lastProjectRef = useCallback(node => {
-    if (loading || isFetchingMore || !hasMore) return;
+  const lastProjectRef = useCallback(
+    (node) => {
+      if (loading || isFetchingMore || !hasMore) return;
 
-    if (observer.current) observer.current.disconnect();
+      if (observer.current) observer.current.disconnect();
 
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        fetchProjects(page + 1);
-      }
-    });
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          fetchProjects(page + 1);
+        }
+      });
 
-    if (node) observer.current.observe(node);
-  }, [loading, isFetchingMore, hasMore, page]);
+      if (node) observer.current.observe(node);
+    },
+    [loading, isFetchingMore, hasMore, page]
+  );
 
   const handleCardclick = (uuid, shaid) => {
     if (role === "admin")
@@ -50,13 +53,18 @@ export default function Projects() {
     else setIsFetchingMore(true);
 
     try {
-      const res = await fetch(`${api}/api/project/fetchalldata?page=${pageNum}&limit=${limit}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "authorization": `Bearer ${decryptData(localStorage.getItem("token"))}`,
-        },
-      });
+      const res = await fetch(
+        `${api}/api/project/fetchalldata?page=${pageNum}&limit=${limit}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${decryptData(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
 
       if (res.status === 401) {
         setLogopen(true);
@@ -68,21 +76,21 @@ export default function Projects() {
       const responseData = await res.json();
       const fetched = responseData.project || [];
 
-      fetched.forEach(p => {
-        p.status = parseFloat(p.approved_percentage) === 100.0 ? "Completed" : "Pending";
+      fetched.forEach((p) => {
+        p.status =
+          parseFloat(p.approved_percentage) === 100.0 ? "Completed" : "Pending";
       });
 
       if (pageNum === 1) {
         setProjects(fetched);
         setFilteredData(fetched);
       } else {
-        setProjects(prev => [...prev, ...fetched]);
-        setFilteredData(prev => [...prev, ...fetched]);
+        setProjects((prev) => [...prev, ...fetched]);
+        setFilteredData((prev) => [...prev, ...fetched]);
         setPage(pageNum);
       }
 
       if (fetched.length < limit) setHasMore(false);
-
     } catch (error) {
       console.error("Error fetching project data:", error);
     } finally {
@@ -128,7 +136,10 @@ export default function Projects() {
             <SyncLoader color="#2867B2" />
           </div>
         ) : filteredData.length === 0 ? (
-          <div className="no-data-error" style={{ height: "100%", margin: "0" }}>
+          <div
+            className="no-data-error"
+            style={{ height: "100%", margin: "0" }}
+          >
             <NoDataFound />
           </div>
         ) : (
@@ -142,14 +153,20 @@ export default function Projects() {
                 onClick={() => handleCardclick(key.uuid, key.sha_id)}
               >
                 <div className="status-bar">
-                  <div style={{ backgroundColor: key.status === "Completed" ? "forestGreen" : "" }}>
+                  <div
+                    style={{
+                      backgroundColor:
+                        key.status === "Completed" ? "forestGreen" : "",
+                    }}
+                  >
                     {key.status}
                   </div>
                 </div>
                 <div className="project-details">
                   <div className="project-header">{key.title}</div>
                   <div className="project-date">
-                    {key.initial_date} <span style={{ color: "black", fontWeight: "700" }}>-</span>{" "}
+                    {key.initial_date}{" "}
+                    <span style={{ color: "black", fontWeight: "700" }}>-</span>{" "}
                     {key.due_date}
                   </div>
                 </div>
@@ -189,21 +206,21 @@ export default function Projects() {
             );
           })
         )}
-        {isFetchingMore && (
-  <div
-    style={{
-      padding: "1rem",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "80px", // Add height to vertically center
-      width: "100%",
-    }}
-  >
-    <SyncLoader size={12} color="#2867B2" />
-  </div>
-)}
       </div>
+      {isFetchingMore && (
+        <div
+          style={{
+            padding: "1rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "80px", // Add height to vertically center
+            width: "100%",
+          }}
+        >
+          <SyncLoader size={12} color="#2867B2" />
+        </div>
+      )}
     </div>
   );
 }
